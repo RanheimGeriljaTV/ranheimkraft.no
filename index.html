@@ -262,13 +262,14 @@
               <!-- Internal horizontal flare line -->
               <div class="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none z-10"></div>
 
-              <!-- Autoplaying Muted YouTube Loop Player -->
+              <!-- Autoplaying Muted YouTube Loop Player with required strict-origin-when-cross-origin -->
               <iframe 
-                src="https://www.youtube-nocookie.com/embed/Ac-0DqaUDfM?autoplay=1&mute=1&loop=1&playlist=Ac-0DqaUDfM,0u1F3hwLfhU,1Ci_oXPDKiw,PN9fyJ4dxUk,95C6-XZLxbE&playsinline=1&controls=1&modestbranding=1&rel=0" 
+                src="https://www.youtube.com/embed/Ac-0DqaUDfM?autoplay=1&mute=1&loop=1&playlist=Ac-0DqaUDfM&playsinline=1&controls=1&rel=0" 
                 title="Ranheim Gerilja TV Video Player" 
                 class="w-full h-full object-cover"
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
               </iframe>
             </div>
