@@ -8,6 +8,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 * **Minimalisme:** Bento-grid med ryddig typografi (*Space Grotesk*) og god struktur.
 * **Tegneserie & Pop-art:** Halftone dot-bakgrunner og klistremerke-badger (*Bangers*).
 * **Graffiti & Street-art:** Håndtegnede street-tags (*Sedgwick Ave*) og spray glow-effekter.
+* **Ranheim Gerilja TV Spotlight:** Integrert, rammeløs og kompakt YouTube-avspiller med loopet demovisning (muted auto-play) for `@RanheimGeriljaTV`.
 
 ## Filstruktur
 ```text
