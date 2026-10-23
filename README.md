@@ -2,7 +2,8 @@
 
 Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjoner og kreative konsepter under domenet `ranheimkraft.no`.
 
-* **Live URL (GitHub Pages):** [https://ranheimgeriljatv.github.io/ranheimkraft.no/](https://ranheimgeriljatv.github.io/ranheimkraft.no/)
+* **Offisiell URL:** [https://ranheimkraft.no/](https://ranheimkraft.no/)
+* **GitHub Pages URL:** [https://ranheimgeriljatv.github.io/ranheimkraft.no/](https://ranheimgeriljatv.github.io/ranheimkraft.no/)
 * **Offisielt GitHub Repo:** [RanheimGeriljaTV/ranheimkraft.no](https://github.com/RanheimGeriljaTV/ranheimkraft.no)
 
 ## Fremhevede Prosjekter
@@ -15,6 +16,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 * **Minimalisme:** Bento-grid med ryddig typografi (*Space Grotesk*) og god struktur.
 * **Tegneserie & Pop-art:** Halftone dot-bakgrunner og klistremerke-badger (*Bangers*).
 * **Graffiti & Street-art:** Håndtegnede street-tags (*Sedgwick Ave*) og spray glow-effekter.
+* **Mobil-først:** Kompakt header, sveipbar filterrad, store trykkflater (min. 44px), safe-area-støtte for iPhone og lettere rendering (ingen backdrop-blur) på telefon.
 * **Ranheim Gerilja TV Spotlight:** Integrert, rammeløs og kompakt YouTube-avspiller med loopet demovisning (muted auto-play) for `@RanheimGeriljaTV`.
 
 ## Filstruktur
