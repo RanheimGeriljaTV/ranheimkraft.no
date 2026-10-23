@@ -2,6 +2,9 @@
 
 Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjoner og kreative konsepter under domenet `ranheimkraft.no`.
 
+* **Live URL (GitHub Pages):** [https://ranheimgeriljatv.github.io/ranheimkraft.no/](https://ranheimgeriljatv.github.io/ranheimkraft.no/)
+* **Offisielt GitHub Repo:** [RanheimGeriljaTV/ranheimkraft.no](https://github.com/RanheimGeriljaTV/ranheimkraft.no)
+
 ## Estetikk & Stilretning
 * **Glassmorphism:** Frostet glass (`backdrop-blur`), lysbrytende rammer og semitransparente overflater.
 * **Anamorphic Flares:** Horisontale, filmiske linseglimt i cyan og neon-pink.
