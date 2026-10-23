@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="no" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ranheim Kraft // Project Hub</title>
+  
+  <!-- Google Fonts: Space Grotesk (Minimalist Tech) & Sedgwick Ave (Graffiti/Street) & Bangers (Comic pop) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Sedgwick+Ave+Display&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            graffiti: ['"Sedgwick Ave Display"', 'cursive'],
+            comic: ['Bangers', 'cursive'],
+          },
+          colors: {
+            dark: '#080a0f',
+            glass: 'rgba(255, 255, 255, 0.04)',
+            'glass-border': 'rgba(255, 255, 255, 0.12)',
+            'neon-cyan': '#00f0ff',
+            'neon-pink': '#ff007f',
+            'neon-amber': '#ffaa00',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Halftone Comic Pattern Overlay */
+    .comic-halftone {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    /* Anamorphic Lens Flare Line */
+    .anamorphic-streak {
+      position: absolute;
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 240, 255, 0.2) 20%, 
+        rgba(0, 240, 255, 0.9) 50%, 
+        rgba(255, 0, 127, 0.6) 70%, 
+        transparent 100%
+      );
+      filter: drop-shadow(0 0 10px #00f0ff);
+      pointer-events: none;
+    }
+
+    /* Premium Glassmorphism Card */
+    .glass-card {
+      background: rgba(18, 22, 34, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 240, 255, 0.4);
+      box-shadow: 0 25px 60px rgba(0, 240, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Comic Sticker Style */
+    .comic-sticker {
+      box-shadow: 3px 3px 0px #000;
+      transition: transform 0.2s ease;
+    }
+    .comic-sticker:hover {
+      transform: scale(1.08) rotate(-1deg);
+    }
+
+    /* Spray Paint Glow Effect */
+    .spray-glow-cyan {
+      filter: drop-shadow(0 0 25px rgba(0, 240, 255, 0.45));
+    }
+    .spray-glow-pink {
+      filter: drop-shadow(0 0 25px rgba(255, 0, 127, 0.45));
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080a0f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e2433;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f0ff;
+    }
+  </style>
+</head>
+
+<body class="bg-dark text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black">
+
+  <!-- Background Layers: Comic Halftone + Deep Atmospheric Glows -->
+  <div class="fixed inset-0 comic-halftone pointer-events-none opacity-40 z-0"></div>
+  
+  <!-- Interactive Anamorphic Mouse Glow -->
+  <div id="cursor-glow" class="fixed pointer-events-none w-[500px] h-[500px] rounded-full bg-gradient-to-r from-cyan-500/10 via-pink-500/10 to-transparent blur-3xl -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 opacity-60 z-0"></div>
+
+  <!-- Anamorphic Lens Flare Streaks across the page -->
+  <div class="anamorphic-streak top-28 opacity-40"></div>
+  <div class="anamorphic-streak top-96 opacity-20"></div>
+
+  <!-- Atmospheric Background Orbs -->
+  <div class="fixed top-12 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[130px] pointer-events-none"></div>
+  <div class="fixed top-1/2 right-10 w-96 h-96 bg-pink-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-12 flex flex-col min-h-screen">
+
+    <!-- Top Navigation / Status Header -->
+    <header class="flex flex-wrap items-center justify-between gap-4 pb-10 border-b border-white/5">
+      <!-- Brand Logo & Graffiti Tag -->
+      <div class="flex items-center gap-3">
+        <div class="relative group">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20">
+            <div class="w-full h-full bg-dark/90 backdrop-blur rounded-[11px] flex items-center justify-center font-bold text-white text-lg tracking-wider">
+              RK
+            </div>
+          </div>
+          <!-- Tiny Comic Pop Tag -->
+          <span class="absolute -top-3 -right-3 px-1.5 py-0.5 bg-neon-cyan text-black font-comic text-xs uppercase tracking-wider comic-sticker rotate-6">
+            POW!
+          </span>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+              RANHEIM<span class="text-neon-cyan">KRAFT</span>
+            </h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-white/5 text-slate-400 border border-white/10 font-mono">
+              .NO
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 font-mono flex items-center gap-2">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            PROJECT HUB &middot; TRONDHEIM
+          </p>
+        </div>
+      </div>
+
+      <!-- Live Meta Badges / Graffiti Accent -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-slate-300 backdrop-blur">
+          <span class="text-neon-cyan">SYSTEM:</span> ONLINE
+        </div>
+        <a href="#projects" class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500/20 to-pink-500/20 hover:from-cyan-500/30 hover:to-pink-500/30 border border-cyan-500/30 text-xs font-medium text-white transition flex items-center gap-1.5">
+          <span>Utforsk arkivet</span>
+          <svg class="w-3.5 h-3.5 text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Section: Minimalism meets Street Graffiti & Anamorphic Flare -->
+    <section class="pt-16 pb-12 relative">
+      <!-- Big Graffiti Accent Word in Background -->
+      <div class="absolute -top-2 right-4 text-7xl md:text-9xl font-graffiti text-white/[0.03] select-none pointer-events-none rotate-3">
+        KRAFT
+      </div>
+
+      <div class="max-w-3xl">
+        <!-- Comic/Street Tag Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-mono mb-6 comic-sticker -rotate-1">
+          <span class="font-comic text-sm tracking-wide uppercase">⚡ KRAFTSTASJON</span>
+          <span class="text-slate-400">// PERSONLIG PROSJEKT-PORTAL</span>
+        </div>
+
+        <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
+          Ideer, kode og eksperimenter <br>
+          <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-slate-100 to-neon-pink">
+            drevet av ren nysgjerrighet.
+            <!-- Horizontal mini flare directly under header -->
+            <span class="absolute left-0 bottom-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent blur-[1px]"></span>
+          </span>
+        </h2>
+
+        <p class="text-slate-300 text-base sm:text-lg font-light leading-relaxed mb-8 max-w-2xl">
+          Velkommen til <span class="text-white font-medium">ranheimkraft.no</span>. Dette er min sentrale landingsplass og launchpad for pågående prosjekter, prototyper, webapplikasjoner og kreative krumspring.
+        </p>
+
+        <!-- Category Filters (Minimalist Pills) -->
+        <div class="flex flex-wrap items-center gap-2 pt-2" id="filter-buttons">
+          <button onclick="filterCategory('all')" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-medium bg-neon-cyan text-black border border-neon-cyan transition">
+            Alle prosjekter (6)
+          </button>
+          <button onclick="filterCategory('web')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
+            🌐 Web Apps
+          </button>
+          <button onclick="filterCategory('lab')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
+            🧪 Labs & AI
+          </button>
+          <button onclick="filterCategory('art')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
+            🎨 Design & Kunst
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Grid (Bento Glassmorphism Layout) -->
+    <main id="projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8 flex-grow">
+
+      <!-- PROJECT CARD 1: Featured / Large Spotlight -->
+      <article data-category="web" class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden md:col-span-2 group">
+        <!-- Anamorphic Edge Flare on Hover -->
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+        
+        <!-- Comic Sticker Badge -->
+        <div class="flex items-center justify-between mb-4 relative z-10">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan text-xs font-mono font-semibold">
+              WEB APP
+            </span>
+            <span class="px-2 py-0.5 rounded bg-pink-500 text-black font-comic text-xs uppercase tracking-wider comic-sticker rotate-2">
+              ★ HOVEDPROSJEKT
+            </span>
+          </div>
+          <span class="text-xs text-slate-500 font-mono">v1.2 // AKTIV</span>
+        </div>
+
+        <div class="relative z-10 my-4">
+          <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors flex items-center gap-2">
+            Prosjekt Alpha
+            <svg class="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </h3>
+          <p class="text-slate-300 text-sm mt-2 leading-relaxed max-w-xl">
+            Beskrivelse av ditt fremste prosjekt. Dette kan være en fullskala webapplikasjon, et interaktivt verktøy eller en spennende tjeneste du drifter eller bygger på.
+          </p>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="text-[11px] font-mono px-2 py-1 rounded bg-black/40 text-slate-300 border border-white/5">Python</span>
+            <span class="text-[11px] font-mono px-2 py-1 rounded bg-black/40 text-slate-300 border border-white/5">FastAPI</span>
+            <span class="text-[11px] font-mono px-2 py-1 rounded bg-black/40 text-slate-300 border border-white/5">Tailwind</span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-white/5 flex items-center justify-between relative z-10">
+          <span class="text-xs text-slate-400 font-mono">alpha.ranheimkraft.no</span>
+          <a href="#" class="inline-flex items-center gap-1.5 text-xs font-medium text-neon-cyan group-hover:underline">
+            Åpne prosjekt 
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT CARD 2: Lab / Experiments -->
+      <article data-category="lab" class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 text-xs font-mono">
+              LAB & AI
+            </span>
+            <span class="font-graffiti text-sm text-neon-amber rotate-6">PROTOTYPE</span>
+          </div>
+
+          <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+            Kraft Studio AI
+          </h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+            Eksperimentell AI-assistent, automasjonsskript eller data science-dashboard du eksperimenterer med.
+          </p>
+
+          <div class="flex flex-wrap gap-1.5 mt-4">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Gemini API</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Automation</span>
+          </div>
+        </div>
+
+        <div class="pt-4 mt-6 border-t border-white/5 flex items-center justify-between">
+          <span class="text-xs text-slate-500 font-mono">WIP // 75%</span>
+          <a href="#" class="text-xs text-slate-300 group-hover:text-white flex items-center gap-1">
+            Se demo &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT CARD 3: Comic / Art / Creative -->
+      <article data-category="art" class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-mono">
+              DESIGN & KUNST
+            </span>
+            <span class="px-2 py-0.5 bg-yellow-400 text-black font-comic text-xs uppercase comic-sticker -rotate-3">
+              CREATIVE
+            </span>
+          </div>
+
+          <h3 class="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">
+            Ranheim Visuals
+          </h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+            Galleri for grafikk, 3D-modeller, street-art konsepter, tegneserieillustrasjoner eller UI-eksperimenter.
+          </p>
+
+          <div class="flex flex-wrap gap-1.5 mt-4">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Figma</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">SVG & 3D</span>
+          </div>
+        </div>
+
+        <div class="pt-4 mt-6 border-t border-white/5 flex items-center justify-between">
+          <span class="text-xs text-slate-500 font-mono">visuals.ranheimkraft.no</span>
+          <a href="#" class="text-xs text-slate-300 group-hover:text-white flex items-center gap-1">
+            Utforsk &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT CARD 4: Web project -->
+      <article data-category="web" class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-xs font-mono">
+              VERKTØY
+            </span>
+            <span class="text-xs font-mono text-slate-500">UTILITY</span>
+          </div>
+
+          <h3 class="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+            Strøm & Data Tracker
+          </h3>
+          <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+            Et lite, elegant dashboard for overvåking av strømpriser i Midt-Norge (NO3) eller lokale sensorer.
+          </p>
+
+          <div class="flex flex-wrap gap-1.5 mt-4">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Open APIs</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Charts</span>
+          </div>
+        </div>
+
+        <div class="pt-4 mt-6 border-t border-white/5 flex items-center justify-between">
+          <span class="text-xs text-slate-500 font-mono">Live Widget</span>
+          <a href="#" class="text-xs text-slate-300 group-hover:text-white flex items-center gap-1">
+            Gå til app &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT CARD 5: Placeholder / Under utvikling -->
+      <article data-category="lab" class="project-card rounded-2xl p-6 flex flex-col justify-between border border-dashed border-white/15 bg-white/[0.01] hover:bg-white/[0.03] transition relative group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400 text-xs font-mono">
+              KOMMER SNART
+            </span>
+            <span class="font-comic text-xs text-slate-500 tracking-wider">#NEXT</span>
+          </div>
+
+          <h3 class="text-xl font-bold text-slate-300 group-hover:text-white transition-colors">
+            Prosjekt Delta
+          </h3>
+          <p class="text-slate-500 text-xs mt-2 leading-relaxed">
+            Plassholder for din neste store idé. Bare oppdater denne boksen i index.html når du er klar til å lansere.
+          </p>
+        </div>
+
+        <div class="pt-4 mt-6 border-t border-white/5 flex items-center justify-between">
+          <span class="text-xs text-slate-600 font-mono">UNDER PLANLEGGING</span>
+          <span class="text-xs text-slate-600 font-mono">[COMING SOON]</span>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Graffiti Signature & About Drawer / Quick Notes -->
+    <section class="mt-8 mb-12 p-6 rounded-2xl glass-card relative overflow-hidden">
+      <!-- Background subtle anamorphic spray -->
+      <div class="absolute right-0 top-0 w-80 h-full bg-gradient-to-l from-neon-pink/10 to-transparent pointer-events-none"></div>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+        <div>
+          <div class="font-graffiti text-2xl text-neon-cyan tracking-wide mb-1">
+            Ranheim i hjertet, koden i fingrene.
+          </div>
+          <p class="text-slate-400 text-xs max-w-xl leading-relaxed">
+            Denne huben er bygget for å samle alt jeg lager på ett sted. Herfra kan du klikke deg rett inn i aktive prosjekter, undersider, web-eksperimenter og kode-repositorier.
+          </p>
+        </div>
+
+        <!-- Quick Action / GitHub & Contact Links -->
+        <div class="flex items-center gap-3">
+          <a href="https://github.com" target="_blank" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-200 transition flex items-center gap-2">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span>GitHub</span>
+          </a>
+
+          <a href="mailto:kontakt@ranheimkraft.no" class="px-4 py-2 rounded-xl bg-neon-cyan text-black hover:bg-cyan-300 font-semibold text-xs transition flex items-center gap-1.5 shadow-lg shadow-cyan-500/20">
+            <span>Ta kontakt</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Minimalist Footer -->
+    <footer class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4 font-mono">
+      <div>
+        &copy; <span id="year"></span> Ranheim Kraft // All rights reserved.
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hover:text-slate-300 transition">Trondheim, Norge</span>
+        <span>&bull;</span>
+        <span class="text-neon-cyan font-graffiti text-sm">Made with Kraft</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Interactive Scripts -->
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mouse glow follower for anamorphic ambiance
+    const glow = document.getElementById('cursor-glow');
+    window.addEventListener('mousemove', (e) => {
+      glow.style.left = `${e.clientX}px`;
+      glow.style.top = `${e.clientY}px`;
+    });
+
+    // Simple Filter Mechanism
+    function filterCategory(category) {
+      const cards = document.querySelectorAll('.project-card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      // Update button styling
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-neon-cyan', 'text-black', 'border-neon-cyan');
+        btn.classList.add('bg-white/5', 'text-slate-300', 'border-white/10');
+      });
+
+      // Highlight active button
+      event.target.classList.remove('bg-white/5', 'text-slate-300', 'border-white/10');
+      event.target.classList.add('bg-neon-cyan', 'text-black', 'border-neon-cyan');
+
+      // Show/Hide cards with subtle transition
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+          setTimeout(() => card.style.opacity = '1', 50);
+        } else {
+          card.style.opacity = '0';
+          setTimeout(() => card.style.display = 'none', 200);
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
