@@ -251,7 +251,7 @@
 
               <!-- Video Poster / Zero-Lag Interactive Player -->
               <div id="video-poster" class="absolute inset-0 w-full h-full" onclick="loadYouTubePlayer()">
-                <img src="https://i.ytimg.com/vi/Ac-0DqaUDfM/hqdefault.jpg" alt="Ranheim Gerilja TV Siste Video" class="w-full h-full object-cover opacity-85 group-hover/video:scale-105 group-hover/video:opacity-100 transition-all duration-300">
+                <img id="video-poster-img" src="https://i.ytimg.com/vi/Ac-0DqaUDfM/hqdefault.jpg" alt="Ranheim Gerilja TV Video" class="w-full h-full object-cover opacity-85 group-hover/video:scale-105 group-hover/video:opacity-100 transition-all duration-300">
                 
                 <!-- Dark gradient overlay -->
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
@@ -265,8 +265,8 @@
 
                 <!-- Bottom Title Tag inside video -->
                 <div class="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[11px] font-mono text-white/90 pointer-events-none">
-                  <span class="truncate max-w-[200px]">🚨 STOR AVSLØRING // GERILJA TV</span>
-                  <span class="px-1.5 py-0.5 rounded bg-black/70 border border-white/10 text-[10px] text-neon-cyan">SPILL AV ▶</span>
+                  <span id="video-title" class="truncate max-w-[210px]">Laster inn video...</span>
+                  <span class="px-1.5 py-0.5 rounded bg-black/70 border border-white/10 text-[10px] text-neon-cyan shrink-0">SPILL AV ▶</span>
                 </div>
               </div>
 
@@ -274,14 +274,14 @@
               <div id="player-target" class="w-full h-full hidden"></div>
             </div>
 
-            <!-- Bottom Status Bar -->
+            <!-- Bottom Status Bar with Random Switcher -->
             <div class="w-full mt-2.5 pt-2 flex items-center justify-between text-[11px] font-mono">
-              <span class="text-slate-400 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                <span>NYESTE VIDEO // AKTIV</span>
-              </span>
+              <button onclick="pickRandomVideo(true)" title="Bytt til en annen tilfeldig video" class="text-slate-400 hover:text-white flex items-center gap-1.5 transition group/dice">
+                <span class="text-xs group-hover/dice:rotate-45 transition-transform">🎲</span>
+                <span>TILFELDIG VIDEO</span>
+              </button>
               <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="text-neon-cyan hover:underline flex items-center gap-1 font-semibold">
-                Se flere videoer &rarr;
+                Se kanalen &rarr;
               </a>
             </div>
 
@@ -511,8 +511,48 @@
     // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Ranheim Gerilja TV Video Archive (Plays Random Video Every Time)
+    const GERILJA_VIDEOS = [
+      { id: 'Ac-0DqaUDfM', title: '🚨 STOR AVSLØRING FRA RANHEIM GERILJA TV!' },
+      { id: '0u1F3hwLfhU', title: 'Besøk hos Vår Frue Åpen kirke' },
+      { id: '1Ci_oXPDKiw', title: 'Truls & Ranheim Gerilja TV' },
+      { id: 'PN9fyJ4dxUk', title: 'Ranheim Gerilja TV - Heng et stykke ribbe' },
+      { id: '95C6-XZLxbE', title: 'Førjulsprat med Eva Hansen' },
+      { id: 'iVUI7lyTGnw', title: 'På Veien for en God Sak: Tour de Trøndelag' },
+      { id: 'JR7jvYASRR0', title: 'Timelapse Tour de Trøndelag' },
+      { id: 'n7J-a7kZRkA', title: 'Løypa til Tour De Trøndelag' },
+      { id: 'eS5ZUZBtYVc', title: 'Teaser Tour de Trøndelag' },
+      { id: '1lHuPsJkRuM', title: 'Årets Ranheim supporter' },
+      { id: '2d5css3-v8o', title: 'Ranheim Gerilja TV Spesial' }
+    ];
+
+    let currentVideo = null;
+
+    // Selects a random video every visit or on dice click
+    function pickRandomVideo(autoPlayIfOpen = false) {
+      let available = GERILJA_VIDEOS;
+      if (currentVideo && GERILJA_VIDEOS.length > 1) {
+        available = GERILJA_VIDEOS.filter(v => v.id !== currentVideo.id);
+      }
+      currentVideo = available[Math.floor(Math.random() * available.length)];
+
+      const posterImg = document.getElementById('video-poster-img');
+      const titleEl = document.getElementById('video-title');
+      const target = document.getElementById('player-target');
+      const poster = document.getElementById('video-poster');
+
+      if (posterImg) posterImg.src = `https://i.ytimg.com/vi/${currentVideo.id}/hqdefault.jpg`;
+      if (titleEl) titleEl.textContent = currentVideo.title;
+
+      // If user clicked the dice while video is currently playing, load the new video immediately
+      if (autoPlayIfOpen && target && !target.classList.contains('hidden')) {
+        loadYouTubePlayer();
+      }
+    }
+
     // Smooth YouTube Player Loader (Bypasses Error 153 & Removes All Initial Lag)
     function loadYouTubePlayer() {
+      if (!currentVideo) pickRandomVideo();
       const poster = document.getElementById('video-poster');
       const target = document.getElementById('player-target');
       if (!target) return;
@@ -523,8 +563,8 @@
       // Inject clean iframe with user gesture permissions
       target.innerHTML = `
         <iframe 
-          src="https://www.youtube-nocookie.com/embed/Ac-0DqaUDfM?autoplay=1&playsinline=1&rel=0" 
-          title="Ranheim Gerilja TV Video Player" 
+          src="https://www.youtube-nocookie.com/embed/${currentVideo.id}?autoplay=1&playsinline=1&rel=0" 
+          title="${currentVideo.title}" 
           class="w-full h-full object-cover"
           frameborder="0" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -533,6 +573,9 @@
         </iframe>
       `;
     }
+
+    // Initialize random video on load
+    pickRandomVideo();
 
     // Simple Filter Mechanism
     function filterCategory(category) {
