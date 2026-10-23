@@ -9,6 +9,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 * **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder for Ranheim Fotball.
 
 ## Estetikk & Stilretning
+* **Live News Ticker:** Direkte nyhetsticker øverst med ferske nyheter fra [ranheimfotball.no](https://www.ranheimfotball.no), som pauser ved hover og lenker direkte til kampsaker.
 * **Glassmorphism:** Frostet glass (`backdrop-blur`), lysbrytende rammer og semitransparente overflater.
 * **Anamorphic Flares:** Horisontale, filmiske linseglimt i cyan og neon-pink.
 * **Minimalisme:** Bento-grid med ryddig typografi (*Space Grotesk*) og god struktur.
