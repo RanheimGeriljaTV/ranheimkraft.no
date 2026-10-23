@@ -280,44 +280,48 @@
     <!-- Projects Grid (Bento Glassmorphism Layout) -->
     <main id="projects" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8 flex-grow">
 
-      <!-- PROJECT CARD 1: Featured / Large Spotlight -->
-      <article data-category="web" class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden md:col-span-2 group">
+      <!-- PROJECT CARD 1: MatchPic Culler & Renamer (Featured) -->
+      <article data-category="lab web" class="project-card glass-card rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden md:col-span-2 group">
         <!-- Anamorphic Edge Flare on Hover -->
         <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
         
-        <!-- Comic Sticker Badge -->
+        <!-- Badge Header -->
         <div class="flex items-center justify-between mb-4 relative z-10">
           <div class="flex items-center gap-2">
             <span class="px-2.5 py-0.5 rounded bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan text-xs font-mono font-semibold">
-              WEB APP
+              AI &amp; FOTBALL
             </span>
-            <span class="px-2 py-0.5 rounded bg-pink-500 text-black font-comic text-xs uppercase tracking-wider comic-sticker rotate-2">
-              Fremhevet
+            <span class="px-2.5 py-0.5 rounded bg-blue-600/30 border border-blue-500/40 text-blue-300 text-xs font-mono font-medium">
+              Ranheim Fotball
             </span>
           </div>
           <span class="text-xs text-neon-cyan font-mono tracking-widest font-semibold">[ 01 ] &bull; AKTIV</span>
         </div>
 
         <div class="relative z-10 my-4">
-          <h3 class="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors flex items-center gap-2">
-            Prosjekt Alpha
-            <svg class="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </h3>
+          <a href="https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer" target="_blank" rel="noopener noreferrer" class="group/title inline-block">
+            <h3 class="text-2xl font-bold text-white group-hover/title:text-neon-cyan transition-colors flex items-center gap-2">
+              MatchPic Culler &amp; Renamer
+              <svg class="w-5 h-5 opacity-0 group-hover/title:opacity-100 -translate-x-2 group-hover/title:translate-x-0 transition-all text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </h3>
+          </a>
           <p class="text-slate-300 text-sm mt-2 leading-relaxed max-w-xl">
-            Beskrivelse av ditt fremste prosjekt. Dette kan være en fullskala webapplikasjon, et interaktivt verktøy eller en spennende tjeneste du drifter eller bygger på.
+            AI-drevet skrivebordsverktøy for sportsfotografering. Lynrask utvelgelse (culling) og automatisk omdøping av kampbilder for Ranheim Fotball. Kombinerer Gemini AI, fjesgjenkjenning med OpenCV og tropp-database for presis merking av draktnummer og situasjoner.
           </p>
 
           <div class="flex flex-wrap gap-2 mt-4">
-            <span class="text-[11px] font-mono px-2 py-1 rounded bg-black/40 text-slate-300 border border-white/5">Python</span>
-            <span class="text-[11px] font-mono px-2 py-1 rounded bg-black/40 text-slate-300 border border-white/5">FastAPI</span>
-            <span class="text-[11px] font-mono px-2 py-1 rounded bg-black/40 text-slate-300 border border-white/5">Tailwind</span>
+            <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-black/50 text-cyan-300 border border-cyan-500/20">Python 3</span>
+            <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-black/50 text-slate-300 border border-white/5">PyQt6 &amp; WPF</span>
+            <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-black/50 text-slate-300 border border-white/5">OpenCV (Face Rec)</span>
+            <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-black/50 text-pink-300 border border-pink-500/20">Gemini AI Vision</span>
+            <span class="text-[11px] font-mono px-2.5 py-1 rounded bg-black/50 text-slate-300 border border-white/5">EXIF Processing</span>
           </div>
         </div>
 
-        <div class="pt-4 border-t border-white/5 flex items-center justify-between relative z-10">
-          <span class="text-xs text-slate-400 font-mono">alpha.ranheimkraft.no</span>
-          <a href="#" class="inline-flex items-center gap-1.5 text-xs font-medium text-neon-cyan group-hover:underline">
-            Åpne prosjekt 
+        <div class="pt-4 border-t border-white/5 flex items-center justify-between relative z-10 text-xs font-mono">
+          <span class="text-slate-400 truncate max-w-[200px] sm:max-w-none">github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer</span>
+          <a href="https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-medium text-neon-cyan hover:underline shrink-0">
+            <span>Se på GitHub</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
           </a>
         </div>
@@ -570,7 +574,7 @@
 
       // Show/Hide cards with subtle transition
       cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
+        if (category === 'all' || card.getAttribute('data-category').includes(category)) {
           card.style.display = 'flex';
           setTimeout(() => card.style.opacity = '1', 50);
         } else {
