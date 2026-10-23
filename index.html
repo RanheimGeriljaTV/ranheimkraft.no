@@ -132,10 +132,11 @@
       <!-- Brand Logo & Graffiti Tag -->
       <div class="flex items-center gap-3">
         <div class="relative group">
-          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20">
-            <div class="w-full h-full bg-dark/90 backdrop-blur rounded-[11px] flex items-center justify-center font-bold text-white text-lg tracking-wider">
-              RK
-            </div>
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20 overflow-hidden">
+            <picture>
+              <source srcset="Ranheim_gerilja_tv_B.webp" type="image/webp">
+              <img src="Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV Logo" class="w-full h-full object-cover rounded-[11px] bg-dark">
+            </picture>
           </div>
           <!-- Tiny Comic Pop Tag -->
           <span class="absolute -top-3 -right-3 px-1.5 py-0.5 bg-neon-cyan text-black font-comic text-xs uppercase tracking-wider comic-sticker rotate-6">
@@ -154,7 +155,7 @@
           </div>
           <p class="text-xs text-slate-400 font-mono flex items-center gap-2">
             <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            PROJECT HUB &middot; TRONDHEIM
+            PROJECT HUB &middot; GERILJA TV
           </p>
         </div>
       </div>
@@ -172,46 +173,91 @@
     </header>
 
     <!-- Hero Section: Minimalism meets Street Graffiti & Anamorphic Flare -->
-    <section class="pt-16 pb-12 relative">
+    <section class="pt-12 pb-12 relative">
       <!-- Big Graffiti Accent Word in Background -->
       <div class="absolute -top-2 right-4 text-7xl md:text-9xl font-graffiti text-white/[0.03] select-none pointer-events-none rotate-3">
         KRAFT
       </div>
 
-      <div class="max-w-3xl">
-        <!-- Comic/Street Tag Pill -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-mono mb-6 comic-sticker -rotate-1">
-          <span class="font-comic text-sm tracking-wide uppercase">⚡ KRAFTSTASJON</span>
-          <span class="text-slate-400">// PERSONLIG PROSJEKT-PORTAL</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <!-- Left Column: Copy & Tagline -->
+        <div class="lg:col-span-7">
+          <!-- Comic/Street Tag Pill -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-mono mb-6 comic-sticker -rotate-1">
+            <span class="font-comic text-sm tracking-wide uppercase">⚡ KRAFTSTASJON</span>
+            <span class="text-slate-400">// PERSONLIG PROSJEKT-PORTAL</span>
+          </div>
+
+          <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
+            Ideer, kode og eksperimenter <br>
+            <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-slate-100 to-neon-pink">
+              drevet av ren nysgjerrighet.
+              <!-- Horizontal mini flare directly under header -->
+              <span class="absolute left-0 bottom-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent blur-[1px]"></span>
+            </span>
+          </h2>
+
+          <p class="text-slate-300 text-base sm:text-lg font-light leading-relaxed mb-8 max-w-2xl">
+            Velkommen til <span class="text-white font-medium">ranheimkraft.no</span>. Dette er min sentrale landingsplass og launchpad for pågående prosjekter, prototyper, webapplikasjoner og kreative krumspring.
+          </p>
+
+          <!-- Category Filters (Minimalist Pills) -->
+          <div class="flex flex-wrap items-center gap-2 pt-2" id="filter-buttons">
+            <button onclick="filterCategory('all')" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-medium bg-neon-cyan text-black border border-neon-cyan transition">
+              Alle prosjekter (6)
+            </button>
+            <button onclick="filterCategory('web')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
+              🌐 Web Apps
+            </button>
+            <button onclick="filterCategory('lab')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
+              🧪 Labs & AI
+            </button>
+            <button onclick="filterCategory('art')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
+              🎨 Design & Kunst
+            </button>
+          </div>
         </div>
 
-        <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
-          Ideer, kode og eksperimenter <br>
-          <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-slate-100 to-neon-pink">
-            drevet av ren nysgjerrighet.
-            <!-- Horizontal mini flare directly under header -->
-            <span class="absolute left-0 bottom-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent blur-[1px]"></span>
-          </span>
-        </h2>
+        <!-- Right Column: Ranheim Gerilja TV Spotlight Showcase -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          <!-- Anamorphic Backlight Orb behind image -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500/25 via-blue-600/20 to-pink-500/20 rounded-3xl blur-2xl transform scale-95 pointer-events-none"></div>
 
-        <p class="text-slate-300 text-base sm:text-lg font-light leading-relaxed mb-8 max-w-2xl">
-          Velkommen til <span class="text-white font-medium">ranheimkraft.no</span>. Dette er min sentrale landingsplass og launchpad for pågående prosjekter, prototyper, webapplikasjoner og kreative krumspring.
-        </p>
+          <!-- Glass Showcase Container -->
+          <div class="glass-card rounded-3xl p-6 sm:p-8 relative w-full max-w-sm group border border-white/10 flex flex-col items-center">
+            
+            <!-- Top Comic Sticker -->
+            <div class="absolute -top-3 left-6 z-20">
+              <span class="px-3 py-1 bg-neon-cyan text-black font-comic text-xs uppercase tracking-wider comic-sticker -rotate-2 inline-block">
+                ★ RANHEIM GERILJA TV
+              </span>
+            </div>
 
-        <!-- Category Filters (Minimalist Pills) -->
-        <div class="flex flex-wrap items-center gap-2 pt-2" id="filter-buttons">
-          <button onclick="filterCategory('all')" class="filter-btn active px-3.5 py-1.5 rounded-lg text-xs font-medium bg-neon-cyan text-black border border-neon-cyan transition">
-            Alle prosjekter (6)
-          </button>
-          <button onclick="filterCategory('web')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
-            🌐 Web Apps
-          </button>
-          <button onclick="filterCategory('lab')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
-            🧪 Labs & AI
-          </button>
-          <button onclick="filterCategory('art')" class="filter-btn px-3.5 py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
-            🎨 Design & Kunst
-          </button>
+            <!-- Artwork Container with Anamorphic Flare Line -->
+            <div class="relative w-full aspect-square flex items-center justify-center p-2 my-2 overflow-hidden rounded-2xl bg-black/20">
+              <!-- Internal horizontal flare line -->
+              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-40 pointer-events-none"></div>
+              
+              <picture>
+                <source srcset="Ranheim_gerilja_tv_B.webp" type="image/webp">
+                <img src="Ranheim_gerilja_tv_B.png" 
+                     alt="Ranheim Gerilja TV Artwork" 
+                     class="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.7)] group-hover:scale-105 group-hover:rotate-1 transition-all duration-500 ease-out select-none" />
+              </picture>
+            </div>
+
+            <!-- Bottom Street-art Badge & Subtitle -->
+            <div class="w-full mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                ON AIR // HQ
+              </span>
+              <span class="px-2 py-0.5 bg-pink-500 text-black font-comic text-[11px] uppercase comic-sticker rotate-2">
+                ORIGINAL ART
+              </span>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>

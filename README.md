@@ -12,8 +12,10 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 ## Filstruktur
 ```text
 ranheimkraft.no/
-├── index.html        # Hovedside / Prosjektportal
-└── README.md         # Dokumentasjon
+├── index.html                   # Hovedside / Prosjektportal
+├── Ranheim_gerilja_tv_B.png     # Original logo / artwork (4000x4000)
+├── Ranheim_gerilja_tv_B.webp    # Web-optimalisert artwork
+└── README.md                    # Dokumentasjon
 ```
 
 ## Lokalt oppsett
