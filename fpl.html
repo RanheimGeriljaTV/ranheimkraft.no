@@ -287,17 +287,19 @@
     const STORAGE_KEY = 'ranheimkraft_fpl_manager_id';
     const SERVER_STORAGE_KEY = 'ranheimkraft_fpl_server_url';
     
-    // Standard Streamlit App URLer (Endre til din offisielle Streamlit Community Cloud adresse når deployet)
-    const DEFAULT_CLOUD_URL = 'https://fpl-fantasy-26.streamlit.app';
+    // Standard Streamlit App URLer
+    const DEFAULT_CLOUD_URL = 'https://fpl-fantasy-26-emsj7qkbtktydf7ti6pha7.streamlit.app';
     const DEFAULT_LOCAL_URL = 'http://localhost:8501';
 
     function getBaseStreamlitUrl() {
       const savedType = localStorage.getItem('ranheimkraft_fpl_server_type') || 'cloud';
       const customUrl = localStorage.getItem(SERVER_STORAGE_KEY);
       
-      if (savedType === 'local') return DEFAULT_LOCAL_URL;
-      if (savedType === 'custom' && customUrl) return customUrl;
-      return customUrl || DEFAULT_CLOUD_URL;
+      let url = DEFAULT_CLOUD_URL;
+      if (savedType === 'local') url = DEFAULT_LOCAL_URL;
+      else if (savedType === 'custom' && customUrl) url = customUrl;
+      
+      return url.replace(/\/+$/, '');
     }
 
     function initApp() {
