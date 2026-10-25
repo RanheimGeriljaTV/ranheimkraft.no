@@ -279,6 +279,9 @@
       <!-- Live Meta Badges / Graffiti Accent -->
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
         
+        <a href="fpl.html" aria-label="FPL Optimizer" title="FPL Optimizer & Hub" class="inline-flex px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-purple-950/40 to-cyan-950/40 hover:from-purple-900/50 hover:to-cyan-900/50 border border-cyan-500/30 text-xs sm:text-sm font-medium text-slate-200 hover:text-neon-cyan transition items-center gap-1.5 whitespace-nowrap shadow-sm">
+          <span>⚽</span><span>FPL Hub</span>
+        </a>
         <a href="galleri.html" aria-label="Bildegallerier" title="Bildegallerier" class="inline-flex px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-medium text-slate-200 hover:text-neon-cyan transition items-center gap-1.5 whitespace-nowrap">
           <span>📸</span><span>Gallerier</span>
         </a>
@@ -328,7 +331,7 @@
           <!-- Category Filters (Minimalist Pills) -->
           <div class="flex flex-nowrap sm:flex-wrap items-center gap-2 pt-1 sm:pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar" id="filter-buttons">
             <button onclick="filterCategory('all')" class="filter-btn active shrink-0 whitespace-nowrap px-3.5 py-2 sm:py-1.5 rounded-lg text-xs font-medium bg-neon-cyan text-black border border-neon-cyan transition">
-              Alle prosjekter (6)
+              Alle prosjekter (7)
             </button>
             <button onclick="filterCategory('web')" class="filter-btn shrink-0 whitespace-nowrap px-3.5 py-2 sm:py-1.5 rounded-lg text-xs font-medium bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition">
               🌐 Web Apps
@@ -472,6 +475,47 @@
           <a href="https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 py-2 -my-2 font-medium text-neon-cyan hover:underline shrink-0">
             <span>Se på GitHub</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT CARD: Fantasy Premier League (FPL) Optimizer -->
+      <article data-category="web lab" class="project-card glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold">
+                ⚽ FANTASY &amp; AI
+              </span>
+              <span class="px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-300 text-[10px] font-mono">
+                MILP SOLVER
+              </span>
+            </div>
+            <span class="text-xs text-neon-cyan font-mono font-semibold tracking-widest">[ 02 ] &bull; AKTIV</span>
+          </div>
+
+          <a href="fpl.html" class="group/title block">
+            <h3 class="text-xl font-bold text-white group-hover/title:text-neon-cyan transition-colors flex items-center gap-1.5">
+              <span>FPL Optimizer &amp; Hub</span>
+              <svg class="w-4 h-4 text-neon-cyan opacity-0 group-hover/title:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </h3>
+          </a>
+          <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+            Matematisk troppsoptimering med PuLP (Coin-OR CBC MILP), FUT/Panini-spillerkort, live kamptilstand, dynamisk terminliste (FDR) og automatisk byttekalkulator med minne for din FPL ID.
+          </p>
+
+          <div class="flex flex-wrap gap-1.5 mt-4">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-emerald-300 border border-emerald-500/20">PuLP MILP</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-500/20">FPL Live API</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-purple-300 border border-purple-500/20">Streamlit &amp; Altair</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-white/5">FUT Cards</span>
+          </div>
+        </div>
+
+        <div class="pt-4 mt-5 sm:mt-6 border-t border-white/5 flex items-center justify-between">
+          <span class="text-xs text-slate-400 font-mono">ranheimkraft.no/fpl.html</span>
+          <a href="fpl.html" class="text-xs font-bold text-neon-cyan group-hover:underline flex items-center gap-1">
+            <span>Start Optimizer</span> &rarr;
           </a>
         </div>
       </article>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="no" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#070b14">
+  <title>RanheimKraft // FPL Optimizer</title>
+  <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Sedgwick+Ave+Display&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            graffiti: ['"Sedgwick Ave Display"', 'cursive'],
+            comic: ['Bangers', 'cursive'],
+          },
+          colors: {
+            dark: '#080a0f',
+            glass: 'rgba(255, 255, 255, 0.04)',
+            'glass-border': 'rgba(255, 255, 255, 0.12)',
+            'neon-cyan': '#00f0ff',
+            'neon-pink': '#ff007f',
+            'neon-amber': '#ffaa00',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .comic-halftone {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .glass-card {
+      background: rgba(13, 17, 26, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .anamorphic-streak {
+      position: absolute;
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 240, 255, 0.15) 20%, 
+        rgba(0, 240, 255, 0.8) 50%, 
+        rgba(255, 0, 127, 0.5) 70%, 
+        transparent 100%
+      );
+      filter: drop-shadow(0 0 6px #00f0ff);
+      pointer-events: none;
+    }
+
+    /* Fullscreen iframe container */
+    .fpl-frame-wrapper {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 120px);
+      min-height: 650px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0e1117;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-dark text-slate-100 font-sans min-h-screen relative overflow-x-hidden comic-halftone flex flex-col">
+
+  <!-- Top Anamorphic Flare -->
+  <div class="anamorphic-streak top-0"></div>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-5 w-full flex-grow flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-white/5 mb-3 sm:mb-4">
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-purple-600 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20 overflow-hidden shrink-0">
+            <picture>
+              <source srcset="assets/Ranheim_gerilja_tv_B.webp" type="image/webp">
+              <img src="assets/Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV Logo" class="w-full h-full object-cover rounded-[10px] bg-dark">
+            </picture>
+          </div>
+          <div class="min-w-0">
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
+              RANHEIM<span class="text-neon-cyan">KRAFT</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 border border-purple-500/40 text-purple-300">FPL OPTIMIZER</span>
+            </h1>
+            <p class="text-[10px] sm:text-[11px] text-slate-400 font-mono truncate">
+              Matematisk MILP PuLP &bull; Live Premier League Hub
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- User FPL ID Badge & Actions -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Active Manager Pill -->
+        <div id="active-manager-pill" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 border border-emerald-500/40 text-xs font-mono text-emerald-300">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-400">ID:</span>
+          <strong id="display-manager-id" class="text-white"></strong>
+        </div>
+
+        <!-- Change ID Button -->
+        <button onclick="openChangeIdModal()" class="inline-flex px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-neon-cyan transition items-center gap-1 whitespace-nowrap">
+          <span>🔄</span><span class="hidden sm:inline">Bytt FPL ID</span>
+        </button>
+
+        <!-- Fullscreen Toggle -->
+        <button onclick="toggleFullscreen()" class="hidden md:inline-flex px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition items-center gap-1">
+          <span>⛶</span><span>Fullskjerm</span>
+        </button>
+
+        <!-- Back to Home -->
+        <a href="index.html" class="inline-flex px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition items-center gap-1 whitespace-nowrap">
+          <span>🏠</span><span class="hidden sm:inline">Forside</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ONBOARDING HERO (Vises kun når ingen ID er lagret) -->
+    <div id="onboarding-card" class="glass-card rounded-2xl p-6 sm:p-10 max-w-xl mx-auto my-auto text-center relative overflow-hidden border border-cyan-500/30">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-purple-600 via-cyan-500 to-pink-500 p-[2px] shadow-lg shadow-cyan-500/20 mb-4 flex items-center justify-center text-2xl">
+        ⚽
+      </div>
+
+      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+        Velkommen til <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-pink">FPL Optimizer</span>
+      </h2>
+      <p class="text-sm text-slate-300 mb-6 leading-relaxed max-w-md mx-auto">
+        Tast inn din <strong>Fantasy Premier League Manager ID</strong> én gang. Den lagres automatisk på denne enheten, slik at appen åpner ditt lag umiddelbart hver gang du kommer tilbake!
+      </p>
+
+      <form onsubmit="handleInitialSubmit(event)" class="space-y-4 max-w-sm mx-auto text-left">
+        <div>
+          <label for="initial-fpl-id" class="block text-xs font-mono text-slate-300 mb-1.5 font-semibold">
+            Din FPL Manager ID:
+          </label>
+          <input 
+            type="number" 
+            id="initial-fpl-id" 
+            required 
+            placeholder="f.eks. 117526" 
+            class="w-full px-4 py-3 rounded-xl bg-black/70 border border-cyan-500/40 focus:border-neon-cyan focus:outline-none text-white text-base font-mono text-center tracking-wider shadow-inner placeholder-slate-600"
+          >
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3 rounded-xl bg-gradient-to-r from-neon-cyan to-cyan-400 hover:from-cyan-300 hover:to-cyan-400 text-black font-bold text-sm tracking-wider font-mono transition shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2"
+        >
+          <span>🚀 Åpne Mitt FPL-Lag</span>
+        </button>
+
+        <!-- Quick Sample Link -->
+        <div class="text-center pt-2">
+          <button 
+            type="button" 
+            onclick="useSampleId(117526)" 
+            class="text-xs text-slate-400 hover:text-neon-cyan underline font-mono transition"
+          >
+            Eller prøv med eksempel-ID (117526)
+          </button>
+        </div>
+      </form>
+
+      <!-- Help Accordion / Callout -->
+      <div class="mt-6 pt-4 border-t border-white/10 text-left bg-black/30 p-3.5 rounded-xl border border-white/5">
+        <p class="text-[11px] font-mono text-slate-400 leading-normal">
+          <strong class="text-cyan-300">💡 Hvor finner du ID-en din?</strong><br>
+          Gå til <a href="https://fantasy.premierleague.com" target="_blank" rel="noopener noreferrer" class="text-neon-cyan hover:underline">fantasy.premierleague.com</a> og trykk på fanen <em>«Points»</em> eller <em>«Transfers»</em>. Tallet i nettleser-URLen (f.eks. <code class="text-pink-300 bg-black/50 px-1 py-0.5 rounded">.../entry/<b>117526</b>/event/...</code>) er din Manager ID.
+        </p>
+      </div>
+    </div>
+
+    <!-- STREAMLIT IFRAME CONTAINER (Vises når ID er satt) -->
+    <div id="fpl-app-container" class="fpl-frame-wrapper hidden flex-grow relative">
+      <!-- Loading indicator -->
+      <div id="frame-loader" class="absolute inset-0 bg-[#0e1117] flex flex-col items-center justify-center gap-3 z-10 transition-opacity duration-500">
+        <div class="w-10 h-10 border-3 border-cyan-400/20 border-t-neon-cyan rounded-full animate-spin"></div>
+        <p class="text-xs font-mono text-slate-400">Laster FPL Optimizer &amp; lagdata...</p>
+      </div>
+
+      <iframe 
+        id="streamlit-frame" 
+        src="about:blank" 
+        allow="clipboard-write; fullscreen"
+        onload="onFrameLoaded()"
+      ></iframe>
+    </div>
+
+    <!-- Bottom Settings / Server Bar -->
+    <div class="mt-3 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-500 gap-2 px-1">
+      <div class="flex items-center gap-2">
+        <span>Tilkoblet kilde:</span>
+        <select id="server-selector" onchange="changeServerSource()" class="bg-black/60 border border-white/10 rounded px-2 py-0.5 text-slate-300 text-[10px] focus:outline-none focus:border-neon-cyan">
+          <option value="cloud">🌐 Streamlit Sky-app (Produksjon)</option>
+          <option value="local">💻 Lokal server (localhost:8501)</option>
+          <option value="custom">⚙️ Egendefinert URL...</option>
+        </select>
+      </div>
+      <div>
+        Auto-lagret i nettleser via <code class="text-slate-400">localStorage</code>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CHANGE ID MODAL -->
+  <div id="modal-change-id" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="glass-card rounded-2xl p-6 sm:p-8 w-full max-w-md border border-cyan-500/30 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-300 text-lg">
+            ⚽
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-white">Bytt FPL Manager ID</h3>
+            <p class="text-xs text-slate-400 font-mono">Oppdaterer aktivt lag og optimering</p>
+          </div>
+        </div>
+        <button onclick="closeChangeIdModal()" class="text-slate-400 hover:text-white p-1 text-lg leading-none">&times;</button>
+      </div>
+
+      <form onsubmit="handleModalChangeSubmit(event)" class="space-y-4">
+        <div>
+          <label for="modal-input-fpl-id" class="block text-xs font-mono text-slate-300 mb-1.5">Ny FPL Manager ID:</label>
+          <input 
+            type="number" 
+            id="modal-input-fpl-id" 
+            required 
+            class="w-full px-4 py-2.5 rounded-xl bg-black/70 border border-white/15 focus:border-neon-cyan focus:outline-none text-white text-sm font-mono placeholder-slate-600"
+          >
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button 
+            type="button" 
+            onclick="resetStoredId()" 
+            class="text-xs font-mono text-rose-400 hover:underline"
+          >
+            🗑️ Slett lagret ID
+          </button>
+
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeChangeIdModal()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-300 transition">
+              Avbryt
+            </button>
+            <button type="submit" class="px-4 py-2 rounded-xl bg-neon-cyan hover:bg-cyan-300 text-black font-bold text-xs font-mono transition shadow-lg shadow-cyan-500/20">
+              Lagre &amp; Oppdater
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: LocalStorage & Frame Logic -->
+  <script>
+    const STORAGE_KEY = 'ranheimkraft_fpl_manager_id';
+    const SERVER_STORAGE_KEY = 'ranheimkraft_fpl_server_url';
+    
+    // Standard Streamlit App URLer (Endre til din offisielle Streamlit Community Cloud adresse når deployet)
+    const DEFAULT_CLOUD_URL = 'https://fpl-fantasy-26.streamlit.app';
+    const DEFAULT_LOCAL_URL = 'http://localhost:8501';
+
+    function getBaseStreamlitUrl() {
+      const savedType = localStorage.getItem('ranheimkraft_fpl_server_type') || 'cloud';
+      const customUrl = localStorage.getItem(SERVER_STORAGE_KEY);
+      
+      if (savedType === 'local') return DEFAULT_LOCAL_URL;
+      if (savedType === 'custom' && customUrl) return customUrl;
+      return customUrl || DEFAULT_CLOUD_URL;
+    }
+
+    function initApp() {
+      // Sjekk om det finnes en ID i URL (?id=...) først
+      const urlParams = new URLSearchParams(window.location.search);
+      let managerId = urlParams.get('id') || urlParams.get('manager_id');
+
+      if (!managerId) {
+        // Hent fra localStorage
+        managerId = localStorage.getItem(STORAGE_KEY);
+      } else {
+        // Lagre i localStorage hvis sendt inn via URL
+        localStorage.setItem(STORAGE_KEY, managerId);
+      }
+
+      // Oppdater server-selector dropdown
+      const savedType = localStorage.getItem('ranheimkraft_fpl_server_type') || 'cloud';
+      const sel = document.getElementById('server-selector');
+      if (sel) sel.value = savedType;
+
+      if (managerId && !isNaN(parseInt(managerId))) {
+        showStreamlitFrame(managerId);
+      } else {
+        showOnboarding();
+      }
+    }
+
+    function showStreamlitFrame(id) {
+      document.getElementById('onboarding-card').classList.add('hidden');
+      document.getElementById('fpl-app-container').classList.remove('hidden');
+      
+      const pill = document.getElementById('active-manager-pill');
+      const disp = document.getElementById('display-manager-id');
+      if (pill && disp) {
+        disp.textContent = id;
+        pill.classList.remove('hidden');
+        pill.classList.add('inline-flex');
+      }
+
+      // Bygg Streamlit iframe URL med embed=true og ?id=...
+      const baseUrl = getBaseStreamlitUrl();
+      const frameUrl = `${baseUrl}/?embed=true&id=${encodeURIComponent(id)}`;
+      
+      const frame = document.getElementById('streamlit-frame');
+      if (frame && frame.src !== frameUrl) {
+        document.getElementById('frame-loader').style.opacity = '1';
+        frame.src = frameUrl;
+      }
+    }
+
+    function showOnboarding() {
+      document.getElementById('fpl-app-container').classList.add('hidden');
+      document.getElementById('onboarding-card').classList.remove('hidden');
+      document.getElementById('active-manager-pill').classList.add('hidden');
+      
+      const frame = document.getElementById('streamlit-frame');
+      if (frame) frame.src = 'about:blank';
+    }
+
+    function onFrameLoaded() {
+      const loader = document.getElementById('frame-loader');
+      if (loader) {
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => { loader.style.display = 'none'; }, 400);
+        }, 800);
+      }
+    }
+
+    function handleInitialSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('initial-fpl-id');
+      const id = input.value.trim();
+      if (!id || isNaN(parseInt(id))) {
+        alert('Vennligst oppgi et gyldig FPL Manager ID (kun tall).');
+        return;
+      }
+      localStorage.setItem(STORAGE_KEY, id);
+      showStreamlitFrame(id);
+    }
+
+    function useSampleId(id) {
+      localStorage.setItem(STORAGE_KEY, id);
+      showStreamlitFrame(id);
+    }
+
+    function openChangeIdModal() {
+      const cur = localStorage.getItem(STORAGE_KEY) || '';
+      document.getElementById('modal-input-fpl-id').value = cur;
+      document.getElementById('modal-change-id').classList.remove('hidden');
+    }
+
+    function closeChangeIdModal() {
+      document.getElementById('modal-change-id').classList.add('hidden');
+    }
+
+    function handleModalChangeSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('modal-input-fpl-id').value.trim();
+      if (!id || isNaN(parseInt(id))) {
+        alert('Vennligst oppgi et gyldig FPL Manager ID (tall).');
+        return;
+      }
+      localStorage.setItem(STORAGE_KEY, id);
+      closeChangeIdModal();
+      showStreamlitFrame(id);
+    }
+
+    function resetStoredId() {
+      if (confirm('Er du sikker på at du vil nullstille din lagrede FPL ID?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        closeChangeIdModal();
+        showOnboarding();
+      }
+    }
+
+    function changeServerSource() {
+      const sel = document.getElementById('server-selector').value;
+      localStorage.setItem('ranheimkraft_fpl_server_type', sel);
+      
+      if (sel === 'custom') {
+        const cur = localStorage.getItem(SERVER_STORAGE_KEY) || 'https://';
+        const customUrl = prompt('Oppgi full URL til din Streamlit app (inkl. https://):', cur);
+        if (customUrl) {
+          localStorage.setItem(SERVER_STORAGE_KEY, customUrl.trim());
+        }
+      }
+      
+      const curId = localStorage.getItem(STORAGE_KEY);
+      if (curId) {
+        showStreamlitFrame(curId);
+      }
+    }
+
+    function toggleFullscreen() {
+      const elem = document.getElementById('fpl-app-container');
+      if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+          alert(`Feil ved fullskjerm: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Kjør oppstart
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
