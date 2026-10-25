@@ -6,7 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
-## [1.4.0] - 2026-10-25
+## [1.5.0] - 2026-10-26
+
+### Endret
+- **Mobilvisning & Layout**: Fjernet store flytende bakgrunnsord som kolliderte og lå over tekst og videospiller på mobilskjermer.
+- **MatchPic Culler & Renamer**: Fjernet Ranheim Fotball-logo og referanse fra kortet; oppdatert tag til `AI & FOTO`.
+- **Fjerning av stedsreferanser**: Fjernet referanser til Ranheim, Trondheim og Norge i header (`Prosjektportal • Live`), bunnkort og footer.
+- **Rent 3-prosjekts Grid**: Etablert et ryddig, balansert rutenett med kun reelle prosjekter (MatchPic Culler, FPL Optimizer, Bildegalleri).
+
+### Fjernet
+- Fjernet uferdige mockups (Ranheim Visuals, Strømtracker og Prosjekt Delta).
+- Fjernet kategorifilter-knapperad i hero-seksjonen.
+- Skjult anamorphic flares på mobil for å forhindre linjer tvers over tekst.
 
 ### Lagt til
 - **Changelog-side (`changelog.html`)**: Dedikert endringslogg-side designet i full mørk glassmorphism-stil med interaktiv tidslinje, versjonsmerker og filter over oppdateringer.

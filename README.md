@@ -7,13 +7,14 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 * **Offisielt GitHub Repo:** [RanheimGeriljaTV/ranheimkraft.no](https://github.com/RanheimGeriljaTV/ranheimkraft.no)
 
 ## Fremhevede Prosjekter
-* **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder for Ranheim Fotball.
+* **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder.
+* **[FPL Optimizer & Hub](fpl.html)**: Matematisk troppsoptimering for Fantasy Premier League med PuLP MILP solver, FDR-oversikt og FUT-spillerkort.
 * **[Passordbeskyttet Bildegalleri](galleri.html)**: Dedikert galleri-underside koblet direkte til Google Disk. Støtter flere mapper med egne passord, fullskjerm-lightbox med sveip og ett-klikks ZIP-nedlasting av hele album.
 * **[Endringslogg](changelog.html)**: Dedikert changelog-side som dokumenterer alle versjoner, oppdateringer og forbedringer over tid.
 
 ## Estetikk & Stilretning
 * **Live News Ticker i Ranheim-gradient:** Heldekkende nyhetsticker øverst i dyp Ranheim-blå gradient med hurtig responsiv scrolling (22s desktop, 16s mobil), ren typografi og ferske nyheter fra [ranheimfotball.no](https://www.ranheimfotball.no). Oppdateres automatisk via GitHub Actions og klient-side `assets/news.json`. Pauser ved touch/hover.
-* **Street-Art Graffiti Tags:** Bakgrunnstags for `RANHEIM`, `KRAFT`, `KK` og `RANHEIM GERILJA` i *Sedgwick Ave Display* som komplementerer stilen uten å forstyrre lesbarheten.
+* **Minimalistisk Glassmorphism:** Frostet glass (`backdrop-blur`), lysbrytende rammer, semitransparente overflater og ren typografi.
 * **Glassmorphism:** Frostet glass (`backdrop-blur`), lysbrytende rammer og semitransparente overflater.
 * **Anamorphic Flares:** Horisontale, filmiske linseglimt i cyan og neon-pink.
 * **Minimalisme:** Bento-grid med ryddig typografi (*Space Grotesk*) og god struktur.
