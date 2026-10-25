@@ -86,6 +86,41 @@
       border: none;
       display: block;
     }
+
+    /* Mobile First Screen Adaptations */
+    @media (max-width: 640px) {
+      body {
+        overflow-x: hidden;
+        min-height: 100dvh;
+      }
+      .main-container-shell {
+        padding: 0 !important;
+        max-width: 100% !important;
+        height: 100dvh !important;
+        display: flex;
+        flex-direction: column;
+        margin: 0 !important;
+      }
+      header.fpl-nav-header {
+        padding: 8px 10px !important;
+        margin-bottom: 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        flex-shrink: 0;
+      }
+      .fpl-frame-wrapper {
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+        height: calc(100dvh - 52px) !important;
+        min-height: 0 !important;
+        flex-grow: 1;
+        box-shadow: none !important;
+      }
+      .bottom-server-bar {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-dark text-slate-100 font-sans min-h-screen relative overflow-x-hidden comic-halftone flex flex-col">
@@ -94,25 +129,25 @@
   <div class="anamorphic-streak top-0"></div>
 
   <!-- Main Container -->
-  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-5 w-full flex-grow flex flex-col">
+  <div class="main-container-shell max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-5 w-full flex-grow flex flex-col">
 
     <!-- Top Navigation Header -->
-    <header class="flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-white/5 mb-3 sm:mb-4">
+    <header class="fpl-nav-header flex items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-white/5 mb-3 sm:mb-4">
       <!-- Brand & Title -->
-      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
-        <a href="index.html" class="flex items-center gap-2.5 group">
-          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-purple-600 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20 overflow-hidden shrink-0">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 sm:gap-2.5 group">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-purple-600 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20 overflow-hidden shrink-0">
             <picture>
               <source srcset="assets/Ranheim_gerilja_tv_B.webp" type="image/webp">
               <img src="assets/Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV Logo" class="w-full h-full object-cover rounded-[10px] bg-dark">
             </picture>
           </div>
           <div class="min-w-0">
-            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
+            <h1 class="text-sm sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
               RANHEIM<span class="text-neon-cyan">KRAFT</span>
-              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 border border-purple-500/40 text-purple-300">FPL OPTIMIZER</span>
+              <span class="text-[9px] sm:text-[10px] font-mono px-1.5 py-0.5 rounded bg-purple-500/20 border border-purple-500/40 text-purple-300">FPL</span>
             </h1>
-            <p class="text-[10px] sm:text-[11px] text-slate-400 font-mono truncate">
+            <p class="hidden sm:block text-[10px] sm:text-[11px] text-slate-400 font-mono truncate">
               Matematisk MILP PuLP &bull; Live Premier League Hub
             </p>
           </div>
@@ -120,17 +155,17 @@
       </div>
 
       <!-- User FPL ID Badge & Actions -->
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <!-- Active Manager Pill -->
-        <div id="active-manager-pill" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/60 border border-emerald-500/40 text-xs font-mono text-emerald-300">
-          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <div id="active-manager-pill" class="hidden items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg bg-black/60 border border-emerald-500/40 text-[11px] sm:text-xs font-mono text-emerald-300">
+          <span class="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span class="text-slate-400">ID:</span>
           <strong id="display-manager-id" class="text-white"></strong>
         </div>
 
         <!-- Change ID Button -->
-        <button onclick="openChangeIdModal()" class="inline-flex px-2.5 sm:px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-neon-cyan transition items-center gap-1 whitespace-nowrap">
-          <span>🔄</span><span class="hidden sm:inline">Bytt FPL ID</span>
+        <button onclick="openChangeIdModal()" title="Bytt FPL ID" class="inline-flex px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-neon-cyan transition items-center gap-1 whitespace-nowrap">
+          <span>🔄</span><span class="hidden sm:inline">Bytt ID</span>
         </button>
 
         <!-- Fullscreen Toggle -->
@@ -139,7 +174,7 @@
         </button>
 
         <!-- Back to Home -->
-        <a href="index.html" class="inline-flex px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition items-center gap-1 whitespace-nowrap">
+        <a href="index.html" title="Tilbake til forside" class="inline-flex px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition items-center gap-1 whitespace-nowrap">
           <span>🏠</span><span class="hidden sm:inline">Forside</span>
         </a>
       </div>
@@ -217,7 +252,7 @@
     </div>
 
     <!-- Bottom Settings / Server Bar -->
-    <div class="mt-3 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-500 gap-2 px-1">
+    <div class="bottom-server-bar mt-3 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-500 gap-2 px-1">
       <div class="flex items-center gap-2">
         <span>Tilkoblet kilde:</span>
         <select id="server-selector" onchange="changeServerSource()" class="bg-black/60 border border-white/10 rounded px-2 py-0.5 text-slate-300 text-[10px] focus:outline-none focus:border-neon-cyan">
@@ -235,7 +270,7 @@
 
   <!-- CHANGE ID MODAL -->
   <div id="modal-change-id" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
-    <div class="glass-card rounded-2xl p-6 sm:p-8 w-full max-w-md border border-cyan-500/30 shadow-2xl relative">
+    <div class="glass-card rounded-2xl p-5 sm:p-8 w-full max-w-md border border-cyan-500/30 shadow-2xl relative">
       <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
         <div class="flex items-center gap-2">
           <span class="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-300 text-lg">
@@ -256,8 +291,19 @@
             type="number" 
             id="modal-input-fpl-id" 
             required 
-            class="w-full px-4 py-2.5 rounded-xl bg-black/70 border border-white/15 focus:border-neon-cyan focus:outline-none text-white text-sm font-mono placeholder-slate-600"
+            style="font-size: 16px;"
+            class="w-full px-4 py-2.5 rounded-xl bg-black/70 border border-white/15 focus:border-neon-cyan focus:outline-none text-white text-base font-mono placeholder-slate-600"
           >
+        </div>
+
+        <!-- Mobile Server Switcher Shortcut -->
+        <div class="pt-2 border-t border-white/10 sm:hidden">
+          <label for="modal-server-selector" class="block text-[11px] font-mono text-slate-400 mb-1">Serverkilde:</label>
+          <select id="modal-server-selector" onchange="document.getElementById('server-selector').value = this.value; changeServerSource();" class="w-full bg-black/60 border border-white/10 rounded-lg px-2.5 py-1.5 text-slate-300 text-xs font-mono focus:outline-none focus:border-neon-cyan">
+            <option value="cloud">🌐 Streamlit Sky-app (Produksjon)</option>
+            <option value="local">💻 Lokal server (localhost:8501)</option>
+            <option value="custom">⚙️ Egendefinert URL...</option>
+          </select>
         </div>
 
         <div class="flex items-center justify-between pt-2">
@@ -266,11 +312,11 @@
             onclick="resetStoredId()" 
             class="text-xs font-mono text-rose-400 hover:underline"
           >
-            🗑️ Slett lagret ID
+            🗑️ Slett ID
           </button>
 
           <div class="flex items-center gap-2">
-            <button type="button" onclick="closeChangeIdModal()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-300 transition">
+            <button type="button" onclick="closeChangeIdModal()" class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-300 transition">
               Avbryt
             </button>
             <button type="submit" class="px-4 py-2 rounded-xl bg-neon-cyan hover:bg-cyan-300 text-black font-bold text-xs font-mono transition shadow-lg shadow-cyan-500/20">
