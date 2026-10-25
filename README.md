@@ -9,6 +9,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 ## Fremhevede Prosjekter
 * **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder for Ranheim Fotball.
 * **[Passordbeskyttet Bildegalleri](galleri.html)**: Dedikert galleri-underside koblet direkte til Google Disk. Støtter flere mapper med egne passord, fullskjerm-lightbox med sveip og ett-klikks ZIP-nedlasting av hele album.
+* **[Endringslogg](changelog.html)**: Dedikert changelog-side som dokumenterer alle versjoner, oppdateringer og forbedringer over tid.
 
 ## Estetikk & Stilretning
 * **Live News Ticker i Ranheim-gradient:** Heldekkende nyhetsticker øverst i dyp Ranheim-blå gradient med hurtig responsiv scrolling (22s desktop, 16s mobil), ren typografi og ferske nyheter fra [ranheimfotball.no](https://www.ranheimfotball.no). Oppdateres automatisk via GitHub Actions og klient-side `assets/news.json`. Pauser ved touch/hover.
@@ -22,6 +23,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 ## Filstruktur
 ```text
 ranheimkraft.no/
+├── .gitignore                   # Ignorerte filer (hemmeligheter, logger, OS-filer)
 ├── assets/                      # Sentral ressursmappe for media og ikoner
 │   ├── 2560px-Ranheim_IL_logo.png
 │   ├── Ranheim_IL_logo_800.webp
@@ -35,8 +37,10 @@ ranheimkraft.no/
 ├── apps-script/                 # Google Apps Script backend og oppsettsguide
 │   ├── Code.gs                  # Apps Script dørvakt & Disk-integrasjon
 │   └── README.md                # 3-minutters oppsettsveiledning
+├── changelog.html               # Offisiell endringslogg (Nettside)
 ├── galleri.html                 # Passordbeskyttet bildegalleri (Google Disk)
 ├── index.html                   # Hovedside / Prosjektportal
+├── CHANGELOG.md                 # Markdown endringslogg (Keep a Changelog)
 └── README.md                    # Dokumentasjon
 ```
 

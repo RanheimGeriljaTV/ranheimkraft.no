@@ -1,0 +1,67 @@
+# Environment & Secrets (Never commit secrets!)
+.env
+.env.*
+!.env.example
+local.properties
+*.pem
+*.key
+*.p12
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+
+# Node & Build artifacts
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+desktop.ini
+
+# Editor & IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary / Scratch & Test files
+*.log
+*.tmp
+*.bak
+test_*.png
+test_*.jpg
+scratch/
