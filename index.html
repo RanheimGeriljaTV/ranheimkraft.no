@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#070b14">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Ranheim Kraft // Project Hub</title>
+  <title>RanheimKraft</title>
   <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
   
   <!-- Google Fonts: Space Grotesk (Minimalist Tech) & Sedgwick Ave (Graffiti/Street) & Bangers (Comic pop) -->
@@ -109,7 +109,7 @@
     .ticker-content {
       display: inline-flex;
       white-space: nowrap;
-      animation: ticker-slide 50s linear infinite;
+      animation: ticker-slide 22s linear infinite;
       will-change: transform;
     }
     .ticker-container:hover .ticker-content {
@@ -136,13 +136,13 @@
         -webkit-backdrop-filter: none;
         background: rgba(13, 17, 26, 0.92);
       }
-      .ticker-content { animation-duration: 40s; }
+      .ticker-content { animation-duration: 16s; }
       /* Touch: press and hold pauses the ticker */
       .ticker-container:active .ticker-content { animation-play-state: paused; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .ticker-content { animation-duration: 120s; }
+      .ticker-content { animation-duration: 16s; }
     }
   </style>
 </head>
@@ -156,113 +156,87 @@
   <div class="anamorphic-streak top-28 opacity-40"></div>
   <div class="anamorphic-streak top-96 opacity-20"></div>
 
-  <!-- Live Sports News Ticker: Ranheim Fotball Siste Nytt (Edge-to-Edge Full Width) -->
-  <aside class="ticker-container relative z-30 w-full border-b border-cyan-500/20 bg-[#070b14]/95 backdrop-blur-md overflow-hidden text-sm select-none shadow-[0_4px_20px_rgba(0,0,0,0.45)]">
+  <!-- Live Sports News Ticker: Ranheim Fotball Siste Nytt (Edge-to-Edge Full Width, Ranheim Gradient) -->
+  <aside class="ticker-container relative z-30 w-full border-b border-cyan-400/25 bg-gradient-to-r from-[#071330] via-[#0f2766] to-[#071330] text-xs sm:text-sm select-none shadow-[0_4px_25px_rgba(3,10,30,0.6)]">
     <div class="w-full flex items-center justify-between">
-      <!-- Fixed Left Badge with Official Ranheim IL Logo -->
-      <a href="https://www.ranheimfotball.no/nyheter" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 sm:gap-3.5 px-3 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-[#17275c] via-[#1e3378] to-[#203a8f] text-white font-bold tracking-wider shrink-0 z-20 shadow-xl border-r border-cyan-400/30 group/badge hover:brightness-110 transition-all">
-        <picture>
-          <source srcset="Ranheim_IL_logo_800.webp" type="image/webp">
-          <img src="2560px-Ranheim_IL_logo.png" alt="Ranheim IL Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain drop-shadow-[0_2px_8px_rgba(0,240,255,0.35)]">
-        </picture>
-        <div class="flex items-center gap-1.5 sm:gap-2">
-          <span class="inline-block w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#00f0ff]"></span>
-          <span class="hidden sm:inline text-xs md:text-sm font-sans font-black uppercase tracking-wider text-white whitespace-nowrap">SISTE NYTT</span>
-        </div>
+      <!-- Fixed Left Badge (Ranheim Blue Gradient, Clean crisp text, No logo, No blinking dot) -->
+      <a href="https://www.ranheimfotball.no/nyheter" target="_blank" rel="noopener noreferrer" class="flex items-center px-2.5 sm:px-4 py-1.5 sm:py-2.5 bg-gradient-to-r from-cyan-500/20 to-blue-600/30 hover:from-cyan-500/30 hover:to-blue-600/40 text-cyan-200 font-bold tracking-wider shrink-0 z-20 border-r border-cyan-400/30 transition-all">
+        <span class="text-[10px] sm:text-xs md:text-sm font-sans font-black uppercase tracking-wider text-cyan-200 whitespace-nowrap">SISTE NYTT</span>
       </a>
 
       <!-- Auto-scrolling News Tape (Full Width, Pauses on Hover) -->
-      <div class="overflow-hidden relative flex-1 min-w-0 py-2 sm:py-3 cursor-pointer" title="Hold musen over for å pause / klikk for å lese">
-        <!-- Edge Fades for smooth text entrance/exit -->
-        <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#070b14] to-transparent z-10"></div>
-        <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#070b14] to-transparent z-10"></div>
+      <div class="overflow-hidden relative flex-1 min-w-0 py-1 sm:py-2 cursor-pointer" title="Hold over for å pause / klikk for å lese">
+        <!-- Edge Fades matching Ranheim gradient -->
+        <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-6 sm:w-10 bg-gradient-to-r from-[#071330] to-transparent z-10"></div>
+        <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-6 sm:w-10 bg-gradient-to-l from-[#071330] to-transparent z-10"></div>
 
-        <div class="ticker-content flex items-center gap-8 sm:gap-12 pl-4 sm:pl-6">
-          <a href="https://www.ranheimfotball.no/nyheter/offensiv-selvtillit-pa-reisefot-ranheim-gjester-tabelljumboen" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+        <div id="ticker-track" class="ticker-content flex items-center gap-6 sm:gap-10 pl-3 sm:pl-6">
+          <a href="https://www.ranheimfotball.no/nyheter/tre-deilige-poeng-pa-toten-gutta-slo-tilbake-og-vant-3-1-mot-raufoss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
+            <span class="hover:underline">Tre deilige poeng på Toten: Gutta slo tilbake og vant 3-1 mot Raufoss</span>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+          <a href="https://www.ranheimfotball.no/nyheter/coop-midt-norge-og-extra-forlenger-avtalen-med-ranheim" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
+            <span class="hover:underline">Coop Midt-Norge og EXTRA forlenger avtalen med Ranheim</span>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+          <a href="https://www.ranheimfotball.no/nyheter/offensiv-selvtillit-pa-reisefot-ranheim-gjester-tabelljumboen" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">Offensiv selvtillit på reisefot: Ranheim gjester tabelljumboen</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/denne-uken-i-historien-malfester-hostdrama-og-uforglemmelige-oyeblikk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/denne-uken-i-historien-malfester-hostdrama-og-uforglemmelige-oyeblikk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">Denne uken i historien: Målfester, høstdrama og uforglemmelige øyeblikk</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/en-innholdsrik-uke-42-er-i-boks-herlig-hjemmeseier-i-fjaera-og-malshow-fra-g16" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/en-innholdsrik-uke-42-er-i-boks-herlig-hjemmeseier-i-fjaera-og-malshow-fra-g16" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">En innholdsrik uke: Herlig hjemmeseier i fjæra og målshow fra G16</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/malfest-i-fjaera-gutta-snudde-til-overbevisende-4-2-seier-mot-bryne" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/malfest-i-fjaera-gutta-snudde-til-overbevisende-4-2-seier-mot-bryne" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">Målfest i fjæra: Gutta snudde til overbevisende 4-2-seier mot Bryne</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/klar-for-fartsfylt-drama-i-fjaera-nar-bryne-kommer-pa-besok" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Klar for fartsfylt drama i fjæra når Bryne kommer på besøk</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          <!-- Duplicated for seamless loop -->
+          <a href="https://www.ranheimfotball.no/nyheter/tre-deilige-poeng-pa-toten-gutta-slo-tilbake-og-vant-3-1-mot-raufoss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
+            <span class="hover:underline">Tre deilige poeng på Toten: Gutta slo tilbake og vant 3-1 mot Raufoss</span>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/serieinnspurt-i-ulsteinvik-endte-med-seriegull-for-ranheim-gatelag" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Serieinnspurt i Ulsteinvik endte med seriegull for Ranheim Gatelag!</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          <a href="https://www.ranheimfotball.no/nyheter/coop-midt-norge-og-extra-forlenger-avtalen-med-ranheim" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
+            <span class="hover:underline">Coop Midt-Norge og EXTRA forlenger avtalen med Ranheim</span>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/sen-utligning-sikret-sterkt-bortepoeng-i-slitekamp-pa-nye-hoddvoll" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Sen utligning sikret sterkt bortepoeng i slitekamp på Nye Høddvoll</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/jakt-pa-tre-poeng-i-ulsteinvik-vi-gjester-hodd-pa-nye-hoddvoll" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Jakt på tre poeng i Ulsteinvik: Vi gjester Hødd på Nye Høddvoll</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/offensiv-selvtillit-pa-reisefot-ranheim-gjester-tabelljumboen" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/offensiv-selvtillit-pa-reisefot-ranheim-gjester-tabelljumboen" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">Offensiv selvtillit på reisefot: Ranheim gjester tabelljumboen</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/denne-uken-i-historien-malfester-hostdrama-og-uforglemmelige-oyeblikk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/denne-uken-i-historien-malfester-hostdrama-og-uforglemmelige-oyeblikk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">Denne uken i historien: Målfester, høstdrama og uforglemmelige øyeblikk</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/en-innholdsrik-uke-42-er-i-boks-herlig-hjemmeseier-i-fjaera-og-malshow-fra-g16" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/en-innholdsrik-uke-42-er-i-boks-herlig-hjemmeseier-i-fjaera-og-malshow-fra-g16" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">En innholdsrik uke: Herlig hjemmeseier i fjæra og målshow fra G16</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
-          <a href="https://www.ranheimfotball.no/nyheter/malfest-i-fjaera-gutta-snudde-til-overbevisende-4-2-seier-mot-bryne" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
+          <a href="https://www.ranheimfotball.no/nyheter/malfest-i-fjaera-gutta-snudde-til-overbevisende-4-2-seier-mot-bryne" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
             <span class="hover:underline">Målfest i fjæra: Gutta snudde til overbevisende 4-2-seier mot Bryne</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/klar-for-fartsfylt-drama-i-fjaera-nar-bryne-kommer-pa-besok" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Klar for fartsfylt drama i fjæra når Bryne kommer på besøk</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/serieinnspurt-i-ulsteinvik-endte-med-seriegull-for-ranheim-gatelag" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Serieinnspurt i Ulsteinvik endte med seriegull for Ranheim Gatelag!</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/sen-utligning-sikret-sterkt-bortepoeng-i-slitekamp-pa-nye-hoddvoll" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Sen utligning sikret sterkt bortepoeng i slitekamp på Nye Høddvoll</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/jakt-pa-tre-poeng-i-ulsteinvik-vi-gjester-hodd-pa-nye-hoddvoll" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 sm:gap-2.5 py-1 text-slate-200 hover:text-neon-cyan transition-colors text-[13px] sm:text-sm md:text-[14px] font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-sm sm:text-base">&bull;</span>
-            <span class="hover:underline">Jakt på tre poeng i Ulsteinvik: Vi gjester Hødd på Nye Høddvoll</span>
-            <svg class="w-3.5 h-3.5 text-cyan-400/70 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
         </div>
       </div>
 
       <!-- Right Source Link (Pinned to Right Edge) -->
-      <a href="https://www.ranheimfotball.no" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center gap-1.5 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm text-slate-300 hover:text-neon-cyan border-l border-white/10 shrink-0 transition font-mono z-20 bg-[#070b14]/90 hover:bg-[#101726]">
+      <a href="https://www.ranheimfotball.no" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center gap-1.5 px-4 sm:px-5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-cyan-200 hover:text-white border-l border-cyan-400/20 shrink-0 transition font-mono z-20 bg-[#071330]/80 hover:bg-[#0f2766]/90">
         <span class="font-semibold">ranheimfotball.no</span>
         <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
       </a>
@@ -279,8 +253,8 @@
         <div class="relative group shrink-0">
           <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20 overflow-hidden">
             <picture>
-              <source srcset="Ranheim_gerilja_tv_B.webp" type="image/webp">
-              <img src="Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV Logo" class="w-full h-full object-cover rounded-[11px] bg-dark">
+              <source srcset="assets/Ranheim_gerilja_tv_B.webp" type="image/webp">
+              <img src="assets/Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV Logo" class="w-full h-full object-cover rounded-[11px] bg-dark">
             </picture>
           </div>
           
@@ -305,31 +279,38 @@
       <!-- Live Meta Badges / Graffiti Accent -->
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
         
-        <a href="galleri.html" aria-label="Bildegallerier" title="Bildegallerier" class="hidden min-[400px]:inline-flex px-2.5 sm:px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm sm:text-xs font-medium text-slate-200 hover:text-neon-cyan transition items-center gap-1.5 whitespace-nowrap">
-          <span>📸</span><span class="hidden sm:inline">Gallerier</span>
+        <a href="galleri.html" aria-label="Bildegallerier" title="Bildegallerier" class="inline-flex px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-medium text-slate-200 hover:text-neon-cyan transition items-center gap-1.5 whitespace-nowrap">
+          <span>📸</span><span>Gallerier</span>
         </a>
         <a href="#projects" class="hidden md:inline-flex px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 transition items-center gap-1.5">
           <span>Utforsk arkiv</span>
         </a>
-        <a href="mailto:ksandvin@gmail.com" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2.5 sm:py-2 rounded-lg bg-neon-cyan text-black hover:bg-cyan-300 font-bold text-xs tracking-wider whitespace-nowrap transition transform -rotate-1 hover:rotate-0 shadow-[2px_2px_0px_rgba(0,0,0,0.9)] border border-black">
-          <span>Ta kontakt</span>
-          <svg class="w-3.5 h-3.5 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
+        
       </div>
     </header>
 
     <!-- Hero Section: Minimalism meets Street Graffiti & Anamorphic Flare -->
     <section class="pt-7 pb-8 sm:pt-12 sm:pb-12 relative">
       <!-- Big Graffiti Accent Word in Background -->
-      <div class="absolute -top-4 sm:-top-6 right-0 sm:right-6 text-6xl sm:text-8xl md:text-9xl font-graffiti overflow-hidden max-w-full text-cyan-400/[0.04] select-none pointer-events-none rotate-2 tracking-wide">
+      <!-- Background Street Graffiti Tags (Sedgwick Ave Display) -->
+      <div class="absolute -top-4 sm:-top-6 right-0 sm:right-6 text-6xl sm:text-8xl md:text-9xl font-graffiti overflow-hidden max-w-full text-cyan-400/[0.045] select-none pointer-events-none rotate-2 tracking-wide">
         RANHEIM
+      </div>
+      <div class="absolute -top-2 sm:top-2 left-0 sm:left-4 text-5xl sm:text-7xl md:text-8xl font-graffiti overflow-hidden max-w-full text-cyan-400/[0.04] select-none pointer-events-none -rotate-6 tracking-wider">
+        KRAFT
+      </div>
+      <div class="absolute bottom-1 right-8 sm:right-24 text-6xl sm:text-8xl font-graffiti text-pink-400/[0.04] select-none pointer-events-none rotate-12 tracking-widest">
+        KK
+      </div>
+      <div class="absolute -bottom-6 left-2 sm:left-10 text-3xl sm:text-5xl md:text-6xl font-graffiti text-cyan-400/[0.035] select-none pointer-events-none -rotate-3 tracking-wide">
+        RANHEIM GERILJA
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-12 items-center">
         <!-- Left Column: Copy & Tagline -->
         <div class="lg:col-span-7">
           <!-- Comic/Street Tag Pill -->
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 text-[11px] sm:text-xs font-mono mb-4 sm:mb-6"><span class="text-neon-cyan font-bold">⚡ Ranheim Kraft</span> <span class="text-slate-600">&bull;</span> <span class="text-slate-400">Prosjekter &amp; Ideer</span></div>
+          
 
           <h2 class="text-[2.15rem] sm:text-6xl font-bold tracking-tight text-white leading-[1.08] mb-4 sm:mb-6">
             Ideer, kode og eksperimenter <br>
@@ -376,8 +357,8 @@
               <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 group/chan min-w-0">
                 <div class="w-9 h-9 rounded-lg overflow-hidden border border-white/20 bg-dark shrink-0">
                   <picture>
-                    <source srcset="Ranheim_gerilja_tv_B.webp" type="image/webp">
-                    <img src="Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV" class="w-full h-full object-cover">
+                    <source srcset="assets/Ranheim_gerilja_tv_B.webp" type="image/webp">
+                    <img src="assets/Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV" class="w-full h-full object-cover">
                   </picture>
                 </div>
                 <div class="leading-tight truncate">
@@ -457,8 +438,8 @@
             </span>
             <span class="inline-flex items-center gap-1.5 whitespace-nowrap px-2.5 py-0.5 rounded bg-blue-600/30 border border-blue-500/40 text-blue-300 text-xs font-mono font-medium">
               <picture>
-                <source srcset="Ranheim_IL_logo_800.webp" type="image/webp">
-                <img src="2560px-Ranheim_IL_logo.png" alt="Ranheim IL Logo" class="h-3.5 w-auto object-contain">
+                <source srcset="assets/Ranheim_IL_logo_800.webp" type="image/webp">
+                <img src="assets/2560px-Ranheim_IL_logo.png" alt="Ranheim IL Logo" class="h-3.5 w-auto object-contain">
               </picture>
               Ranheim Fotball
             </span>
@@ -760,6 +741,31 @@
         }
       });
     }
+
+    // Dynamic Live News Fetcher (Ranheim Fotball)
+    async function loadLiveNews() {
+      try {
+        const res = await fetch('assets/news.json?v=' + Date.now());
+        if (!res.ok) return;
+        const items = await res.json();
+        if (!Array.isArray(items) || items.length === 0) return;
+
+        const track = document.getElementById('ticker-track');
+        if (!track) return;
+
+        const renderList = [...items, ...items];
+        track.innerHTML = renderList.map(item => `
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
+            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
+            <span class="hover:underline">${item.title}</span>
+            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+        `).join('');
+      } catch (e) {
+        console.log('Using static news fallback');
+      }
+    }
+    loadLiveNews();
   </script>
 
 </body>
