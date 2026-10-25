@@ -8,6 +8,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 
 ## Fremhevede Prosjekter
 * **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder for Ranheim Fotball.
+* **[Passordbeskyttet Bildegalleri](galleri.html)**: Dedikert galleri-underside koblet direkte til Google Disk. Støtter flere mapper med egne passord, fullskjerm-lightbox med sveip og ett-klikks ZIP-nedlasting av hele album.
 
 ## Estetikk & Stilretning
 * **Live News Ticker:** Direkte, heldekkende (edge-to-edge) nyhetsticker øverst med offisiell Ranheim IL-logo og ferske nyheter fra [ranheimfotball.no](https://www.ranheimfotball.no). Pauser automatisk ved hover og lenker direkte til kampsaker.
@@ -23,6 +24,11 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 ```text
 ranheimkraft.no/
 ├── index.html                   # Hovedside / Prosjektportal
+├── galleri.html                 # Passordbeskyttet bildegalleri (Google Disk)
+├── apps-script/                 # Google Apps Script backend og oppsettsguide
+│   ├── Code.gs                  # Apps Script dørvakt & Disk-integrasjon
+│   └── README.md                # 3-minutters oppsettsveiledning
+├── assets/                      # Ikoner, logoer og bilder
 ├── Ranheim_gerilja_tv_B.png     # Original logo / artwork (4000x4000)
 ├── Ranheim_gerilja_tv_B.webp    # Web-optimalisert artwork
 ├── 2560px-Ranheim_IL_logo.png   # Offisiell Ranheim IL-logo (2560x862)

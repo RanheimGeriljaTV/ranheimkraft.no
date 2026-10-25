@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="no" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#070b14">
+  <title>Bildegalleri // Ranheim Kraft</title>
+  <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Sedgwick+Ave+Display&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Space Grotesk', 'sans-serif'],
+            graffiti: ['"Sedgwick Ave Display"', 'cursive'],
+            comic: ['Bangers', 'cursive'],
+          },
+          colors: {
+            dark: '#080a0f',
+            glass: 'rgba(255, 255, 255, 0.04)',
+            'glass-border': 'rgba(255, 255, 255, 0.12)',
+            'neon-cyan': '#00f0ff',
+            'neon-pink': '#ff007f',
+            'neon-amber': '#ffaa00',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Lightweight Comic Pattern Overlay */
+    .comic-halftone {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Anamorphic Lens Flare Line */
+    .anamorphic-streak {
+      position: absolute;
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(0, 240, 255, 0.15) 20%, 
+        rgba(0, 240, 255, 0.8) 50%, 
+        rgba(255, 0, 127, 0.5) 70%, 
+        transparent 100%
+      );
+      filter: drop-shadow(0 0 6px #00f0ff);
+      pointer-events: none;
+    }
+
+    /* Glassmorphism Card */
+    .glass-card {
+      background: rgba(13, 17, 26, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    @media (hover: hover) {
+      .glass-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(0, 240, 255, 0.35);
+        box-shadow: 0 16px 36px rgba(0, 240, 255, 0.08);
+      }
+    }
+    @media (max-width: 640px) {
+      .glass-card {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(13, 17, 26, 0.94);
+      }
+    }
+
+    /* Comic Sticker / Graffiti Button Style */
+    .graffiti-btn {
+      box-shadow: 3px 3px 0px #000;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .graffiti-btn:hover {
+      transform: scale(1.03) rotate(-0.5deg);
+      box-shadow: 4px 4px 0px #000;
+    }
+    .graffiti-btn:active {
+      transform: scale(0.98);
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #080a0f; }
+    ::-webkit-scrollbar-thumb { background: #1e2433; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+  </style>
+</head>
+
+<body class="bg-[#080a0f] text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black" style="background-image: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%), radial-gradient(circle at 85% 40%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);">
+
+  <!-- Background Layer: Comic Halftone Pattern -->
+  <div class="fixed inset-0 comic-halftone pointer-events-none opacity-40 z-0"></div>
+
+  <!-- Anamorphic Lens Flare Streaks -->
+  <div class="anamorphic-streak top-24 opacity-30"></div>
+  <div class="anamorphic-streak top-80 opacity-20"></div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-12 flex flex-col min-h-screen" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
+
+    <!-- Top Navigation -->
+    <header class="flex items-center justify-between gap-3 pb-5 sm:pb-8 border-b border-white/5">
+      <!-- Back to Main Hub & Brand Logo -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-neon-cyan transition flex items-center gap-2 group text-xs font-mono">
+          <svg class="w-4 h-4 text-neon-cyan group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+          <span class="hidden sm:inline">Tilbake til</span>
+          <span class="font-bold text-white group-hover:text-neon-cyan">ranheimkraft.no</span>
+        </a>
+      </div>
+
+      <!-- Live Title & Contact -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-600/20 border border-blue-500/30 text-blue-300 text-xs font-mono">
+          <picture>
+            <source srcset="Ranheim_IL_logo_800.webp" type="image/webp">
+            <img src="2560px-Ranheim_IL_logo.png" alt="Ranheim IL Logo" class="h-4 w-auto object-contain">
+          </picture>
+          <span>Fotoarkiv</span>
+        </div>
+
+        <a href="mailto:ksandvin@gmail.com" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 sm:py-1.5 rounded-lg bg-neon-cyan text-black hover:bg-cyan-300 font-bold text-xs tracking-wider transition transform -rotate-1 hover:rotate-0 shadow-[2px_2px_0px_rgba(0,0,0,0.9)] border border-black whitespace-nowrap">
+          <span>Ta kontakt</span>
+          <svg class="w-3.5 h-3.5 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Title & Hero Header -->
+    <div class="pt-6 sm:pt-8 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 text-[11px] sm:text-xs font-mono mb-3">
+          <span class="text-neon-cyan font-bold">🔒 Passordbeskyttet</span>
+          <span class="text-slate-600">&bull;</span>
+          <span class="text-slate-400">Google Disk Galleri</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">
+          Bilde<span class="text-neon-cyan">gallerier</span>
+        </h1>
+        <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-xl font-light">
+          Høyoppløselige kampbilder, arrangementer og fotoeksperimenter. Velg et galleri nedenfor, oppgi passord og bla gjennom bildene eller last ned alt i én zip-fil.
+        </p>
+      </div>
+
+      <!-- Refresh / Setup Guide Toggle -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="btn-refresh" onclick="loadGalleries()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition font-mono" title="Oppdater gallerioversikt">
+          <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          <span>Oppdater</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN VIEW 1: Gallery List (Cards) -->
+    <section id="view-list" class="py-4">
+      <!-- Loading indicator -->
+      <div id="list-loader" class="flex flex-col items-center justify-center py-16 text-center">
+        <div class="w-10 h-10 border-2 border-neon-cyan border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-xs font-mono text-slate-400">Henter gallerier fra Google Disk...</p>
+      </div>
+
+      <!-- Error banner if any -->
+      <div id="list-error" class="hidden mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300 font-mono"></div>
+
+      <!-- Galleries Grid -->
+      <div id="galleries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </section>
+
+    <!-- MAIN VIEW 2: Active Gallery View (Hidden by default) -->
+    <section id="view-gallery" class="hidden py-4">
+      <!-- Gallery Action Header -->
+      <div class="glass-card rounded-2xl p-5 sm:p-6 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-5 relative overflow-hidden">
+        <!-- Background subtle glow -->
+        <div class="absolute right-0 top-0 w-80 h-full bg-gradient-to-l from-cyan-500/10 via-pink-500/5 to-transparent pointer-events-none"></div>
+
+        <div>
+          <button onclick="backToList()" class="inline-flex items-center gap-1.5 text-xs font-mono text-neon-cyan hover:underline mb-2 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span>Alle gallerier</span>
+          </button>
+          <h2 id="gallery-active-title" class="text-2xl sm:text-3xl font-bold text-white tracking-tight"></h2>
+          <div class="flex flex-wrap items-center gap-2 mt-2 text-xs font-mono text-slate-400">
+            <span id="gallery-active-date" class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300"></span>
+            <span id="gallery-active-count" class="px-2 py-0.5 rounded bg-cyan-400/10 border border-cyan-400/30 text-cyan-300"></span>
+            <span id="gallery-active-desc" class="text-slate-400"></span>
+          </div>
+        </div>
+
+        <!-- BIG GRAFFITI DOWNLOAD ALL BUTTON -->
+        <div class="shrink-0 flex items-center">
+          <a id="btn-download-all" href="#" target="_blank" rel="noopener noreferrer" class="graffiti-btn w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-neon-cyan via-cyan-400 to-neon-cyan text-black font-graffiti text-lg tracking-wider border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.9)]">
+            <svg class="w-5 h-5 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span>LAST NED ALLE (DISK ZIP)</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Photo Grid -->
+      <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3 font-mono text-center" style="padding-bottom: env(safe-area-inset-bottom);">
+      <div>
+        &copy; <span id="year"></span> Ranheim Kraft &bull; Passordbeskyttet Google Disk Galleri
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="hover:text-neon-cyan transition">Forside</a>
+        <span>&bull;</span>
+        <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- PASSWORD PROMPT MODAL -->
+  <div id="modal-password" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="glass-card rounded-2xl p-6 sm:p-8 w-full max-w-md border border-cyan-500/30 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-300">
+            🔒
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-white">Lås opp galleri</h3>
+            <p id="modal-gallery-name" class="text-xs text-slate-400 font-mono truncate max-w-[240px]"></p>
+          </div>
+        </div>
+        <button onclick="closePasswordModal()" class="text-slate-400 hover:text-white p-1 text-lg leading-none">&times;</button>
+      </div>
+
+      <form onsubmit="submitPassword(event)" class="space-y-4">
+        <div>
+          <label for="input-password" class="block text-xs font-mono text-slate-300 mb-1.5">Oppgi passord for dette galleriet:</label>
+          <div class="relative">
+            <input type="password" id="input-password" autocomplete="current-password" required placeholder="Passord..." class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 focus:border-neon-cyan focus:outline-none text-white text-sm font-mono placeholder-slate-600">
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono">👁️</button>
+          </div>
+        </div>
+
+        <div id="modal-error" class="hidden text-xs text-rose-400 font-mono bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20"></div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button type="button" onclick="closePasswordModal()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-300 transition">
+            Avbryt
+          </button>
+          <button type="submit" id="btn-submit-pwd" class="px-5 py-2 rounded-xl bg-neon-cyan hover:bg-cyan-300 text-black font-bold text-xs tracking-wider font-mono transition shadow-lg shadow-cyan-500/20 flex items-center gap-2">
+            <span>Lås opp &rarr;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN LIGHTBOX MODAL -->
+  <div id="lightbox" class="fixed inset-0 z-50 bg-[#05070b] flex flex-col justify-between hidden select-none">
+    <!-- Lightbox Top bar -->
+    <div class="flex items-center justify-between p-4 z-10 bg-gradient-to-b from-black/80 to-transparent">
+      <div class="flex items-center gap-3 text-xs font-mono text-slate-300">
+        <span id="lb-counter" class="px-2 py-0.5 rounded bg-white/10 border border-white/10">1 / 1</span>
+        <span id="lb-filename" class="text-slate-400 truncate max-w-[200px] sm:max-w-md"></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a id="lb-download-single" href="#" target="_blank" download class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-mono text-neon-cyan transition flex items-center gap-1.5" title="Last ned original">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span class="hidden sm:inline">Last ned</span>
+        </a>
+        <button onclick="closeLightbox()" class="p-2 text-slate-400 hover:text-white text-xl leading-none transition" title="Lukk (Esc)">&times;</button>
+      </div>
+    </div>
+
+    <!-- Image Display Area -->
+    <div class="relative flex-1 flex items-center justify-center p-2 sm:p-6 overflow-hidden" onclick="onLightboxBgClick(event)">
+      <!-- Prev Button -->
+      <button onclick="prevPhoto(event)" class="absolute left-2 sm:left-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center transition shadow-xl" title="Forrige bilde (Venstre piltast)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+
+      <!-- Center Image -->
+      <img id="lb-img" src="" alt="Galleri forstørret bilde" class="max-h-[82vh] max-w-[94vw] object-contain rounded shadow-2xl transition-opacity duration-200">
+
+      <!-- Next Button -->
+      <button onclick="nextPhoto(event)" class="absolute right-2 sm:right-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center transition shadow-xl" title="Neste bilde (Høyre piltast)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+
+    <!-- Lightbox Bottom bar -->
+    <div class="p-3 text-center text-[11px] font-mono text-slate-500 bg-gradient-to-t from-black/80 to-transparent">
+      Bruk piltastene &larr; &rarr; eller sveip for å bla &bull; Trykk Esc for å lukke
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* =====================================================================
+       KONFIGURASJON:
+       Lim inn din Google Apps Script Nettapp-URL her.
+       (Instruksjoner finnes i apps-script/README.md)
+       Hvis variabelen er tom, viser siden demonstrations-modus med eksempler!
+       ===================================================================== */
+    const APPS_SCRIPT_URL = '';
+
+    // Demo-galleriene vises kun ved lokal testing – aldri på den offentlige siden
+    const IS_LOCAL = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+
+    // In-memory state
+    let allGalleries = [];
+    let currentGallery = null;
+    let pendingGalleryId = null;
+    let currentPhotos = [];
+    let currentPhotoIndex = 0;
+
+    // Demonstration / Sample Fallback Data if Apps Script is not yet linked
+    const DEMO_GALLERIES = [
+      {
+        id: 'ranheim-vs-bryne-2026',
+        title: 'Ranheim vs. Bryne (4–2)',
+        date: '2026-10-18',
+        description: 'Målfest og høstdrama i fjæra. Ekstraomganger og feiring foran supporterne.',
+        locked: true,
+        count: 42
+      },
+      {
+        id: 'tour-de-trondelag-2026',
+        title: 'Tour de Trøndelag – Bak kulissene',
+        date: '2026-09-04',
+        description: 'Eksklusive bilder fra opptak og ritt med Ranheim Gerilja TV-teamet.',
+        locked: true,
+        count: 28
+      },
+      {
+        id: 'ranheim-gatelag-gull-2026',
+        title: 'Seriegull for Ranheim Gatelag!',
+        date: '2026-10-09',
+        description: 'Avslutning og jubelscener fra Ulsteinvik da seriemesterskapet ble sikret.',
+        locked: false,
+        count: 19
+      }
+    ];
+
+    // Sample placeholder photos for demo galleries
+    function getDemoPhotos(galleryId) {
+      const samples = [
+        'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80',
+        'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80',
+        'https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=800&q=80',
+        'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80',
+        'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
+        'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&q=80',
+        'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80',
+        'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&q=80'
+      ];
+      return samples.map((url, i) => ({
+        id: `demo-${i + 1}`,
+        name: `Kampbilde_${String(i + 1).padStart(3, '0')}.jpg`,
+        thumbUrl: url,
+        fullUrl: url.replace('w=800', 'w=1600'),
+        downloadUrl: url
+      }));
+    }
+
+    // 1. Load galleries list from Apps Script (or demo)
+    async function loadGalleries() {
+      const loader = document.getElementById('list-loader');
+      const errBox = document.getElementById('list-error');
+      const grid = document.getElementById('galleries-grid');
+
+      loader.classList.remove('hidden');
+      errBox.classList.add('hidden');
+      grid.innerHTML = '';
+
+      if (!APPS_SCRIPT_URL && !IS_LOCAL) {
+        loader.classList.add('hidden');
+        allGalleries = [];
+        grid.innerHTML = `
+          <div class="col-span-full glass-card rounded-2xl p-8 text-center">
+            <div class="font-graffiti text-3xl text-neon-cyan mb-2">Kommer snart</div>
+            <p class="text-sm text-slate-400">Galleriene er under oppsett. Ta kontakt hvis du venter på bilder.</p>
+          </div>`;
+        return;
+      }
+
+      if (!APPS_SCRIPT_URL) {
+        // Lokal demo-modus
+        setTimeout(() => {
+          loader.classList.add('hidden');
+          allGalleries = DEMO_GALLERIES;
+          renderGalleries(allGalleries, true);
+        }, 400);
+        return;
+      }
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL + '?t=' + Date.now());
+        const data = await res.json();
+        loader.classList.add('hidden');
+
+        if (data.ok && Array.isArray(data.galleries)) {
+          allGalleries = data.galleries;
+          renderGalleries(allGalleries, false);
+        } else {
+          showListError(data.error || 'Kunne ikke hente gallerier fra Google Disk.');
+        }
+      } catch (err) {
+        loader.classList.add('hidden');
+        console.warn('Apps Script kontakt feilet', err);
+        showListError('Klarte ikke hente gallerier akkurat nå. Prøv å laste siden på nytt om litt.');
+      }
+    }
+
+    // 2. Render Gallery Cards
+    function renderGalleries(list, isDemo) {
+      const grid = document.getElementById('galleries-grid');
+      grid.innerHTML = '';
+
+      if (isDemo) {
+        const banner = document.createElement('div');
+        banner.className = 'col-span-full mb-2 p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono text-cyan-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
+        banner.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-base">💡</span>
+            <span><strong>Eksempel-modus:</strong> Viser forhåndsvisningsgallerier. Koble til ditt eget Google-regneark i <code>apps-script/Code.gs</code>.</span>
+          </div>
+          <span class="text-[11px] text-cyan-400">Passord for eksemplene: <code>ranheim</code></span>
+        `;
+        grid.appendChild(banner);
+      }
+
+      list.forEach(g => {
+        const card = document.createElement('article');
+        card.className = 'glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between cursor-pointer group';
+        card.onclick = () => requestOpenGallery(g.id);
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-medium ${g.locked ? 'bg-amber-400/10 text-amber-300 border border-amber-400/30' : 'bg-emerald-400/10 text-emerald-300 border border-emerald-400/30'}">
+                ${g.locked ? '🔒 Passordbeskyttet' : '🔓 Åpent galleri'}
+              </span>
+              <span class="text-xs text-slate-400 font-mono">${g.date || ''}</span>
+            </div>
+
+            <h3 class="text-xl font-bold text-white group-hover:text-neon-cyan transition-colors leading-snug">
+              ${g.title}
+            </h3>
+
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed line-clamp-2">
+              ${g.description || 'Klikk for å låse opp og se bilder.'}
+            </p>
+          </div>
+
+          <div class="pt-4 mt-5 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-cyan-300 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              <span>${g.count ? g.count + ' bilder' : 'Bildegalleri'}</span>
+            </span>
+
+            <span class="inline-flex items-center gap-1 font-bold text-neon-cyan group-hover:translate-x-1 transition-transform">
+              <span>Åpne galleri</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </span>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function showListError(msg) {
+      const errBox = document.getElementById('list-error');
+      errBox.textContent = msg;
+      errBox.classList.remove('hidden');
+    }
+
+    // 3. Request to Open a Gallery (Check if password required)
+    function requestOpenGallery(galleryId) {
+      const g = allGalleries.find(x => x.id === galleryId);
+      if (!g) return;
+
+      if (!g.locked) {
+        // Open directly without password
+        unlockGallery(galleryId, '');
+      } else {
+        // Open password modal
+        pendingGalleryId = galleryId;
+        document.getElementById('modal-gallery-name').textContent = g.title;
+        document.getElementById('input-password').value = '';
+        document.getElementById('modal-error').classList.add('hidden');
+        document.getElementById('modal-password').classList.remove('hidden');
+        setTimeout(() => document.getElementById('input-password').focus(), 100);
+      }
+    }
+
+    function closePasswordModal() {
+      document.getElementById('modal-password').classList.add('hidden');
+      pendingGalleryId = null;
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('input-password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // 4. Submit Password
+    async function submitPassword(e) {
+      e.preventDefault();
+      const pwd = document.getElementById('input-password').value;
+      const btn = document.getElementById('btn-submit-pwd');
+      const errBox = document.getElementById('modal-error');
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="inline-block w-3 h-3 border-2 border-black border-t-transparent rounded-full animate-spin"></span> Sjekker...`;
+      errBox.classList.add('hidden');
+
+      await unlockGallery(pendingGalleryId, pwd);
+
+      btn.disabled = false;
+      btn.innerHTML = `<span>Lås opp &rarr;</span>`;
+    }
+
+    // 5. Unlock Gallery & Fetch Photos
+    async function unlockGallery(galleryId, password) {
+      const errBox = document.getElementById('modal-error');
+
+      // Demo mode fallback
+      if (!APPS_SCRIPT_URL) {
+        if (password && password.trim().toLowerCase() !== 'ranheim' && password.trim().toLowerCase() !== '1234') {
+          errBox.textContent = 'Feil passord! (Tips i demo-modus: skriv "ranheim")';
+          errBox.classList.remove('hidden');
+          return;
+        }
+
+        const g = allGalleries.find(x => x.id === galleryId);
+        closePasswordModal();
+        displayGallery({
+          id: g.id,
+          title: g.title,
+          date: g.date,
+          description: g.description,
+          folderUrl: 'https://drive.google.com/drive/folders/DEMO_FOLDER_ID',
+          images: getDemoPhotos(g.id)
+        });
+        return;
+      }
+
+      // Real Google Apps Script Backend call
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'open', id: galleryId, password: password })
+        });
+        const data = await res.json();
+
+        if (data.ok && data.gallery) {
+          closePasswordModal();
+          // Transform drive image objects into displayable thumbnail URLs
+          const transformed = {
+            ...data.gallery,
+            images: data.gallery.images.map(img => ({
+              id: img.id,
+              name: img.name,
+              thumbUrl: `https://drive.google.com/thumbnail?id=${img.id}&sz=w800`,
+              fullUrl: `https://drive.google.com/thumbnail?id=${img.id}&sz=w2048`,
+              downloadUrl: `https://drive.google.com/uc?export=download&id=${img.id}`
+            }))
+          };
+          displayGallery(transformed);
+        } else {
+          errBox.textContent = data.error || 'Feil passord eller tilgang nektet.';
+          errBox.classList.remove('hidden');
+        }
+      } catch (err) {
+        errBox.textContent = 'Klarte ikke kontakte server. Prøv igjen.';
+        errBox.classList.remove('hidden');
+      }
+    }
+
+    // 6. Display Gallery Images Grid
+    function displayGallery(galleryData) {
+      currentGallery = galleryData;
+      currentPhotos = galleryData.images || [];
+
+      document.getElementById('view-list').classList.add('hidden');
+      document.getElementById('view-gallery').classList.remove('hidden');
+
+      document.getElementById('gallery-active-title').textContent = galleryData.title;
+      document.getElementById('gallery-active-date').textContent = galleryData.date || '';
+      document.getElementById('gallery-active-count').textContent = `${currentPhotos.length} bilder`;
+      document.getElementById('gallery-active-desc').textContent = galleryData.description || '';
+
+      // Set Download All Button link directly to Google Drive folder
+      const downloadBtn = document.getElementById('btn-download-all');
+      downloadBtn.href = galleryData.folderUrl || '#';
+      downloadBtn.title = 'Åpner Google Disk-mappen der du kan trykke "Last ned alle" som én samlet .zip-fil';
+
+      // Render Photo Grid
+      const grid = document.getElementById('photos-grid');
+      grid.innerHTML = '';
+
+      if (currentPhotos.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center text-slate-400 font-mono text-xs">
+            Ingen bilder funnet i denne mappen ennå.
+          </div>
+        `;
+        return;
+      }
+
+      currentPhotos.forEach((photo, idx) => {
+        const item = document.createElement('div');
+        item.className = 'group relative aspect-square rounded-xl overflow-hidden bg-black/50 border border-white/10 hover:border-cyan-400/50 transition cursor-pointer';
+        item.onclick = () => openLightbox(idx);
+
+        item.innerHTML = `
+          <img src="${photo.thumbUrl}" alt="${photo.name}" loading="lazy" onerror="this.style.opacity=0.15" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2.5">
+            <span class="text-[11px] font-mono text-white truncate">${photo.name}</span>
+            <span class="text-[10px] text-neon-cyan font-mono flex items-center gap-1">
+              <span>Se forstørret</span> &rarr;
+            </span>
+          </div>
+        `;
+
+        grid.appendChild(item);
+      });
+
+      // Scroll to top of gallery smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToList() {
+      document.getElementById('view-gallery').classList.add('hidden');
+      document.getElementById('view-list').classList.remove('hidden');
+      currentGallery = null;
+      currentPhotos = [];
+    }
+
+    // 7. Lightbox Fullscreen Modal Functions
+    function openLightbox(index) {
+      currentPhotoIndex = index;
+      updateLightboxImage();
+      document.getElementById('lightbox').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightboxImage() {
+      if (!currentPhotos || currentPhotos.length === 0) return;
+      const photo = currentPhotos[currentPhotoIndex];
+      const img = document.getElementById('lb-img');
+      const counter = document.getElementById('lb-counter');
+      const filename = document.getElementById('lb-filename');
+      const dlBtn = document.getElementById('lb-download-single');
+
+      img.style.opacity = '0.5';
+      img.src = photo.fullUrl || photo.thumbUrl;
+      img.onload = () => { img.style.opacity = '1'; };
+
+      counter.textContent = `${currentPhotoIndex + 1} / ${currentPhotos.length}`;
+      filename.textContent = photo.name;
+      dlBtn.href = photo.downloadUrl || photo.fullUrl;
+    }
+
+    function nextPhoto(e) {
+      if (e) e.stopPropagation();
+      if (currentPhotoIndex < currentPhotos.length - 1) {
+        currentPhotoIndex++;
+      } else {
+        currentPhotoIndex = 0; // loop
+      }
+      updateLightboxImage();
+    }
+
+    function prevPhoto(e) {
+      if (e) e.stopPropagation();
+      if (currentPhotoIndex > 0) {
+        currentPhotoIndex--;
+      } else {
+        currentPhotoIndex = currentPhotos.length - 1; // loop
+      }
+      updateLightboxImage();
+    }
+
+    function onLightboxBgClick(e) {
+      if (e.target.id === 'lb-img' || e.target.closest('button')) return;
+      closeLightbox();
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('lightbox');
+      if (lb.classList.contains('hidden')) return;
+
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextPhoto();
+      if (e.key === 'ArrowLeft') prevPhoto();
+    });
+
+    // Touch Swipe Support for Lightbox on Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const lbArea = document.getElementById('lightbox');
+    lbArea.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    lbArea.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 40) {
+        if (diff < 0) nextPhoto(); // swipe left -> next
+        else prevPhoto(); // swipe right -> prev
+      }
+    }
+
+    // Initialize
+    loadGalleries();
+  </script>
+</body>
+</html>

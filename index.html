@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#070b14">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Ranheim Kraft // Project Hub</title>
+  <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
   
   <!-- Google Fonts: Space Grotesk (Minimalist Tech) & Sedgwick Ave (Graffiti/Street) & Bangers (Comic pop) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -302,9 +303,12 @@
       </div>
 
       <!-- Live Meta Badges / Graffiti Accent -->
-      <div class="flex items-center gap-3 shrink-0">
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
         
-        <a href="#projects" class="hidden sm:inline-flex px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 transition items-center gap-1.5">
+        <a href="galleri.html" aria-label="Bildegallerier" title="Bildegallerier" class="hidden min-[400px]:inline-flex px-2.5 sm:px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm sm:text-xs font-medium text-slate-200 hover:text-neon-cyan transition items-center gap-1.5 whitespace-nowrap">
+          <span>📸</span><span class="hidden sm:inline">Gallerier</span>
+        </a>
+        <a href="#projects" class="hidden md:inline-flex px-3.5 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 transition items-center gap-1.5">
           <span>Utforsk arkiv</span>
         </a>
         <a href="mailto:ksandvin@gmail.com" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2.5 sm:py-2 rounded-lg bg-neon-cyan text-black hover:bg-cyan-300 font-bold text-xs tracking-wider whitespace-nowrap transition transform -rotate-1 hover:rotate-0 shadow-[2px_2px_0px_rgba(0,0,0,0.9)] border border-black">
@@ -491,35 +495,42 @@
         </div>
       </article>
 
-      <!-- PROJECT CARD 2: Lab / Experiments -->
-      <article data-category="lab" class="project-card glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden group">
+      <!-- PROJECT CARD 2: Bildegalleri (Passordbeskyttet Google Disk) -->
+      <article data-category="web art" class="project-card glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between relative overflow-hidden group">
         <div>
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 text-xs font-mono font-semibold">
-                LAB &amp; AI
+              <span class="px-2.5 py-0.5 rounded bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-mono font-semibold">
+                FOTO &amp; DISK
+              </span>
+              <span class="px-2 py-0.5 rounded bg-cyan-400/10 border border-cyan-400/30 text-cyan-300 text-[10px] font-mono">
+                🔒 PASSORD
               </span>
             </div>
-            <span class="text-xs text-emerald-400/60 font-mono font-semibold tracking-widest">[ 02 ]</span>
+            <span class="text-xs text-neon-cyan font-mono font-semibold tracking-widest">[ 02 ] &bull; AKTIV</span>
           </div>
 
-          <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
-            Kraft Studio AI
-          </h3>
-          <p class="text-slate-400 text-xs mt-2 leading-relaxed">
-            Eksperimentell AI-assistent, automasjonsskript eller data science-dashboard du eksperimenterer med.
+          <a href="galleri.html" class="group/title block">
+            <h3 class="text-xl font-bold text-white group-hover/title:text-neon-cyan transition-colors flex items-center gap-1.5">
+              <span>Kamp- &amp; Bildegalleri</span>
+              <svg class="w-4 h-4 text-neon-cyan opacity-0 group-hover/title:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </h3>
+          </a>
+          <p class="text-slate-300 text-xs mt-2 leading-relaxed">
+            Passordbeskyttede bildegallerier direkte fra Google Disk. Bla gjennom høyoppløselige bilder i nettleseren eller last ned hele mapper i én samlet zip-fil.
           </p>
 
           <div class="flex flex-wrap gap-1.5 mt-4">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Gemini API</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5">Automation</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-500/20">Google Disk</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-amber-300 border border-amber-500/20">Eget passord/galleri</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-white/5">ZIP-nedlasting</span>
           </div>
         </div>
 
         <div class="pt-4 mt-5 sm:mt-6 border-t border-white/5 flex items-center justify-between">
-          <span class="text-xs text-slate-500 font-mono">Under utvikling</span>
-          <a href="#" class="text-xs text-slate-300 group-hover:text-white flex items-center gap-1">
-            Se demo &rarr;
+          <span class="text-xs text-slate-400 font-mono">Flere mapper</span>
+          <a href="galleri.html" class="text-xs font-bold text-neon-cyan group-hover:underline flex items-center gap-1">
+            <span>Åpne galleri</span> &rarr;
           </a>
         </div>
       </article>
@@ -659,7 +670,9 @@
       <div>
         &copy; <span id="year"></span> Ranheim Kraft &bull; All rights reserved.
       </div>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="galleri.html" class="hover:text-neon-cyan transition">Bildegalleri</a>
+        <span>&bull;</span>
         <span class="hover:text-slate-300 transition">Trondheim, Norge</span>
         <span>&bull;</span>
         <span class="text-neon-cyan font-graffiti text-sm">Made with Kraft</span>
