@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.0.1] - 2026-10-26
+
+### Endret & Forbedret
+- **Fjernet gyroskop & stabil mobilvisning**:
+  - Gyroskop-lytteren (`deviceorientation`) på mobil er fjernet helt for å unngå urolig og forstyrrende vipping av kortene. Mobilvisningen er nå 100% stødig og lynrask.
+  - På desktop er 3D-tiltingen tonet kraftig ned til en diskret lysrefleks ved musepeker uten fargesterk regnbuefolie.
+- **Fjernet passordinngang på forsiden**:
+  - Fjernet passordfeltet fra bildegalleriboksen på forsiden.
+  - Erstattet med en ren og informativ liste over galleriets kjernefunksjoner (fullskjermsvisning, 1-klikks samlet ZIP-nedlasting og sikre mapper) som balanserer Bento-boksen harmonisk mot videospilleren.
+
+---
+
 ## [2.0.0] - 2026-10-26
 
 ### Lagt til

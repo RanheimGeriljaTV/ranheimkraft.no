@@ -315,21 +315,26 @@
             Passordbeskyttede bildegallerier for arrangementer, turer, prosjekter og diverse fotoalbum. Bla gjennom bildene i fullskjermsvisning rett i nettleseren, eller last ned hele mapper i én samlet zip-fil.
           </p>
 
-          <!-- Klient- & Oppdragstilgang (Diskret inngang uten lekking av albumtitler) -->
-          <div class="mt-4 p-3.5 rounded-xl bg-black/45 border border-amber-400/20 backdrop-blur-sm">
-            <div class="flex items-center justify-between text-[11px] font-mono text-amber-300 mb-2">
-              <span class="flex items-center gap-1.5 font-semibold">
-                <span>🔐</span>
-                <span>Klient- &amp; oppdragstilgang</span>
-              </span>
-              <span class="text-slate-500 text-[10px]">DIREKTE INNGANG</span>
+          <!-- Galleri-funksjoner / Høydepunkter (Fyller plassen naturlig uten passordfelt) -->
+          <div class="mt-4 space-y-2 text-xs text-slate-300">
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-black/35 border border-white/5">
+              <span class="text-amber-400 text-xs font-bold">⚡</span>
+              <span>Fullskjermsvisning med piltaster og sveip</span>
             </div>
-            <form onsubmit="quickOpenGallery(event)" class="flex items-center gap-2">
-              <input type="password" id="quick-pwd" placeholder="Tast inn passord..." class="w-full px-3 py-2 rounded-lg bg-black/60 border border-white/10 focus:border-amber-400 focus:outline-none text-xs font-mono text-white placeholder-slate-600">
-              <button type="submit" class="px-3.5 py-2 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 border border-amber-400/40 text-amber-300 hover:text-white text-xs font-mono font-bold transition whitespace-nowrap flex items-center gap-1">
-                <span>Lås opp</span> &rarr;
-              </button>
-            </form>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-black/35 border border-white/5">
+              <span class="text-amber-400 text-xs font-bold">📦</span>
+              <span>1-klikks ZIP-nedlasting av hele album</span>
+            </div>
+            <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-black/35 border border-white/5">
+              <span class="text-amber-400 text-xs font-bold">🔒</span>
+              <span>Lukkede mapper med eget passord per oppdrag</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 mt-3.5">
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-amber-300 border border-amber-500/20">Google Disk</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-500/20">ZIP-pakker</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-white/5">Fullskjerm</span>
           </div>
 
 
