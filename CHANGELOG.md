@@ -16,6 +16,19 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [1.7.0] - 2026-10-26
+
+### Lagt til
+- **Bento Grid Hub-design**: Fullstendig restrukturering av forsiden til et moderne og intuitivt Bento Grid oppdelt i to naturlige etasjer (Media & Opplevelser øverst, Verktøy & Kodelab nederst).
+- **Tydelige handlingsknapper (Call-to-Action)**: Hver flis har nå en klar, fullbredde handlingsknapp (`Åpne bildegalleriet 📸`, `Start FPL-kalkulator ⚽`, `Åpne Eliteserien Hub 🇳🇴`, `Se koden på GitHub 💻`).
+- **Album-forhåndsvisning på galleriet**: Miniatyrliste over ferske fotoalbum direkte på galleriflisen for å pirre nysgjerrigheten til tilfeldige besøkende.
+
+### Endret
+- **Forenklet språk for vanlige besøkende**: Fjernet forvirrende fagspråk (som *PuLP MILP solver*, *EXIF*, *FDR*, *OpenCV* og *culling*) fra forsiden til fordel for folkelige og forståelige beskrivelser.
+- **Strømlinjeformet hero-seksjon**: Fjernet overflødige duplikate tekstbokser til fordel for en ren og innbydende intro-stripe.
+
+---
+
 ## [1.6.0] - 2026-10-26
 
 ### Lagt til
