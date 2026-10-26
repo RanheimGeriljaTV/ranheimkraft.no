@@ -24,6 +24,7 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 - **Album-forhåndsvisning på galleriet**: Miniatyrliste over ferske fotoalbum direkte på galleriflisen for å pirre nysgjerrigheten til tilfeldige besøkende.
 
 ### Endret
+- **Generelt Bildegalleri**: Korrigert galleriet fra å feilaktig omtales som «RIL fotoarkiv» eller «kampbilder» til å være et generelt, passordbeskyttet bildegalleri for arrangementer, turer, prosjekter og diverse fotoalbum. Fjernet Ranheim IL-logo fra galleri-headeren.
 - **Forenklet språk for vanlige besøkende**: Fjernet forvirrende fagspråk (som *PuLP MILP solver*, *EXIF*, *FDR*, *OpenCV* og *culling*) fra forsiden til fordel for folkelige og forståelige beskrivelser.
 - **Strømlinjeformet hero-seksjon**: Fjernet overflødige duplikate tekstbokser til fordel for en ren og innbydende intro-stripe.
 
