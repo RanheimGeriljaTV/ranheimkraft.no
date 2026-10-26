@@ -6,6 +6,15 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [1.8.0] - 2026-10-26
+
+### Lagt til
+- **Live Google Disk Bildegalleri**: Koblet `galleri.html` direkte til Google Regneark og Google Disk via Google Apps Script Web App API (`AKfycby...`).
+- **Sanntids gallerioversikt**: Nettsiden henter nå automatisk oppdaterte album, bildelister, datoer og beskrivelser rett fra privat Google Regneark uten behov for nye kodeoppdateringer.
+- **Passordsikkerhet & Referrer Policy**: Bildestrømmen er sikret med `referrerpolicy="no-referrer"` på miniatyrer og lightbox for full kompatibilitet med Google Disk, kombinert med passordbeskyttelse.
+
+---
+
 ## [1.7.0] - 2026-10-26
 
 ### Lagt til

@@ -300,7 +300,7 @@
       </button>
 
       <!-- Center Image -->
-      <img id="lb-img" src="" alt="Galleri forstørret bilde" class="max-h-[82vh] max-w-[94vw] object-contain rounded shadow-2xl transition-opacity duration-200">
+      <img id="lb-img" src="" alt="Galleri forstørret bilde" referrerpolicy="no-referrer" class="max-h-[82vh] max-w-[94vw] object-contain rounded shadow-2xl transition-opacity duration-200">
 
       <!-- Next Button -->
       <button onclick="nextPhoto(event)" class="absolute right-2 sm:right-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center transition shadow-xl" title="Neste bilde (Høyre piltast)">
@@ -323,7 +323,7 @@
        (Instruksjoner finnes i apps-script/README.md)
        Hvis variabelen er tom, viser siden demonstrations-modus med eksempler!
        ===================================================================== */
-    const APPS_SCRIPT_URL = '';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGmkFmROkW39rHdvkmliYypX9Raj5eTXanvMBVCNn0RQsTemFlayRtklv4dtc5vMwddA/exec';
 
     // Demo-galleriene vises kun ved lokal testing – aldri på den offentlige siden
     const IS_LOCAL = ['localhost', '127.0.0.1', ''].includes(location.hostname);
@@ -638,7 +638,7 @@
         item.onclick = () => openLightbox(idx);
 
         item.innerHTML = `
-          <img src="${photo.thumbUrl}" alt="${photo.name}" loading="lazy" onerror="this.style.opacity=0.15" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <img src="${photo.thumbUrl}" alt="${photo.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=0.15" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2.5">
             <span class="text-[11px] font-mono text-white truncate">${photo.name}</span>
             <span class="text-[10px] text-neon-cyan font-mono flex items-center gap-1">
