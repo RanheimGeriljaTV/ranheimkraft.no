@@ -40,63 +40,8 @@
     }
   </script>
 
-  <style>
-    /* Lightweight Comic Pattern Overlay */
-    .comic-halftone {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
-
-    /* Anamorphic Lens Flare Line */
-    .anamorphic-streak {
-      position: absolute;
-      height: 1px;
-      width: 100%;
-      background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(0, 240, 255, 0.15) 20%, 
-        rgba(0, 240, 255, 0.8) 50%, 
-        rgba(255, 0, 127, 0.5) 70%, 
-        transparent 100%
-      );
-      filter: drop-shadow(0 0 6px #00f0ff);
-      pointer-events: none;
-    }
-
-    /* Glassmorphism Card */
-    .glass-card {
-      background: rgba(13, 17, 26, 0.82);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    @media (hover: hover) {
-      .glass-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(0, 240, 255, 0.35);
-        box-shadow: 0 16px 36px rgba(0, 240, 255, 0.08);
-      }
-    }
-    @media (max-width: 640px) {
-      .glass-card {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background: rgba(13, 17, 26, 0.94);
-      }
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #080a0f; }
-    ::-webkit-scrollbar-thumb { background: #1e2433; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
-
-    /* Hide scrollbars for pill list */
-    .no-scrollbar { scrollbar-width: none; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-  </style>
+  <!-- Custom & Component Styles -->
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body class="bg-[#080a0f] text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black" style="background-image: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%), radial-gradient(circle at 85% 40%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);">
@@ -164,8 +109,11 @@
 
         <!-- Quick Jump Filter Badges -->
         <div class="flex items-center gap-2 mt-6 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-          <a href="#v1.8.0" class="shrink-0 px-3 py-1 rounded-lg bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan text-xs font-mono font-semibold hover:bg-neon-cyan hover:text-black transition">
-            v1.8.0 (Nyest)
+          <a href="#v1.9.0" class="shrink-0 px-3 py-1 rounded-lg bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan text-xs font-mono font-semibold hover:bg-neon-cyan hover:text-black transition">
+            v1.9.0 (Nyest)
+          </a>
+          <a href="#v1.8.0" class="shrink-0 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-mono hover:text-neon-cyan hover:border-cyan-400/30 transition">
+            v1.8.0
           </a>
           <a href="#v1.7.0" class="shrink-0 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300 text-xs font-mono hover:text-neon-cyan hover:border-cyan-400/30 transition">
             v1.7.0
@@ -198,6 +146,41 @@
     <!-- Changelog Timeline Entries -->
     <main class="space-y-6 sm:space-y-8 flex-grow">
 
+      <!-- ENTRY: v1.9.0 -->
+      <article id="v1.9.0" class="glass-card rounded-2xl p-5 sm:p-7 relative overflow-hidden group scroll-mt-6">
+        <!-- Glowing Accent Border on Left -->
+        <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-pink-500 to-transparent"></div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-white/5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+              <span>v1.9.0</span>
+              <span class="px-2 py-0.5 rounded-md bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan text-[11px] font-sans font-bold uppercase tracking-wider">
+                Siste versjon
+              </span>
+            </span>
+          </div>
+          <div class="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>26. oktober 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-sm leading-relaxed text-slate-300">
+          <div>
+            <h4 class="text-xs uppercase font-mono font-bold tracking-wider text-cyan-300 mb-2 flex items-center gap-1.5">
+              <span>⚡</span>
+              <span>Modulær arkitektur &amp; Oppdeling av filer</span>
+            </h4>
+            <ul class="space-y-1.5 list-disc list-inside text-xs sm:text-sm text-slate-300">
+              <li><strong class="text-white">Felles stilark (<code>assets/style.css</code>):</strong> Samlet all CSS for glassmorphism, graffiti, animasjoner, skrollefelt og responsiv styling i én felles fil som gjenbrukes og caches på tvers av hele nettstedet.</li>
+              <li><strong class="text-white">Separat JavaScript (<code>assets/main.js</code>):</strong> Skilte ut YouTube Cinema-spilleren, mutelogikk og sanntids RSS-ticker i en ren modulær JavaScript-fil.</li>
+              <li><strong class="text-white">Slankere kodebase:</strong> Kuttet over 400 linjer med duplisert CSS og inline-kode; <code class="text-cyan-300">index.html</code> er redusert fra 786 til under 460 linjer.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
       <!-- ENTRY: v1.8.0 -->
       <article id="v1.8.0" class="glass-card rounded-2xl p-5 sm:p-7 relative overflow-hidden group scroll-mt-6">
         <!-- Glowing Accent Border on Left -->
@@ -207,9 +190,6 @@
           <div class="flex flex-wrap items-center gap-2.5">
             <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
               <span>v1.8.0</span>
-              <span class="px-2 py-0.5 rounded-md bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-sans font-bold uppercase tracking-wider">
-                Siste versjon
-              </span>
             </span>
           </div>
           <div class="text-xs text-slate-400 font-mono flex items-center gap-1.5">

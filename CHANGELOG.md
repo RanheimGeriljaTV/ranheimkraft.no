@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [1.9.0] - 2026-10-26
+
+### Endret & Refaktorert
+- **Modulær arkitektur & filoppdeling**:
+  - Opprettet `assets/style.css` som samler all felles styling, glassmorphism-effekter, bakgrunnsgraffiti, animasjoner og skrollefelt.
+  - Opprettet `assets/main.js` som inneholder YouTube Cinema Player API-styring, lydkontroll, terningvelger og sanntids RSS-ticker.
+  - Slanket `index.html` fra 786 linjer ned til 457 linjer med ren, semantisk HTML.
+  - Gjenbruker `assets/style.css` i `galleri.html` og `changelog.html`, og eliminerte over 400 linjer med duplisert CSS og inline-skript.
+- **YouTube Cinema Mode**: Autoplay på mute uten forstyrrende YouTube-grensesnitt (tidslinje, pauseknapper og logoer), styrt via en egen tilpasset `🔇 Slå på lyd`-knapp.
+
+---
+
 ## [1.8.0] - 2026-10-26
 
 ### Lagt til

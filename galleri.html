@@ -40,73 +40,8 @@
     }
   </script>
 
-  <style>
-    /* Lightweight Comic Pattern Overlay */
-    .comic-halftone {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
-
-    /* Anamorphic Lens Flare Line */
-    .anamorphic-streak {
-      position: absolute;
-      height: 1px;
-      width: 100%;
-      background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(0, 240, 255, 0.15) 20%, 
-        rgba(0, 240, 255, 0.8) 50%, 
-        rgba(255, 0, 127, 0.5) 70%, 
-        transparent 100%
-      );
-      filter: drop-shadow(0 0 6px #00f0ff);
-      pointer-events: none;
-    }
-
-    /* Glassmorphism Card */
-    .glass-card {
-      background: rgba(13, 17, 26, 0.82);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    @media (hover: hover) {
-      .glass-card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(0, 240, 255, 0.35);
-        box-shadow: 0 16px 36px rgba(0, 240, 255, 0.08);
-      }
-    }
-    @media (max-width: 640px) {
-      .glass-card {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background: rgba(13, 17, 26, 0.94);
-      }
-    }
-
-    /* Comic Sticker / Graffiti Button Style */
-    .graffiti-btn {
-      box-shadow: 3px 3px 0px #000;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .graffiti-btn:hover {
-      transform: scale(1.03) rotate(-0.5deg);
-      box-shadow: 4px 4px 0px #000;
-    }
-    .graffiti-btn:active {
-      transform: scale(0.98);
-      box-shadow: 2px 2px 0px #000;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #080a0f; }
-    ::-webkit-scrollbar-thumb { background: #1e2433; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
-  </style>
+  <!-- Custom & Component Styles -->
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body class="bg-[#080a0f] text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black" style="background-image: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%), radial-gradient(circle at 85% 40%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);">

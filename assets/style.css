@@ -1,0 +1,148 @@
+/**
+ * Ranheim Kraft – Global & Component Styles
+ * Shared across index.html, galleri.html, and changelog.html
+ */
+
+/* 1. Lightweight Comic Pattern Overlay - Low Opacity, Zero Lag */
+.comic-halftone {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 2. Anamorphic Lens Flare Line */
+.anamorphic-streak {
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 240, 255, 0.15) 20%, 
+    rgba(0, 240, 255, 0.8) 50%, 
+    rgba(255, 0, 127, 0.5) 70%, 
+    transparent 100%
+  );
+  filter: drop-shadow(0 0 6px #00f0ff);
+  pointer-events: none;
+}
+
+/* 3. Ultra-Smooth High Performance Glassmorphism Card */
+.glass-card {
+  background: rgba(13, 17, 26, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .glass-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 240, 255, 0.35);
+    box-shadow: 0 16px 36px rgba(0, 240, 255, 0.08);
+  }
+}
+
+/* Mobile Glass Optimization: solid background without expensive blur filter */
+@media (max-width: 640px) {
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(13, 17, 26, 0.94);
+  }
+}
+
+@media (hover: none) {
+  .glass-card:hover {
+    transform: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* 4. Comic Sticker & Graffiti Button Styles */
+.comic-sticker {
+  box-shadow: 3px 3px 0px #000;
+  transition: transform 0.2s ease;
+}
+.comic-sticker:hover {
+  transform: scale(1.06) rotate(-1deg);
+}
+
+.graffiti-btn {
+  box-shadow: 3px 3px 0px #000;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.graffiti-btn:hover {
+  transform: scale(1.03) rotate(-0.5deg);
+  box-shadow: 4px 4px 0px #000;
+}
+.graffiti-btn:active {
+  transform: scale(0.98);
+  box-shadow: 2px 2px 0px #000;
+}
+
+/* 5. Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #080a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2433;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* 6. Utility: Hide scrollbars for swipeable pill lists */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* 7. Live Sports News Ticker Marquee */
+@keyframes ticker-slide {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.ticker-content {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-slide 22s linear infinite;
+  will-change: transform;
+}
+
+.ticker-container:hover .ticker-content {
+  animation-play-state: paused;
+}
+
+@media (max-width: 640px) {
+  .ticker-content {
+    animation-duration: 16s;
+  }
+  .ticker-container:active .ticker-content {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-content {
+    animation-duration: 16s;
+  }
+}
+
+/* 8. Global HTML & Touch Polish */
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
