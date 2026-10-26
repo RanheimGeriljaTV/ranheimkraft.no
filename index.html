@@ -324,17 +324,19 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
-        <!-- Left Column: Copy & Tagline -->
+        <!-- Left Column: Sharp, clean heading -->
         <div class="lg:col-span-7">
-          <h2 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight mb-3 sm:mb-4">
-            Ideer, kode og eksperimenter <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan via-slate-100 to-neon-pink">
-              drevet av ren nysgjerrighet.
-            </span>
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-[11px] font-mono text-cyan-300 mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+            <span>Web &bull; AI &bull; Foto</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-4xl font-bold tracking-tight text-white leading-snug mb-2 sm:mb-3">
+            Prosjekter og eksperimenter
           </h2>
 
-          <p class="text-slate-300 text-sm sm:text-base font-light leading-relaxed max-w-2xl">
-            Velkommen til <span class="text-white font-medium">ranheimkraft.no</span>. Dette er min personlige landingsplass og launchpad for aktive prosjekter, webverktøy og eksperimenter.
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-xl">
+            En personlig samling av aktive webverktøy, kodelab og fotoarkiv.
           </p>
         </div>
 
@@ -554,36 +556,30 @@
 
     </main>
 
-    <!-- Graffiti Signature & About Drawer / Quick Notes -->
-    <section class="mt-4 sm:mt-8 mb-8 sm:mb-12 p-5 sm:p-6 rounded-2xl glass-card relative overflow-hidden">
-      <!-- Background subtle anamorphic spray -->
-      <div class="absolute right-0 top-0 w-1/2 sm:w-80 h-full bg-gradient-to-l from-neon-pink/10 to-transparent pointer-events-none"></div>
-
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-        <div>
-          <div class="font-graffiti text-[1.6rem] leading-snug sm:text-3xl text-neon-cyan tracking-wider mb-3 sm:mb-2">
-            <span>Kreativitet i hjertet, koden i fingrene.</span>
-          </div>
-          <p class="text-slate-400 text-[13px] sm:text-xs max-w-xl leading-relaxed">
-            Denne huben er bygget for å samle alt jeg lager på ett sted. Herfra kan du klikke deg rett inn i aktive prosjekter, undersider, web-eksperimenter og kode-repositorier.
-          </p>
+    <!-- Compact Contact & Channels Strip -->
+    <section class="mt-4 sm:mt-6 mb-6 sm:mb-10 p-3.5 sm:p-4 rounded-xl glass-card relative overflow-hidden">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>
+          <span class="text-xs sm:text-sm font-semibold text-white">Ranheim Kraft</span>
+          <span class="text-slate-400 text-xs hidden sm:inline">&bull; Kode, foto og video på ett sted</span>
         </div>
 
-        <!-- Quick Action / YouTube, GitHub & Contact Links -->
-        <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-3 shrink-0">
-          <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="px-4 py-3 sm:py-2 rounded-xl bg-red-600/10 hover:bg-red-600/20 border border-red-500/30 text-sm sm:text-xs font-medium text-red-300 transition flex items-center justify-center gap-2">
-            <svg class="w-4 h-4 text-red-500 fill-current" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 20c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 4c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+        <!-- Quick Action Buttons: YouTube, GitHub & Ta kontakt -->
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-red-600/15 border border-white/10 hover:border-red-500/30 text-xs text-slate-300 hover:text-red-300 transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-red-500 fill-current" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 20c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 4c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
             <span>YouTube</span>
           </a>
 
-          <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="px-4 py-3 sm:py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sm sm:text-xs font-medium text-slate-200 transition flex items-center justify-center gap-2">
-            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-slate-300" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
             <span>GitHub</span>
           </a>
 
-          <a href="mailto:ksandvin@gmail.com" data-umami-event="contact_email_click" class="col-span-2 sm:col-span-1 mt-1 sm:mt-0 relative inline-flex items-center justify-center gap-2.5 px-5 py-3.5 sm:py-2.5 rounded-xl bg-gradient-to-r from-neon-cyan via-cyan-400 to-neon-cyan text-black font-graffiti text-lg sm:text-base tracking-wider transition-all duration-200 transform -rotate-1 hover:rotate-0 hover:scale-105 shadow-[4px_4px_0px_rgba(0,0,0,0.9),0_0_20px_rgba(0,240,255,0.4)] border-2 border-black group/contact">
-            <span class="text-black font-bold tracking-wider">TA KONTAKT</span>
-            <svg class="w-4 h-4 text-black group-hover/contact:translate-x-0.5 group-hover/contact:-translate-y-0.5 transition-transform stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          <a href="mailto:ksandvin@gmail.com" data-umami-event="contact_email_click" class="px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/30 text-xs font-semibold text-cyan-200 hover:text-white transition flex items-center gap-1.5 shadow-sm">
+            <span>Ta kontakt</span>
+            <svg class="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
         </div>
       </div>

@@ -15,6 +15,8 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 - **Oppdatert nyhetsfeed**: Både static fallback og lokal feed er oppdatert med ferskeste sak: «Sterk borteseier på Raufoss for gutta og ellevill cupfest i vente i fjæra!».
 
 ### Endret
+- **Nedtonet og ryddigere hero-seksjon**: Fjernet svulstig slagord og lang velkomsttekst; erstattet med en skarp, minimalistisk overskrift (*«Prosjekter og eksperimenter»*) og en ren, konsis beskrivelse.
+- **Kompakt kontaktstripe**: Erstattet den store «Kreativitet i hjertet...»-boksen og den overdrevne, skjeve tegneserie-knappen med en lavmælt og elegant glass-stripe med matchende knapper for YouTube, GitHub og Ta kontakt.
 - **Finjustert mobildesign**: Gjennomgått og verifisert alle elementer på tvers av 320px–390px visninger; header, videospiller og prosjektkort har balansert margin og null overlapp.
 
 ---
