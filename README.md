@@ -8,6 +8,7 @@ Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjon
 
 ## Fremhevede Prosjekter
 * **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder.
+* **[Eliteserien Fantasy Hub](eliteserien.html)**: Matematisk troppsoptimering for Eliteserien Fantasy med PuLP MILP solver, interaktive banekort, sanntids poengoppdatering og minne for Manager ID.
 * **[FPL Optimizer & Hub](fpl.html)**: Matematisk troppsoptimering for Fantasy Premier League med PuLP MILP solver, FDR-oversikt og FUT-spillerkort.
 * **[Passordbeskyttet Bildegalleri](galleri.html)**: Dedikert galleri-underside koblet direkte til Google Disk. Støtter flere mapper med egne passord, fullskjerm-lightbox med sveip og ett-klikks ZIP-nedlasting av hele album.
 * **[Endringslogg](changelog.html)**: Dedikert changelog-side som dokumenterer alle versjoner, oppdateringer og forbedringer over tid.

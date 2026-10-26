@@ -6,6 +6,16 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [1.7.0] - 2026-10-26
+
+### Lagt til
+- **Eliteserien Fantasy Hub (`eliteserien.html`)**: Dedikert side på `ranheimkraft.no` for matematisk troppsoptimering og livedashboard for Eliteserien Fantasy.
+- **Hukommelse for Manager ID (`localStorage`)**: Første gang brukeren besøker siden, skriver man inn sin Eliteserien Fantasy ID (eller tester med eksempel-ID). Den lagres automatisk på enheten slik at appen åpner ditt lag umiddelbart ved neste besøk.
+- **Mobil-først og Fullskjerm**: Responsivt skall tilpasset mobilskjermer (`viewport-fit=cover`), kildevelger (Sky vs. Lokalhost) og mulighet for fullskjerm.
+- **Prosjektkort & Navigasjon**: Lagt til hurtigknapp i toppmenyen og nytt Bento-prosjektkort for Eliteserien Hub på `index.html`.
+
+---
+
 ## [1.6.0] - 2026-10-26
 
 ### Lagt til
