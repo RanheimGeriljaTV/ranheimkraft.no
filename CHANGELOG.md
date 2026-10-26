@@ -6,6 +6,17 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.0.0] - 2026-10-26
+
+### Lagt til
+- **3D Holografiske Samlekort (Holo Foil Card)**:
+  - Bento-flisene har nå en 3D-samlekorteffekt (`perspective: 1400px`) med en glitrende holografisk regnbuefolie (`.holo-foil`) og lysglans.
+  - **Gyroskop på mobil**: Når du snur og vipper på telefonen, reagerer kortene i sanntid via `deviceorientation` i 3D-rommet.
+  - **Musepeker-tilt på desktop**: Lysrefleksjonen og 3D-vinklingen følger musepekeren dynamisk over hvert enkelt kort.
+- **Klient- & Oppdragshurtiginngang**: Lagt til et diskret passordfelt i bildegalleri-kortet på forsiden. Fyller tomrommet perfekt og lar kunder låse opp sine private oppdrag direkte fra forsiden uten å lekke albumtitler eller klientnavn offentlig.
+
+---
+
 ## [1.9.0] - 2026-10-26
 
 ### Endret & Refaktorert

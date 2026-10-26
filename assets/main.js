@@ -176,3 +176,95 @@ async function loadLiveNews() {
 
 // Start fetching live news immediately
 loadLiveNews();
+
+
+// 4. Quick Unlock Gallery from Front Page
+function quickOpenGallery(e) {
+  if (e) e.preventDefault();
+  const input = document.getElementById('quick-pwd');
+  const pwd = input ? input.value.trim() : '';
+  if (!pwd) return;
+  try {
+    sessionStorage.setItem('pending_gallery_pwd', pwd);
+  } catch (err) {}
+  window.location.href = 'galleri.html';
+}
+
+// 5. 3D Holographic Card Tilt & Mobile Gyroscope (Rare Holo Foil Card Effect)
+function initHoloTilt() {
+  const cards = document.querySelectorAll('.bento-tile');
+  if (!cards.length) return;
+
+  // Insert holo foil sheen layer into each card
+  cards.forEach(card => {
+    if (!card.querySelector('.holo-foil')) {
+      const foil = document.createElement('div');
+      foil.className = 'holo-foil';
+      card.appendChild(foil);
+    }
+  });
+
+  // Desktop Mouse Move: 3D tilt + dynamic glare
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const maxTilt = 8;
+      const rotateX = -(y - 0.5) * 2 * maxTilt;
+      const rotateY = (x - 0.5) * 2 * maxTilt;
+
+      card.style.setProperty('--tilt-x', `${rotateX.toFixed(2)}deg`);
+      card.style.setProperty('--tilt-y', `${rotateY.toFixed(2)}deg`);
+      card.style.setProperty('--glare-x', `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty('--glare-y', `${(y * 100).toFixed(1)}%`);
+      card.style.setProperty('--holo-opacity', '1');
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.setProperty('--tilt-x', '0deg');
+      card.style.setProperty('--tilt-y', '0deg');
+      card.style.setProperty('--holo-opacity', '0');
+    });
+  });
+
+  // Mobile Gyroscope (DeviceOrientation)
+  let lastUpdate = 0;
+  function handleOrientation(e) {
+    if (e.gamma === null && e.beta === null) return;
+    const now = performance.now();
+    if (now - lastUpdate < 32) return; // ~30fps smooth rate
+    lastUpdate = now;
+
+    const gamma = e.gamma || 0; // [-90, 90]
+    const beta = e.beta || 0;   // [-180, 180]
+
+    // Normal viewing angle: phone is held tilted around 45deg
+    const normX = Math.max(-1, Math.min(1, gamma / 22));
+    const normY = Math.max(-1, Math.min(1, (beta - 45) / 25));
+
+    const maxTilt = 7;
+    const rotateX = -normY * maxTilt;
+    const rotateY = normX * maxTilt;
+    const glareX = ((normX + 1) / 2) * 100;
+    const glareY = ((normY + 1) / 2) * 100;
+
+    cards.forEach(card => {
+      card.style.setProperty('--tilt-x', `${rotateX.toFixed(1)}deg`);
+      card.style.setProperty('--tilt-y', `${rotateY.toFixed(1)}deg`);
+      card.style.setProperty('--glare-x', `${glareX.toFixed(1)}%`);
+      card.style.setProperty('--glare-y', `${glareY.toFixed(1)}%`);
+      card.style.setProperty('--holo-opacity', '0.75');
+    });
+  }
+
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHoloTilt);
+} else {
+  initHoloTilt();
+}
