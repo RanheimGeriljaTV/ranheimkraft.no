@@ -166,9 +166,9 @@
           <strong id="display-manager-id" class="text-white"></strong>
         </div>
 
-        <!-- Change ID Button -->
-        <button onclick="openChangeIdModal()" title="Bytt Eliteserien ID" class="inline-flex px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-neon-cyan transition items-center gap-1 whitespace-nowrap">
-          <span>🔄</span><span class="hidden sm:inline">Bytt ID</span>
+        <!-- Change ID & Server Button -->
+        <button onclick="openChangeIdModal()" title="Bytt Eliteserien ID eller Serverkilde" class="inline-flex px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-neon-cyan transition items-center gap-1 whitespace-nowrap">
+          <span>🔄</span><span class="hidden sm:inline">Bytt ID / Server</span>
         </button>
 
         <!-- Fullscreen Toggle -->
@@ -289,7 +289,7 @@
 
       <form onsubmit="handleModalChangeSubmit(event)" class="space-y-4">
         <div>
-          <label for="modal-input-es-id" class="block text-xs font-mono text-slate-300 mb-1.5">Ny Eliteserien Manager ID:</label>
+          <label for="modal-input-es-id" class="block text-xs font-mono text-slate-300 mb-1.5">Din Eliteserien Manager ID:</label>
           <input 
             type="number" 
             id="modal-input-es-id" 
@@ -299,14 +299,36 @@
           >
         </div>
 
-        <!-- Mobile Server Switcher Shortcut -->
-        <div class="pt-2 border-t border-white/10 sm:hidden">
-          <label for="modal-server-selector" class="block text-[11px] font-mono text-slate-400 mb-1">Serverkilde:</label>
-          <select id="modal-server-selector" onchange="document.getElementById('server-selector').value = this.value; changeServerSource();" class="w-full bg-black/60 border border-white/10 rounded-lg px-2.5 py-1.5 text-slate-300 text-xs font-mono focus:outline-none focus:border-neon-cyan">
-            <option value="cloud">🌐 Streamlit Sky-app (Produksjon)</option>
-            <option value="local">💻 Lokal server (localhost:8501)</option>
-            <option value="custom">⚙️ Egendefinert URL...</option>
+        <!-- Server Switcher Shortcut (All screens) -->
+        <div class="pt-2 border-t border-white/10 space-y-2">
+          <label for="modal-server-selector" class="block text-xs font-mono text-slate-300">Serverkilde / Streamlit URL:</label>
+          <select id="modal-server-selector" onchange="onModalServerSelect(this.value)" class="w-full bg-black/70 border border-white/15 rounded-xl px-3 py-2 text-slate-200 text-xs font-mono focus:outline-none focus:border-neon-cyan">
+            <option value="cloud">🌐 Streamlit Sky-app (share.streamlit.io)</option>
+            <option value="local">💻 Lokal server (localhost:8501 - run.bat)</option>
+            <option value="custom">⚙️ Egendefinert Streamlit URL...</option>
           </select>
+
+          <!-- Input for Custom URL if custom is selected -->
+          <div id="modal-custom-url-container" class="hidden pt-1">
+            <label for="modal-input-custom-url" class="block text-[11px] font-mono text-slate-400 mb-1">Streamlit App URL (f.eks. fra share.streamlit.io):</label>
+            <input 
+              type="url" 
+              id="modal-input-custom-url" 
+              placeholder="https://eliteserien-fantasy-xxxx.streamlit.app"
+              class="w-full px-3 py-2 rounded-lg bg-black/70 border border-white/15 focus:border-neon-cyan focus:outline-none text-white text-xs font-mono placeholder-slate-600"
+            >
+          </div>
+        </div>
+
+        <!-- Status & Troubleshooting Help -->
+        <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/25 text-[11px] font-mono text-blue-200/90 space-y-1 leading-relaxed">
+          <div class="font-semibold text-blue-300 flex items-center gap-1.5">
+            <span>ℹ️</span> <span>Får du «You do not have access to this app»?</span>
+          </div>
+          <div>
+            1. <strong>Lokal test:</strong> Start <code>run.bat</code> på din PC og velg <em>Lokal server (localhost:8501)</em> over.<br>
+            2. <strong>Sky:</strong> Åpne <a href="https://share.streamlit.io" target="_blank" class="underline text-neon-cyan hover:text-white">share.streamlit.io</a> og klikk «Create app» for <code>RanheimGeriljaTV/eliteserien-fantasy</code>.
+          </div>
         </div>
 
         <div class="flex items-center justify-between pt-2">
@@ -439,7 +461,38 @@
     function openChangeIdModal() {
       const cur = localStorage.getItem(STORAGE_KEY) || '';
       document.getElementById('modal-input-es-id').value = cur;
+
+      const serverType = localStorage.getItem('ranheimkraft_es_server_type') || 'cloud';
+      const sel = document.getElementById('modal-server-selector');
+      if (sel) sel.value = serverType;
+
+      const customContainer = document.getElementById('modal-custom-url-container');
+      const customInput = document.getElementById('modal-input-custom-url');
+      if (customContainer && customInput) {
+        if (serverType === 'custom') {
+          customContainer.classList.remove('hidden');
+          customInput.value = localStorage.getItem(SERVER_STORAGE_KEY) || '';
+        } else {
+          customContainer.classList.add('hidden');
+        }
+      }
+
       document.getElementById('modal-change-id').classList.remove('hidden');
+    }
+
+    function onModalServerSelect(val) {
+      const customContainer = document.getElementById('modal-custom-url-container');
+      if (customContainer) {
+        if (val === 'custom') {
+          customContainer.classList.remove('hidden');
+          const customInput = document.getElementById('modal-input-custom-url');
+          if (customInput && !customInput.value) {
+            customInput.value = localStorage.getItem(SERVER_STORAGE_KEY) || '';
+          }
+        } else {
+          customContainer.classList.add('hidden');
+        }
+      }
     }
 
     function closeChangeIdModal() {
@@ -454,6 +507,22 @@
         return;
       }
       localStorage.setItem(STORAGE_KEY, id);
+
+      const sel = document.getElementById('modal-server-selector');
+      if (sel) {
+        const val = sel.value;
+        localStorage.setItem('ranheimkraft_es_server_type', val);
+        const bottomSel = document.getElementById('server-selector');
+        if (bottomSel) bottomSel.value = val;
+
+        if (val === 'custom') {
+          const customUrl = document.getElementById('modal-input-custom-url').value.trim();
+          if (customUrl) {
+            localStorage.setItem(SERVER_STORAGE_KEY, customUrl);
+          }
+        }
+      }
+
       closeChangeIdModal();
       showStreamlitFrame(id);
     }
@@ -470,6 +539,9 @@
       const sel = document.getElementById('server-selector').value;
       localStorage.setItem('ranheimkraft_es_server_type', sel);
       
+      const modalSel = document.getElementById('modal-server-selector');
+      if (modalSel) modalSel.value = sel;
+
       if (sel === 'custom') {
         const cur = localStorage.getItem(SERVER_STORAGE_KEY) || 'https://';
         const customUrl = prompt('Oppgi full URL til din Streamlit app (inkl. https://):', cur);
