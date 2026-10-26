@@ -147,6 +147,7 @@
       .ticker-content { animation-duration: 16s; }
     }
   </style>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 
 <body class="bg-[#080a0f] text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black" style="background-image: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%), radial-gradient(circle at 85% 40%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);">
@@ -353,24 +354,26 @@
             </div>
           </div>
 
-          <!-- Video Player Window (Direct Autoplay on Mute) -->
+          <!-- Video Player Window (Clean Cinema Autoplay, No YouTube UI) -->
           <div id="video-container" class="relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-white/10 shadow-inner group/video">
             <div class="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none z-10"></div>
 
-            <iframe 
-              id="yt-iframe" 
-              class="w-full h-full border-0 absolute inset-0" 
-              src="https://www.youtube-nocookie.com/embed/Ac-0DqaUDfM?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1" 
-              title="Ranheim Gerilja TV" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              allowfullscreen>
-            </iframe>
+            <!-- YouTube API Player Target -->
+            <div id="yt-player-target" class="w-full h-full pointer-events-none"></div>
+
+            <!-- Custom Clean Sound Toggle Pill -->
+            <button id="btn-toggle-sound" onclick="toggleSound(event)" class="absolute bottom-2.5 right-2.5 z-20 px-2.5 py-1.5 rounded-lg bg-black/80 hover:bg-black border border-white/20 text-[11px] font-mono text-cyan-300 hover:text-white transition flex items-center gap-1.5 backdrop-blur-md shadow-lg group/sound cursor-pointer">
+              <span id="sound-icon">🔇</span>
+              <span id="sound-text">Slå på lyd</span>
+            </button>
           </div>
 
-          <!-- Video Title & Mute Notice -->
+          <!-- Video Title & Direct YouTube Link -->
           <div class="mt-2.5 flex items-center justify-between text-xs font-mono text-slate-300 gap-2">
             <span id="current-video-title" class="truncate font-medium text-white">Laster inn video...</span>
-            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-cyan-300 shrink-0 font-mono" title="Lyd er mutet automatisk. Trykk på høyttalerikonet i spilleren for lyd.">🔇 MUTET</span>
+            <a id="current-video-link" href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-white flex items-center gap-1 text-[11px] shrink-0 font-medium">
+              <span>Se på YouTube</span> &rarr;
+            </a>
           </div>
 
           <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">
@@ -625,7 +628,75 @@
 
     let currentVideo = null;
 
-    // Selects a random video every visit or on dice click (Autoplays on mute)
+    let ytPlayer = null;
+    let ytApiReady = false;
+    let isSoundOn = false;
+
+    // Pick random video at startup
+    currentVideo = GERILJA_VIDEOS[Math.floor(Math.random() * GERILJA_VIDEOS.length)];
+
+    // Called automatically by YouTube IFrame API
+    window.onYouTubeIframeAPIReady = function() {
+      ytApiReady = true;
+      initPlayer();
+    };
+
+    function initPlayer() {
+      if (!currentVideo) currentVideo = GERILJA_VIDEOS[0];
+      const target = document.getElementById('yt-player-target');
+      if (!target || !window.YT || !YT.Player) return;
+
+      ytPlayer = new YT.Player('yt-player-target', {
+        videoId: currentVideo.id,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          rel: 0,
+          modestbranding: 1,
+          playsinline: 1,
+          loop: 1,
+          playlist: currentVideo.id,
+          iv_load_policy: 3,
+          disablekb: 1
+        },
+        events: {
+          onReady: function(e) {
+            e.target.mute();
+            e.target.playVideo();
+          }
+        }
+      });
+      updateVideoDetails();
+    }
+
+    // Fallback if API was already loaded
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    }
+
+    function toggleSound(e) {
+      if (e) e.stopPropagation();
+      if (!ytPlayer) return;
+
+      const icon = document.getElementById('sound-icon');
+      const text = document.getElementById('sound-text');
+
+      if (ytPlayer.isMuted()) {
+        ytPlayer.unMute();
+        ytPlayer.setVolume(100);
+        isSoundOn = true;
+        if (icon) icon.textContent = '🔊';
+        if (text) text.textContent = 'Mute';
+      } else {
+        ytPlayer.mute();
+        isSoundOn = false;
+        if (icon) icon.textContent = '🔇';
+        if (text) text.textContent = 'Slå på lyd';
+      }
+    }
+
+    // Selects a random video on dice click (no YouTube UI)
     function pickRandomVideo() {
       let available = GERILJA_VIDEOS;
       if (currentVideo && GERILJA_VIDEOS.length > 1) {
@@ -633,19 +704,24 @@
       }
       currentVideo = available[Math.floor(Math.random() * available.length)];
 
-      const iframe = document.getElementById('yt-iframe');
-      const titleEl = document.getElementById('current-video-title');
-
-      if (iframe) {
-        iframe.src = `https://www.youtube-nocookie.com/embed/${currentVideo.id}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1`;
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        ytPlayer.loadVideoById({
+          videoId: currentVideo.id,
+          startSeconds: 0
+        });
+        if (!isSoundOn) ytPlayer.mute();
       }
-      if (titleEl) {
-        titleEl.textContent = currentVideo.title;
-      }
+      updateVideoDetails();
     }
 
-    // Initialize random video on load
-    pickRandomVideo();
+    function updateVideoDetails() {
+      const titleEl = document.getElementById('current-video-title');
+      const linkEl = document.getElementById('current-video-link');
+      if (titleEl && currentVideo) titleEl.textContent = currentVideo.title;
+      if (linkEl && currentVideo) linkEl.href = 'https://www.youtube.com/watch?v=' + currentVideo.id;
+    }
+
+    updateVideoDetails();
 
 
     // Dynamic Live News Fetcher (Ranheim Fotball) - Real-time RSS with fallback
