@@ -341,11 +341,11 @@
     const DEFAULT_LOCAL_URL = 'http://localhost:8501';
 
     function getBaseStreamlitUrl() {
-      const savedType = localStorage.getItem('ranheimkraft_es_server_type') || 'local';
+      const savedType = localStorage.getItem('ranheimkraft_es_server_type') || 'cloud';
       const customUrl = localStorage.getItem(SERVER_STORAGE_KEY);
       
-      let url = DEFAULT_LOCAL_URL;
-      if (savedType === 'cloud') url = DEFAULT_CLOUD_URL;
+      let url = DEFAULT_CLOUD_URL;
+      if (savedType === 'local') url = DEFAULT_LOCAL_URL;
       else if (savedType === 'custom' && customUrl) url = customUrl;
       
       return url.replace(/\/+$/, '');
@@ -365,7 +365,7 @@
       }
 
       // Oppdater server-selector dropdown
-      const savedType = localStorage.getItem('ranheimkraft_es_server_type') || 'local';
+      const savedType = localStorage.getItem('ranheimkraft_es_server_type') || 'cloud';
       const sel = document.getElementById('server-selector');
       if (sel) sel.value = savedType;
 
