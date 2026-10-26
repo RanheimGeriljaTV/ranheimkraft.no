@@ -9,6 +9,7 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 ## [1.6.0] - 2026-10-26
 
 ### Lagt til
+- **Umami Analytics integrasjon**: Integrert personvernvennlig, cookiefri besøksstatistikk med Umami Cloud på tvers av alle undersider (`index.html`, `fpl.html`, `galleri.html`, `changelog.html`), med automatisk sporing av unike besøk, sidevisninger, referrers og klikk-hendelser (`data-umami-event`).
 - **Gjenopprettet gatekunst & bakgrunnsgraffiti**: Gjennomført plassering av autentiske graffiti-tags (`Kraft`, `KK`, `Ranheim Gerilja`, `Ranheim`) i *Sedgwick Ave Display* i bakgrunnen (`-z-10`, `pointer-events-none`) med subtil opasitet, slik at de gir portalen rå street-art-identitet uten å overlappe eller forstyrre tekst og klikkbare knapper på mobil.
 - **Sanntids RSS-henting fra Ranheim Fotball**: Implementert klientside sanntidshenting av `https://www.ranheimfotball.no/rss-nyheter` via Jina AI CORS-proxy (`x-respond-with: text`) med `DOMParser()` og automatisk fallback til lokal `assets/news.json`.
 - **Oppdatert nyhetsfeed**: Både static fallback og lokal feed er oppdatert med ferskeste sak: «Sterk borteseier på Raufoss for gutta og ellevill cupfest i vente i fjæra!».
