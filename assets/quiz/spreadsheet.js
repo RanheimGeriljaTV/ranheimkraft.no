@@ -1,10 +1,18 @@
 /**
- * spreadsheet.js - Regneark-tabell, dynamisk rendering, tastaturnavigasjon og redigering
+ * spreadsheet.js - Regneark-tabell, dynamisk rendering, tastaturnavigasjon og presentasjonsmodus
  * For Quiz Kraft (ranheimkraft.no)
  */
 
 let appState = null;
 let onStateChangeCallback = null;
+
+// Visningsinnstillinger
+let currentFilter = 'all'; // 'all', 'top5', 'top10', 'top15', 'page'
+let currentPage = 1;
+const PAGE_SIZE = 12; // 12 lag per side ved rullering/karusell
+let is2ColumnLayout = false;
+let isPresentationMode = false;
+let isLastRoundHidden = false; // "Cliffhanger / Hemmelig finale"
 
 function initSpreadsheet(state, onStateChange) {
   appState = state;
@@ -21,6 +29,89 @@ function getState() {
   return appState;
 }
 
+function setViewFilter(filter) {
+  currentFilter = filter;
+  currentPage = 1;
+  renderTable();
+}
+
+function getViewFilter() {
+  return currentFilter;
+}
+
+function set2ColumnLayout(enabled) {
+  is2ColumnLayout = enabled;
+  renderTable();
+}
+
+function get2ColumnLayout() {
+  return is2ColumnLayout;
+}
+
+function setPresentationMode(enabled) {
+  isPresentationMode = enabled;
+  renderTable();
+}
+
+function getPresentationMode() {
+  return isPresentationMode;
+}
+
+function setHideLastRound(hidden) {
+  isLastRoundHidden = hidden;
+  renderTable();
+}
+
+function getHideLastRound() {
+  return isLastRoundHidden;
+}
+
+function setPage(page) {
+  currentPage = page;
+  renderTable();
+}
+
+function getPage() {
+  return currentPage;
+}
+
+function getTotalPages() {
+  const teams = appState ? (appState.teams || []) : [];
+  return Math.max(1, Math.ceil(teams.length / PAGE_SIZE));
+}
+
+function nextPage() {
+  const total = getTotalPages();
+  currentPage = (currentPage % total) + 1;
+  renderTable();
+  return currentPage;
+}
+
+function prevPage() {
+  const total = getTotalPages();
+  currentPage = currentPage === 1 ? total : currentPage - 1;
+  renderTable();
+  return currentPage;
+}
+
+/**
+ * Filtrerer lagene basert på aktivt filter (Alle, Topp 5, Topp 10, Topp 15, eller side)
+ */
+function getVisibleTeams() {
+  const teams = appState.teams || [];
+  if (currentFilter === 'top5') {
+    return teams.slice(0, 5);
+  } else if (currentFilter === 'top10') {
+    return teams.slice(0, 10);
+  } else if (currentFilter === 'top15') {
+    return teams.slice(0, 15);
+  } else if (currentFilter === 'page') {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return teams.slice(start, start + PAGE_SIZE);
+  }
+  return teams;
+}
+
 /**
  * Hovedfunksjon for rendering av regneark-tabellen
  */
@@ -30,10 +121,70 @@ function renderTable() {
 
   const roundCount = appState.roundCount || 5;
   const roundNames = appState.roundNames || [];
-  const teams = appState.teams || [];
+  const allTeams = appState.teams || [];
+  const visibleTeams = getVisibleTeams();
+
+  // Finn indeksen for siste spilte runde hvis "Hemmelig finale" er aktivert
+  const lastPlayedIdx = window.QuizScoring ? window.QuizScoring.getLastPlayedRoundIndex(allTeams, roundCount) : -1;
+
+  // Bestem om 2-kolonne skal brukes (f.eks. ved mange lag på bred skjerm)
+  const use2Columns = is2ColumnLayout && visibleTeams.length > 8;
+
+  let html = '';
+
+  // Informasjonslinje for aktivt filter (f.eks. "Viser Topp 10 av 25 lag")
+  if (currentFilter !== 'all' || isPresentationMode) {
+    html += `
+      <div class="presentation-info-bar">
+        <span class="info-tag">
+          ${currentFilter === 'all' ? `Totalt ${allTeams.length} lag registrert` : ''}
+          ${currentFilter === 'top5' ? `Viser Topp 5 av ${allTeams.length} lag` : ''}
+          ${currentFilter === 'top10' ? `Viser Topp 10 av ${allTeams.length} lag` : ''}
+          ${currentFilter === 'top15' ? `Viser Topp 15 av ${allTeams.length} lag` : ''}
+          ${currentFilter === 'page' ? `Side ${currentPage} av ${getTotalPages()} (Lag ${(currentPage - 1) * PAGE_SIZE + 1}–${Math.min(currentPage * PAGE_SIZE, allTeams.length)} av ${allTeams.length})` : ''}
+        </span>
+        ${isLastRoundHidden && lastPlayedIdx >= 0 ? `
+          <span class="cliffhanger-tag">
+            🔒 Siste runde (${roundNames[lastPlayedIdx] || 'Runde ' + (lastPlayedIdx + 1)}) er hemmelig på storskjerm!
+          </span>
+        ` : ''}
+      </div>
+    `;
+  }
+
+  if (use2Columns) {
+    // 2-KOLONNE VISNING FOR 15–30 LAG PÅ STORSKJERM
+    const half = Math.ceil(visibleTeams.length / 2);
+    const leftTeams = visibleTeams.slice(0, half);
+    const rightTeams = visibleTeams.slice(half);
+
+    html += `
+      <div class="quiz-grid-2col">
+        <div class="quiz-col-left">
+          ${buildTableHtml(leftTeams, 0, roundCount, roundNames, lastPlayedIdx, true)}
+        </div>
+        <div class="quiz-col-right">
+          ${buildTableHtml(rightTeams, half, roundCount, roundNames, lastPlayedIdx, true)}
+        </div>
+      </div>
+    `;
+  } else {
+    // STANDARD 1-KOLONNE VISNING
+    html += buildTableHtml(visibleTeams, 0, roundCount, roundNames, lastPlayedIdx, false);
+  }
+
+  container.innerHTML = html;
+  bindTableEvents(container);
+}
+
+/**
+ * Bygger HTML-strengen for selve tabellen
+ */
+function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, lastPlayedIdx, isCompact) {
+  const isPres = isPresentationMode;
 
   let html = `
-    <table class="quiz-table" id="quiz-table" role="grid" aria-label="Quiz Poengtavle">
+    <table class="quiz-table ${isPres ? 'quiz-table-presentation' : ''} ${isCompact ? 'quiz-table-compact' : ''}" role="grid" aria-label="Quiz Poengtavle">
       <thead>
         <tr>
           <th class="col-rank" scope="col">#</th>
@@ -43,11 +194,17 @@ function renderTable() {
   // Runde-kolonner
   for (let r = 0; r < roundCount; r++) {
     const roundTitle = roundNames[r] || `Runde ${r + 1}`;
+    const isHiddenFinal = isLastRoundHidden && r === lastPlayedIdx;
+
     html += `
-      <th class="col-round" scope="col">
+      <th class="col-round ${isHiddenFinal ? 'col-round-hidden' : ''}" scope="col">
         <div class="th-round-header">
-          <input type="text" class="round-title-input" data-round-idx="${r}" value="${escapeHtml(roundTitle)}" aria-label="Endre navn på runde ${r + 1}" title="Klikk for å endre tittel på runden" />
-          ${roundCount > 1 ? `<button type="button" class="btn-remove-round" data-round-idx="${r}" title="Fjern runde ${r + 1}" aria-label="Fjern runde ${r + 1}">×</button>` : ''}
+          ${isPres ? `
+            <span class="pres-round-title">${escapeHtml(roundTitle)}</span>
+          ` : `
+            <input type="text" class="round-title-input" data-round-idx="${r}" value="${escapeHtml(roundTitle)}" aria-label="Endre navn på runde ${r + 1}" title="Klikk for å endre tittel på runden" />
+            ${roundCount > 1 ? `<button type="button" class="btn-remove-round" data-round-idx="${r}" title="Fjern runde ${r + 1}">×</button>` : ''}
+          `}
         </div>
       </th>
     `;
@@ -55,26 +212,27 @@ function renderTable() {
 
   // Sammenlagt og Merknad
   html += `
-          <th class="col-total" scope="col">SAMMENLAGT</th>
-          <th class="col-note" scope="col">Merknad / Tie-breaker</th>
-          <th class="col-actions no-print" scope="col">Fjern</th>
+          <th class="col-total" scope="col">SUM</th>
+          <th class="col-note" scope="col">Merknad</th>
+          ${!isPres ? `<th class="col-actions no-print" scope="col">Fjern</th>` : ''}
         </tr>
       </thead>
       <tbody>
   `;
 
-  if (teams.length === 0) {
+  if (teamsList.length === 0) {
     html += `
       <tr>
-        <td colspan="${roundCount + 4}" class="empty-table-msg">
-          Ingen lag er registrert ennå. Trykk på den store grønne knappen <strong>"Legg til nytt lag"</strong> for å starte!
+        <td colspan="${roundCount + (isPres ? 3 : 4)}" class="empty-table-msg">
+          Ingen lag i denne visningen.
         </td>
       </tr>
     `;
   } else {
-    teams.forEach((team, tIdx) => {
+    teamsList.forEach((team, localIdx) => {
+      const realIdx = startIndexOffset + localIdx;
       const total = window.QuizScoring ? window.QuizScoring.calculateTeamTotal(team, roundCount) : 0;
-      const rank = team.rank || (tIdx + 1);
+      const rank = team.rank || (realIdx + 1);
       
       let rankBadge = `${rank}.`;
       let rowHighlightClass = '';
@@ -92,48 +250,65 @@ function renderTable() {
       }
 
       html += `
-        <tr class="team-row ${rowHighlightClass}" data-team-idx="${tIdx}">
+        <tr class="team-row ${rowHighlightClass}" data-team-idx="${realIdx}">
           <td class="col-rank">
             <span class="rank-badge" title="Plassering: ${rank}.">${rankBadge}</span>
           </td>
           <td class="col-team">
-            <input type="text" 
-                   class="team-name-input" 
-                   data-team-idx="${tIdx}" 
-                   value="${escapeHtml(team.name || '')}" 
-                   placeholder="Skriv lagnavn..." 
-                   aria-label="Lagnavn for lag ${tIdx + 1}" />
+            ${isPres ? `
+              <span class="pres-team-name">${escapeHtml(team.name || 'Lag ' + (realIdx + 1))}</span>
+            ` : `
+              <input type="text" 
+                     class="team-name-input" 
+                     data-team-idx="${realIdx}" 
+                     value="${escapeHtml(team.name || '')}" 
+                     placeholder="Skriv lagnavn..." 
+                     aria-label="Lagnavn for lag ${realIdx + 1}" />
+            `}
           </td>
       `;
 
       // Poengceller
       for (let r = 0; r < roundCount; r++) {
         const rawScore = team.scores ? team.scores[r] : '';
+        const isHiddenFinal = isLastRoundHidden && r === lastPlayedIdx;
+
         html += `
-          <td class="col-round">
-            <input type="text" 
-                   inputmode="decimal"
-                   class="score-input" 
-                   data-team-idx="${tIdx}" 
-                   data-round-idx="${r}" 
-                   value="${escapeHtml(rawScore)}" 
-                   placeholder="-" 
-                   aria-label="Poeng for ${escapeHtml(team.name || 'Lag ' + (tIdx + 1))}, runde ${r + 1}" />
+          <td class="col-round ${isHiddenFinal ? 'col-round-hidden' : ''}">
+            ${isPres ? `
+              <span class="pres-score">${isHiddenFinal ? '❓' : (rawScore !== '' ? escapeHtml(rawScore) : '-')}</span>
+            ` : `
+              <input type="text" 
+                     inputmode="decimal"
+                     class="score-input" 
+                     data-team-idx="${realIdx}" 
+                     data-round-idx="${r}" 
+                     value="${escapeHtml(rawScore)}" 
+                     placeholder="-" 
+                     aria-label="Poeng for ${escapeHtml(team.name || 'Lag ' + (realIdx + 1))}, runde ${r + 1}" />
+            `}
           </td>
         `;
       }
 
-      // Sammenlagtcelle
+      // Sammenlagt (hvis siste runde er hemmelig, vis enten sum før siste runde eller med ?)
+      let displayTotal = window.QuizScoring ? window.QuizScoring.formatScore(total) : total;
+      if (isPres && isLastRoundHidden && lastPlayedIdx >= 0) {
+        displayTotal = '🔒 ?';
+      }
+
       html += `
           <td class="col-total">
-            <span class="total-display" id="total-${tIdx}" aria-live="polite">${window.QuizScoring ? window.QuizScoring.formatScore(total) : total}</span>
+            <span class="total-display" id="total-${realIdx}" aria-live="polite">${displayTotal}</span>
           </td>
           <td class="col-note">
             ${team.tieBreakerNote ? `<span class="tie-breaker-badge">${escapeHtml(team.tieBreakerNote)}</span>` : '<span class="note-empty">-</span>'}
           </td>
-          <td class="col-actions no-print">
-            <button type="button" class="btn-delete-team" data-team-idx="${tIdx}" title="Slett dette laget" aria-label="Slett ${escapeHtml(team.name || 'lag')}">Slett</button>
-          </td>
+          ${!isPres ? `
+            <td class="col-actions no-print">
+              <button type="button" class="btn-delete-team" data-team-idx="${realIdx}" title="Slett dette laget">Slett</button>
+            </td>
+          ` : ''}
         </tr>
       `;
     });
@@ -141,74 +316,74 @@ function renderTable() {
 
   html += `
       </tbody>
-      <tfoot>
-        <tr class="summary-row">
-          <td class="col-rank">Totalt</td>
-          <td class="col-team"><strong>${teams.length} lag</strong></td>
   `;
 
-  // Gjennomsnitt per runde
-  for (let r = 0; r < roundCount; r++) {
-    let rSum = 0;
-    let rCount = 0;
-    teams.forEach(t => {
-      const parsed = window.QuizScoring ? window.QuizScoring.parseScore(t.scores ? t.scores[r] : null) : null;
-      if (parsed !== null) {
-        rSum += parsed;
-        rCount++;
-      }
-    });
-    const avg = rCount > 0 ? (rSum / rCount) : null;
+  // Gjennomsnitt per runde (kun i redigeringsmodus)
+  if (!isPres) {
     html += `
-      <td class="col-round summary-cell" title="Gjennomsnitt for runde ${r + 1}: ${avg !== null ? window.QuizScoring.formatScore(avg) : 'Ingen poeng'}">
-        <span class="avg-label">Snitt:</span>
-        <span class="avg-value">${avg !== null ? window.QuizScoring.formatScore(avg) : '-'}</span>
-      </td>
+      <tfoot>
+        <tr class="summary-row">
+          <td class="col-rank">Snitt</td>
+          <td class="col-team"><strong>${teamsList.length} lag</strong></td>
+    `;
+
+    for (let r = 0; r < roundCount; r++) {
+      let rSum = 0;
+      let rCount = 0;
+      teamsList.forEach(t => {
+        const parsed = window.QuizScoring ? window.QuizScoring.parseScore(t.scores ? t.scores[r] : null) : null;
+        if (parsed !== null) {
+          rSum += parsed;
+          rCount++;
+        }
+      });
+      const avg = rCount > 0 ? (rSum / rCount) : null;
+      html += `
+        <td class="col-round summary-cell" title="Snitt runde ${r + 1}: ${avg !== null ? window.QuizScoring.formatScore(avg) : '-'}">
+          <span class="avg-label">Snitt:</span>
+          <span class="avg-value">${avg !== null ? window.QuizScoring.formatScore(avg) : '-'}</span>
+        </td>
+      `;
+    }
+
+    let grandTotal = 0;
+    teamsList.forEach(t => {
+      grandTotal += window.QuizScoring ? window.QuizScoring.calculateTeamTotal(t, roundCount) : 0;
+    });
+    const teamAvg = teamsList.length > 0 ? (grandTotal / teamsList.length) : null;
+
+    html += `
+            <td class="col-total summary-cell">
+              <span class="avg-label">Totalt:</span>
+              <span class="avg-value">${teamAvg !== null ? window.QuizScoring.formatScore(teamAvg) : '-'}</span>
+            </td>
+            <td class="col-note summary-cell"></td>
+            <td class="col-actions no-print"></td>
+          </tr>
+        </tfoot>
     `;
   }
 
-  // Sammenlagt snitt
-  let grandTotal = 0;
-  teams.forEach(t => {
-    grandTotal += window.QuizScoring ? window.QuizScoring.calculateTeamTotal(t, roundCount) : 0;
-  });
-  const teamAvg = teams.length > 0 ? (grandTotal / teams.length) : null;
-
-  html += `
-          <td class="col-total summary-cell">
-            <span class="avg-label">Snitt totalt:</span>
-            <span class="avg-value">${teamAvg !== null ? window.QuizScoring.formatScore(teamAvg) : '-'}</span>
-          </td>
-          <td class="col-note summary-cell"></td>
-          <td class="col-actions no-print"></td>
-        </tr>
-      </tfoot>
-    </table>
-  `;
-
-  container.innerHTML = html;
-  bindTableEvents(container);
+  html += `</table>`;
+  return html;
 }
 
 /**
  * Knytter opp hendelser for inntasting, tastaturnavigasjon og sletting
  */
 function bindTableEvents(container) {
-  // 1. Tastatur- og inntastingshåndtering for poengfelter
+  // 1. Poengfelter
   const scoreInputs = container.querySelectorAll('.score-input');
   scoreInputs.forEach(input => {
-    // Sanntidsoppdatering av sum ved hvert tastetrykk
     input.addEventListener('input', (e) => {
       const tIdx = parseInt(e.target.dataset.teamIdx, 10);
       const rIdx = parseInt(e.target.dataset.roundIdx, 10);
       const val = e.target.value;
 
       appState.teams[tIdx].scores[rIdx] = val;
-      // Hvis vi endrer poeng, er tabellen ikke lenger garantert ferdig sortert
       appState.isSorted = false;
       appState.teams.forEach(t => t.tieBreakerNote = '');
 
-      // Oppdater direkte sum-visning i samme rad
       const totalSpan = document.getElementById(`total-${tIdx}`);
       if (totalSpan && window.QuizScoring) {
         const newTotal = window.QuizScoring.calculateTeamTotal(appState.teams[tIdx], appState.roundCount);
@@ -218,7 +393,6 @@ function bindTableEvents(container) {
       notifyChange(false);
     });
 
-    // Formatering med komma ved blur (når man forlater feltet)
     input.addEventListener('blur', (e) => {
       const tIdx = parseInt(e.target.dataset.teamIdx, 10);
       const rIdx = parseInt(e.target.dataset.roundIdx, 10);
@@ -238,13 +412,12 @@ function bindTableEvents(container) {
       notifyChange(true);
     });
 
-    // TASTATURNAVIGASJON (Ekstremt viktig krav for quizmaster og projektorbruk!)
     input.addEventListener('keydown', (e) => {
       handleScoreKeydown(e, input);
     });
   });
 
-  // 2. Lagnavn-endring
+  // 2. Lagnavn
   const teamNameInputs = container.querySelectorAll('.team-name-input');
   teamNameInputs.forEach(input => {
     input.addEventListener('input', (e) => {
@@ -262,7 +435,6 @@ function bindTableEvents(container) {
         e.preventDefault();
         focusCell(tIdx - 1, 'name');
       } else if (e.key === 'ArrowRight' && (input.selectionStart === input.value.length || e.key === 'Enter')) {
-        // Hopp til første runde
         e.preventDefault();
         focusCell(tIdx, 0);
       }
@@ -273,7 +445,7 @@ function bindTableEvents(container) {
     });
   });
 
-  // 3. Rundenavn-endring
+  // 3. Rundenavn
   const roundInputs = container.querySelectorAll('.round-title-input');
   roundInputs.forEach(input => {
     input.addEventListener('change', (e) => {
@@ -302,12 +474,6 @@ function bindTableEvents(container) {
   });
 }
 
-/**
- * Tastaturnavigasjon for poengceller:
- * - Enter eller Pil Ned: Hopper rett NED til neste lag i samme runde.
- * - Pil Opp: Hopper rett OPP til forrige lag i samme runde.
- * - Pil Høyre / Venstre: Navigerer horisontalt mellom runder.
- */
 function handleScoreKeydown(e, currentInput) {
   const tIdx = parseInt(currentInput.dataset.teamIdx, 10);
   const rIdx = parseInt(currentInput.dataset.roundIdx, 10);
@@ -317,14 +483,11 @@ function handleScoreKeydown(e, currentInput) {
   if (e.key === 'Enter' || e.key === 'ArrowDown') {
     e.preventDefault();
     if (tIdx + 1 < teamCount) {
-      // Gå til neste lag i samme runde
       focusCell(tIdx + 1, rIdx);
     } else {
-      // På siste lag: loop til toppen av neste runde hvis neste runde finnes
       if (rIdx + 1 < roundCount) {
         focusCell(0, rIdx + 1);
       } else {
-        // Hvis på aller siste celle, bli værende eller behold fokus
         currentInput.select();
       }
     }
@@ -333,11 +496,9 @@ function handleScoreKeydown(e, currentInput) {
     if (tIdx - 1 >= 0) {
       focusCell(tIdx - 1, rIdx);
     } else if (rIdx - 1 >= 0) {
-      // Loop opp til bunnen av forrige runde
       focusCell(teamCount - 1, rIdx - 1);
     }
   } else if (e.key === 'ArrowRight') {
-    // Hvis markøren er helt til høyre i feltet, hopp til neste runde
     if (currentInput.selectionStart === currentInput.value.length) {
       if (rIdx + 1 < roundCount) {
         e.preventDefault();
@@ -345,7 +506,6 @@ function handleScoreKeydown(e, currentInput) {
       }
     }
   } else if (e.key === 'ArrowLeft') {
-    // Hvis markøren er helt til venstre i feltet, hopp til forrige runde eller lagnavn
     if (currentInput.selectionStart === 0 && currentInput.selectionEnd === 0) {
       e.preventDefault();
       if (rIdx - 1 >= 0) {
@@ -357,9 +517,6 @@ function handleScoreKeydown(e, currentInput) {
   }
 }
 
-/**
- * Setter fokus på spesifikk celle i tabellen
- */
 function focusCell(teamIdx, target) {
   if (teamIdx < 0 || teamIdx >= appState.teams.length) return;
 
@@ -378,9 +535,6 @@ function focusCell(teamIdx, target) {
   }
 }
 
-/**
- * Handlinger: Legg til lag
- */
 function addTeam() {
   if (!appState) return;
   saveUndoSnapshot();
@@ -399,15 +553,11 @@ function addTeam() {
   renderTable();
   notifyChange(true);
 
-  // Sett fokus direkte på det nye lagets navn
   setTimeout(() => {
     focusCell(appState.teams.length - 1, 'name');
   }, 50);
 }
 
-/**
- * Handlinger: Slett lag
- */
 function deleteTeam(tIdx) {
   if (!appState || tIdx < 0 || tIdx >= appState.teams.length) return;
   const team = appState.teams[tIdx];
@@ -423,9 +573,6 @@ function deleteTeam(tIdx) {
   notifyChange(true);
 }
 
-/**
- * Handlinger: Legg til ny runde
- */
 function addRound() {
   if (!appState) return;
   saveUndoSnapshot();
@@ -446,9 +593,6 @@ function addRound() {
   notifyChange(true);
 }
 
-/**
- * Handlinger: Fjern runde
- */
 function deleteRound(rIdx) {
   if (!appState || appState.roundCount <= 1) {
     alert('Du må ha minst én runde i quizen.');
@@ -456,8 +600,6 @@ function deleteRound(rIdx) {
   }
 
   const roundTitle = appState.roundNames[rIdx] || `Runde ${rIdx + 1}`;
-  
-  // Sjekk om det finnes poeng i runden
   let hasScores = false;
   appState.teams.forEach(team => {
     if (team.scores && team.scores[rIdx] && team.scores[rIdx].trim() !== '') {
@@ -485,10 +627,7 @@ function deleteRound(rIdx) {
   notifyChange(true);
 }
 
-/**
- * Handlinger: Sorter etter poeng med tie-breaker
- */
-function sortTeams() {
+function sortTeams(withConfetti = true) {
   if (!appState || !window.QuizScoring) return;
   saveUndoSnapshot();
 
@@ -498,11 +637,12 @@ function sortTeams() {
 
   renderTable();
   notifyChange(true);
+
+  if (withConfetti && window.QuizConfetti) {
+    window.QuizConfetti.launchConfetti();
+  }
 }
 
-/**
- * Handlinger: Nullstill alle poeng (behold lag og runder)
- */
 function clearAllScores() {
   if (!appState) return;
   const ok = window.confirm('Vil du nullstille alle poeng til blankt? Lagene og rundene beholdes.');
@@ -552,5 +692,18 @@ window.QuizSpreadsheet = {
   addRound,
   deleteRound,
   sortTeams,
-  clearAllScores
+  clearAllScores,
+  setViewFilter,
+  getViewFilter,
+  set2ColumnLayout,
+  get2ColumnLayout,
+  setPresentationMode,
+  getPresentationMode,
+  setHideLastRound,
+  getHideLastRound,
+  setPage,
+  getPage,
+  getTotalPages,
+  nextPage,
+  prevPage
 };

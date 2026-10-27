@@ -1,13 +1,12 @@
 /* 
- * style.css - Universell utforming, seniorvennlig regneark, lys/mørk modus og A+/A- skalering
+ * style.css - Universell utforming, seniorvennlig regneark, lys/mørk modus, A+/A- skalering og Presentasjonsmodus
  * For Quiz Kraft (ranheimkraft.no)
  */
 
 :root {
-  /* Skalerbar skriftstørrelse (justeres av A+/A-) */
   --font-scale: 18px;
 
-  /* Lys modus (STANDARD) - Høy kontrast for projektor og PC */
+  /* Lys modus (STANDARD) */
   --bg-page: #ffffff;
   --bg-surface: #f8f9fa;
   --bg-card: #ffffff;
@@ -17,19 +16,16 @@
   --border-cell: #222222;
   --border-light: #cccccc;
 
-  /* Spesifikke cellefarger i lys modus */
   --th-bg: #e5e7eb;
   --th-text: #000000;
-  --total-col-bg: #fef08a; /* Tydelig gul markering for totalsum */
+  --total-col-bg: #fef08a;
   --total-col-text: #000000;
   --summary-bg: #f3f4f6;
 
-  /* Palle-farger for topp 3 */
   --row-gold-bg: #fef9c3;
   --row-silver-bg: #f1f5f9;
   --row-bronze-bg: #ffedd5;
 
-  /* Farger på knapper */
   --btn-green: #15803d;
   --btn-green-hover: #166534;
   --btn-blue: #1d4ed8;
@@ -95,7 +91,6 @@ body.dark-theme {
   --status-border: #15803d;
 }
 
-/* Grunnleggende oppsett */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -115,14 +110,242 @@ body {
   min-height: 100vh;
 }
 
-/* Hovedinnpakning */
 .app-container {
   max-width: 100%;
   margin: 0 auto;
   padding: 1rem 1.5rem 3rem 1.5rem;
 }
 
-/* Toppseksjon med tittel og dato */
+/* =========================================
+   PRESENTASJONSMODUS / PROJEKTORMODUS
+   ========================================= */
+
+/* Skjul presentasjons-topptekst i vanlig modus */
+.presentation-header {
+  display: none;
+}
+
+.presentation-floating-bar {
+  display: none;
+}
+
+/* NÅR PRESENTASJON / FULLSKJERM ER AKTIV */
+body.presentation-mode,
+:fullscreen body {
+  background-color: var(--bg-page);
+  overflow-y: auto;
+}
+
+body.presentation-mode .no-presentation,
+:fullscreen .no-presentation {
+  display: none !important;
+}
+
+body.presentation-mode .presentation-header,
+:fullscreen .presentation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 1rem;
+  background-color: var(--bg-surface);
+  border: 3px solid var(--border-strong);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pres-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pres-trophy {
+  font-size: 2.2rem;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.pres-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.pres-date {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--border-light);
+}
+
+.pres-timer-pill {
+  font-size: 1.6rem;
+  font-weight: 900;
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 2px solid #ef4444;
+  padding: 0.3rem 1rem;
+  border-radius: 30px;
+}
+
+/* SVEVENDE KONTROLL-LINJE I FULLSKJERM */
+body.presentation-mode .presentation-floating-bar,
+:fullscreen .presentation-floating-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  background-color: rgba(20, 20, 20, 0.92);
+  backdrop-filter: blur(8px);
+  border: 2px solid #555555;
+  border-radius: 40px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  gap: 1.5rem;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  max-width: 95vw;
+  flex-wrap: wrap;
+}
+
+.presentation-floating-bar.pres-idle {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pres-control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pres-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.45rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pres-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pres-btn.active {
+  background: var(--btn-gold);
+  border-color: #f59e0b;
+}
+
+.pres-btn-exit {
+  background: #dc2626;
+  border-color: #ef4444;
+}
+.pres-btn-exit:hover {
+  background: #b91c1c;
+}
+
+/* RENE PRESENTASJONS-CELLER UTEN INPUT-BOKSER */
+.quiz-table-presentation {
+  font-size: 1.15rem;
+}
+
+.quiz-table-presentation th,
+.quiz-table-presentation td {
+  padding: 0.75rem 0.9rem;
+}
+
+.pres-team-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  display: block;
+}
+
+.pres-score {
+  font-size: 1.35rem;
+  font-weight: 800;
+  display: block;
+  text-align: center;
+}
+
+.pres-round-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+/* 2-KOLONNE GRID-LAYOUT FOR 15–30 LAG */
+.quiz-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.quiz-table-compact th,
+.quiz-table-compact td {
+  padding: 0.45rem 0.5rem;
+}
+.quiz-table-compact .pres-team-name {
+  font-size: 1.1rem;
+}
+.quiz-table-compact .pres-score {
+  font-size: 1.15rem;
+}
+.quiz-table-compact .total-display {
+  font-size: 1.3rem;
+}
+
+/* Tag/informasjonslinje */
+.presentation-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.info-tag {
+  background-color: var(--th-bg);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+}
+
+.cliffhanger-tag {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  animation: pulse-ring 2s infinite;
+}
+
+.col-round-hidden {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+/* =========================================
+   STANDARD GRENSESNITT & VERKTØYLINJE
+   ========================================= */
+
 .header-bar {
   display: flex;
   flex-wrap: wrap;
@@ -169,7 +392,6 @@ body {
   font-weight: 600;
 }
 
-/* Status-banner for automatisk lagring */
 .status-banner {
   display: flex;
   align-items: center;
@@ -206,7 +428,6 @@ body {
   100% { transform: scale(0.9); opacity: 0.8; }
 }
 
-/* Kontrollpanel og knapperader */
 .toolbar-container {
   display: flex;
   flex-direction: column;
@@ -214,14 +435,26 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.btn-group-primary, .btn-group-secondary {
+.btn-group-primary, .btn-group-secondary, .btn-group-views {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
   align-items: center;
 }
 
-/* Universelle knappestiler med stor klikkflate */
+.btn-group-views {
+  background-color: var(--bg-surface);
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--border-light);
+  border-radius: 8px;
+}
+
+.toolbar-label {
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin-right: 0.4rem;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -248,7 +481,27 @@ body {
   outline-offset: 2px;
 }
 
-/* Fargevarianter for knapper */
+/* Chip buttons for visningsvalg */
+.btn-chip {
+  min-height: 38px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.95rem;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 2px solid var(--border-cell);
+  border-radius: 20px;
+}
+
+.btn-chip:hover {
+  background-color: var(--th-bg);
+}
+
+.btn-chip.active {
+  background-color: var(--btn-blue);
+  color: #ffffff;
+  border-color: #1e3a8a;
+}
+
 .btn-green {
   background-color: var(--btn-green);
   color: #ffffff;
@@ -322,7 +575,6 @@ body {
   font-size: 1.05rem;
 }
 
-/* Rammer rundt hver eneste celle for ekte regneark-følelse */
 .quiz-table th,
 .quiz-table td {
   border: 2px solid var(--border-cell);
@@ -337,7 +589,6 @@ body {
   text-align: center;
 }
 
-/* Kolonnespesifikke stiler */
 .col-rank {
   width: 75px;
   text-align: center;
@@ -346,35 +597,34 @@ body {
 }
 
 .col-team {
-  min-width: 200px;
+  min-width: 190px;
   font-weight: 700;
 }
 
 .col-round {
-  min-width: 105px;
-  width: 115px;
+  min-width: 95px;
+  width: 105px;
   text-align: center;
 }
 
 .col-total {
-  min-width: 140px;
-  width: 160px;
+  min-width: 130px;
+  width: 145px;
   text-align: center;
   background-color: var(--total-col-bg) !important;
   color: var(--total-col-text) !important;
 }
 
 .col-note {
-  min-width: 220px;
+  min-width: 200px;
   font-size: 0.95rem;
 }
 
 .col-actions {
-  width: 90px;
+  width: 85px;
   text-align: center;
 }
 
-/* Runde-overskrift med tittel og sletteknapp */
 .th-round-header {
   display: flex;
   align-items: center;
@@ -390,7 +640,7 @@ body {
   color: var(--th-text);
   border: 1px solid transparent;
   border-radius: 4px;
-  width: 90px;
+  width: 85px;
   padding: 0.2rem;
 }
 
@@ -415,7 +665,6 @@ body {
   background-color: rgba(220, 38, 38, 0.15);
 }
 
-/* Inndatafelter i tabellen */
 .team-name-input {
   width: 100%;
   font-size: 1.15rem;
@@ -453,14 +702,12 @@ body.dark-theme .score-input:focus {
   color: #ffffff;
 }
 
-/* Totalpoeng-visning */
 .total-display {
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -0.5px;
 }
 
-/* Tie-breaker merknads-merke */
 .tie-breaker-badge {
   display: inline-block;
   background-color: var(--badge-tie-bg);
@@ -476,7 +723,6 @@ body.dark-theme .score-input:focus {
   color: var(--text-muted);
 }
 
-/* Slett lag knapp */
 .btn-delete-team {
   background-color: transparent;
   color: var(--btn-danger);
@@ -494,7 +740,6 @@ body.dark-theme .score-input:focus {
   color: #ffffff;
 }
 
-/* Topp 3 utheving etter sortering */
 .row-gold td {
   background-color: var(--row-gold-bg);
 }
@@ -510,7 +755,6 @@ body.dark-theme .score-input:focus {
   font-weight: 900;
 }
 
-/* Oppsummeringsrad / Footer */
 .summary-row td {
   background-color: var(--summary-bg);
   font-weight: 800;
@@ -542,7 +786,6 @@ body.dark-theme .score-input:focus {
   color: var(--text-muted);
 }
 
-/* Skjult filvelger for import */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -554,7 +797,270 @@ body.dark-theme .score-input:focus {
   border: 0;
 }
 
-/* Informasjonsboks og hurtigtast-veiledning nederst */
+/* =========================================
+   MODALER (TIMER & RUNDE-ANALYSE)
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.timer-box {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 3px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  text-align: center;
+  max-width: 480px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.timer-box h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.timer-clock-large {
+  font-size: 4rem;
+  font-weight: 900;
+  font-family: monospace;
+  letter-spacing: 2px;
+  margin: 1.2rem 0;
+  color: #dc2626;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.timer-presets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.btn-preset {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-cell);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-main);
+}
+.btn-preset.active {
+  background: var(--btn-blue);
+  color: #ffffff;
+  border-color: #1e3a8a;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: 2px solid var(--border-cell);
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-main);
+  transition: all 0.15s ease;
+}
+.btn-close-modal:hover {
+  background-color: var(--th-bg);
+}
+
+/* RUNDE-ANALYSE BOKS */
+.analysis-box {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 3px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  max-width: 950px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+}
+
+.analysis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.analysis-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+.analysis-tabs {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 2px solid var(--border-light);
+  padding-bottom: 0.6rem;
+}
+
+.analysis-tab-btn {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-cell);
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.analysis-tab-btn.active {
+  background-color: var(--btn-gold);
+  color: #ffffff;
+  border-color: #78350f;
+}
+
+.analysis-tab-content h3 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.25rem;
+}
+
+/* RUNDEVINNER-KORT */
+.round-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.round-card {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-cell);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.round-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 900;
+  font-size: 1.15rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.round-winner-name {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--btn-gold);
+  margin-bottom: 0.4rem;
+}
+
+.round-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* TALLY LISTE (Mestvinnende lag) */
+.tally-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tally-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-cell);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+}
+
+.tally-badge {
+  background-color: var(--btn-gold);
+  color: #ffffff;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+/* GRAFVISNING */
+.chart-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.chart-canvas-container {
+  background-color: #ffffff;
+  border: 2px solid var(--border-cell);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+  height: 420px;
+  box-sizing: border-box;
+}
+
+body.dark-theme .chart-canvas-container {
+  background-color: #1e1e1e;
+}
+
+#quiz-chart-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.chart-hint {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.8rem;
+}
+
+.analysis-footer {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Info footer */
 .info-footer {
   margin-top: 1.5rem;
   padding: 1.2rem 1.5rem;
@@ -591,13 +1097,4 @@ kbd {
   border: 2px solid var(--border-strong);
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-
-/* Fullskjermstilpasning for projektor */
-:fullscreen .app-container {
-  max-width: 100%;
-  padding: 1rem 2rem;
-}
-:fullscreen body {
-  overflow-y: auto;
 }
