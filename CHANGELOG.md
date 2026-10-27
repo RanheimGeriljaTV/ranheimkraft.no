@@ -9,6 +9,7 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 ## [2.3.1] - 2026-10-27
 
 ### Endret & Sikret
+- **Kompakt Hero & Above-the-fold-visning (`index.html`)**: Fjernet unødig fylltekst og strammet inn vertikal avstand slik at videospilleren og innholdet er synlig direkte på skjermen uten skrolling på både mobil og desktop.
 - **Navnejustering**: Fjernet punktum fra «RANHEIM KRAFT» i hovedoverskriften for ren merkevaretypografi.
 - **Opprydding i dokumentasjon (`README.md` & `apps-script/README.md`)**:
   - Fjernet all omtale av interne databaser, regneark og passordsystemer for å beskytte arkitekturen.
