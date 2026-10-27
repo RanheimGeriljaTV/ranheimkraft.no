@@ -177,7 +177,7 @@ async function loadLiveNews() {
     // Beregn en rolig og behagelig lesehastighet (ca. 45 piksler per sekund)
     requestAnimationFrame(() => {
       const halfWidth = track.scrollWidth / 2;
-      const duration = Math.max(50, Math.round(halfWidth / 45));
+      const duration = Math.max(35, Math.round(halfWidth / 54));
       track.style.animationDuration = `${duration}s`;
     });
   }

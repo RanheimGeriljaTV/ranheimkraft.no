@@ -124,7 +124,7 @@
 .ticker-content {
   display: inline-flex;
   white-space: nowrap;
-  animation: ticker-slide 95s linear infinite; /* Rolig standard, overstyres dynamisk av JS */
+  animation: ticker-slide 75s linear infinite; /* Rolig standard, overstyres dynamisk av JS */
   will-change: transform;
 }
 

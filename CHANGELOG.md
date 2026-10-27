@@ -6,6 +6,17 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.6.2] - 2026-10-27
+
+### Endret & Forbedret
+- **Verktøyprioritering & Revisjonsmodus (`index.html`, `quiz.html`, `galleri.html`)**:
+  - Flyttet **Quiz Kraft** og **QR Kraft** til henholdsvis plass 01 og 02 både i hovedoversikten på forsiden og i toppmenyen.
+  - Gjort **Eliteserien Fantasy Hub** og **Premier League FPL** midlertidig ikke-klikkbare med «Under revisjon»-merke mens beregningene gjennomgås.
+- **Justert nyhetstempo (+20 % fart) (`assets/main.js`, `assets/style.css`)**:
+  - Økt hastigheten på nyhetsstripen med 20 % (til ca. 54 px/s) for bedre fremdrift, med bevart behagelig lesbarhet og hover/touch-pause.
+
+---
+
 ## [2.6.1] - 2026-10-27
 
 ### Endret & Forbedret

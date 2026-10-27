@@ -54,11 +54,11 @@
         <span class="text-white font-bold tracking-wider font-syne uppercase text-sm">Ranheim Kraft</span>
       </div>
       <div class="flex items-center gap-4 sm:gap-5 text-zinc-400 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-[11px] sm:text-xs">
-        <a href="galleri.html" data-umami-event="header_galleri_click" class="hover:text-white transition">Bildegalleri</a>
-        <a href="eliteserien.html" data-umami-event="header_es_click" class="hover:text-white transition">Eliteserien</a>
-        <a href="fpl.html" data-umami-event="header_fpl_click" class="hover:text-white transition">Premier League</a>
-        <a href="qr.html" data-umami-event="header_qr_click" class="text-cyan-400 hover:text-white transition font-medium">QR Kraft</a>
         <a href="quiz.html" data-umami-event="header_quiz_click" class="text-amber-400 hover:text-white transition font-medium">Quiz Kraft</a>
+        <a href="qr.html" data-umami-event="header_qr_click" class="text-cyan-400 hover:text-white transition font-medium">QR Kraft</a>
+        <a href="galleri.html" data-umami-event="header_galleri_click" class="hover:text-white transition">Bildegalleri</a>
+        <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Eliteserien</span>
+        <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Premier League</span>
         <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
       </div>
     </nav>
@@ -168,29 +168,35 @@
       <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">03 / Verktøy &amp; Kode</span>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
-        <a href="eliteserien.html" data-umami-event="card_es_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-white transition">01</span>
-          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Eliteserien Fantasy Hub</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">Troppsoptimalisering, automatisk bytteberegning og livedashbord.</p>
-        </a>
-
-        <a href="fpl.html" data-umami-event="card_fpl_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-white transition">02</span>
-          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Premier League FPL</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">Matematisk optimaliseringsverktøy med terminliste og Panini-kort.</p>
+        <a href="quiz.html" data-umami-event="card_quiz_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-400/40 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-amber-400 transition">01</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Quiz Kraft</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Interaktivt regneark og poengtavle for quizkvelder med tie-breaker og flerarks Excel-eksport.</p>
         </a>
 
         <a href="qr.html" data-umami-event="card_qr_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-400/40 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-cyan-400 transition">03</span>
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-cyan-400 transition">02</span>
           <h3 class="text-lg font-syne font-bold text-white group-hover:underline">QR Kraft</h3>
           <p class="text-xs text-zinc-400 leading-relaxed">Gratis, reklamefri QR-kodegenerator med gradienter, WiFi-skilt, vCard og logo.</p>
         </a>
 
-        <a href="quiz.html" data-umami-event="card_quiz_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-400/40 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-amber-400 transition">04</span>
-          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Quiz Kraft</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">Interaktivt regneark og poengtavle for quizkvelder med tie-breaker og Excel-eksport.</p>
-        </a>
+        <div class="p-6 rounded-2xl bg-white/[0.015] border border-white/5 opacity-60 cursor-not-allowed select-none space-y-3 relative group" title="Siden er midlertidig under revisjon">
+          <div class="flex items-center justify-between">
+            <span class="font-syne text-2xl font-bold text-zinc-600">03</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 border border-white/10 uppercase tracking-wider">Under revisjon</span>
+          </div>
+          <h3 class="text-lg font-syne font-bold text-zinc-300">Eliteserien Fantasy Hub</h3>
+          <p class="text-xs text-zinc-500 leading-relaxed">Troppsoptimalisering, automatisk bytteberegning og livedashbord.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white/[0.015] border border-white/5 opacity-60 cursor-not-allowed select-none space-y-3 relative group" title="Siden er midlertidig under revisjon">
+          <div class="flex items-center justify-between">
+            <span class="font-syne text-2xl font-bold text-zinc-600">04</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 border border-white/10 uppercase tracking-wider">Under revisjon</span>
+          </div>
+          <h3 class="text-lg font-syne font-bold text-zinc-300">Premier League FPL</h3>
+          <p class="text-xs text-zinc-500 leading-relaxed">Matematisk optimaliseringsverktøy med terminliste og Panini-kort.</p>
+        </div>
       </div>
     </section>
 
