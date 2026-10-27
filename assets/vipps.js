@@ -7,7 +7,7 @@
    1. KONFIGURASJONSVARIABLER
    ========================================================================= */
 const VIPPS_KODE = '3153MT';
-const VIPPS_BOKS_URL = 'https://qr.vipps.no/box/3153MT/pay-in';
+const VIPPS_BOKS_URL = 'https://qr.vipps.no/box/2c57f671-a1a6-4059-9ecd-6db37065517b/pay-in';
 
 /* =========================================================================
    2. RENDERING AV VIPPS-KOMPONENT
