@@ -151,7 +151,7 @@ function initQuizApp() {
   applyTheme(savedTheme);
 
   if (btnToggleTheme) {
-    btnToggleTheme.addEventListener("click", () => {
+    btnToggleTheme.addEventListener('click', () => {
       const isDark = document.body.classList.contains('dark-theme');
       const nextTheme = isDark ? 'light' : 'dark';
       applyTheme(nextTheme);

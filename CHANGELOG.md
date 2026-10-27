@@ -9,6 +9,10 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 ## [2.5.0] - 2026-10-27
 
 ### Lagt til
+- **Felles Auto-Sync for subprosjekter (`.github/workflows/sync-subprojects.yml` & `scripts/sync_subprojects.py`)**:
+  - Helautomatisk synkronisering av frittstående klientside-verktøy (**Quiz Kraft** og **QR Kraft**) mot deres respektive oppstrømsrepoer.
+  - Kjører automatisk hver 6. time (cron `0 */6 * * *`) eller on-demand via «Run workflow» i GitHub Actions.
+  - Fremtidssikker arkitektur: Nye prosjekter legges til med noen få linjer i `SUBPROJECTS`-listen.
 - **Quiz Kraft integrasjon (`quiz.html` & `assets/quiz/`)**:
   - Fullverdig integrasjon av **Quiz Kraft** – interaktivt regneark og poengtavle for quizkvelder.
   - **Universell & seniorvennlig utforming**: Lys modus som standard med kullsvarte tall og linjer for maksimal lesbarhet på projektor, samt mørk modus for kveldsbelysning.

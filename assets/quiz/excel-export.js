@@ -1,6 +1,6 @@
 /**
  * excel-export.js - Generering av ekte Microsoft Excel-arbeidsbøker (.xlsx)
- * Bruker lokalt pakket SheetJS (vendor/xlsx.full.min.js) for 100 % offline drift.
+ * Bruker lokalt pakket SheetJS (assets/quiz/xlsx.full.min.js) for 100 % offline drift.
  * For Quiz Kraft (ranheimkraft.no)
  */
 
