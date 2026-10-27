@@ -148,6 +148,8 @@
       <div class="flex items-center gap-4">
         <a href="index.html" class="hover:text-white transition">Hovedside</a>
         <span>&bull;</span>
+        <button type="button" onclick="openFeedbackModal()" class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400 hover:text-white"><span>🐛</span> <span>Rapporter feil</span></button>
+        <span>&bull;</span>
         <a href="changelog.html" class="hover:text-white transition">Changelog</a>
         <span>&bull;</span>
         <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
@@ -678,6 +680,7 @@
     // Initialize
     loadGalleries();
   </script>
+  <script defer src="assets/feedback.js"></script>
   <script defer src="assets/vipps.js"></script>
 </body>
 </html>

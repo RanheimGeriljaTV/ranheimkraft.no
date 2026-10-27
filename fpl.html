@@ -262,6 +262,8 @@
           <span class="opacity-80 font-mono text-[9px]">3153MT</span>
         </a>
         <span class="text-slate-600">&bull;</span>
+        <button type="button" onclick="openFeedbackModal()" class="hover:text-white text-slate-400 transition flex items-center gap-1 cursor-pointer text-[10px] font-mono"><span>🐛</span> <span>Rapporter feil</span></button>
+        <span class="text-slate-600">&bull;</span>
         <span>Tilkoblet kilde:</span>
         <select id="server-selector" onchange="changeServerSource()" class="bg-black/60 border border-white/10 rounded px-2 py-0.5 text-slate-300 text-[10px] focus:outline-none focus:border-neon-cyan">
           <option value="cloud">🌐 Streamlit Sky-app (Produksjon)</option>
@@ -502,5 +504,6 @@
     // Kjør oppstart
     document.addEventListener('DOMContentLoaded', initApp);
   </script>
+  <script defer src="assets/feedback.js"></script>
 </body>
 </html>

@@ -6,6 +6,19 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.4.0] - 2026-10-27
+
+### Lagt til
+- **Serverløs & spam-sikker feilrapportering (`assets/feedback.js`)**:
+  - Integrert modal-skjema for feilrapporter og tilbakemeldinger uten behov for egen server.
+  - **Trygg for offentlig GitHub**: E-postadresser skjules fullstendig via Web3Forms API og konfigurerbar `FORM_ACCESS_KEY`.
+  - **Spam-beskyttelse**: Usynlig honeypot-felt (`botcheck`) blokkerer automatiserte spam-roboter.
+  - **Automatisk diagnostikk**: Skjulte felter fanger automatisk opp URL, nettleserinfo og skjermoppløsning for rask feilsøking.
+  - **Sekundær GitHub-lenke**: Direkte hurtiglenke til å opprette ferdig utfylt GitHub Issue.
+  - **Diskret footer-knapp**: Tilgjengelig på tvers av alle fem sider (`index.html`, `galleri.html`, `changelog.html`, `eliteserien.html` og `fpl.html`).
+
+---
+
 ## [2.3.1] - 2026-10-27
 
 ### Endret & Sikret
