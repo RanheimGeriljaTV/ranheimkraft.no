@@ -6,6 +6,21 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.5.0] - 2026-10-27
+
+### Lagt til
+- **Quiz Kraft integrasjon (`quiz.html` & `assets/quiz/`)**:
+  - Fullverdig integrasjon av **Quiz Kraft** – interaktivt regneark og poengtavle for quizkvelder.
+  - **Universell & seniorvennlig utforming**: Lys modus som standard med kullsvarte tall og linjer for maksimal lesbarhet på projektor, samt mørk modus for kveldsbelysning.
+  - **A+ / A- skriftstørrelsesskalering**: To store knapper for enkel oppskalering av tabellen.
+  - **Smart tastaturnavigasjon & halvpoeng**: Trykk Enter / Pil Ned for å hoppe rett til neste lag i samme runde. Støtter både komma og punktum (`8,5` og `8.5`).
+  - **Sortering med tie-breaker**: Automatisk rangering etter total poengsum og tie-breaker basert på runderesultater bakover.
+  - **Automatisk lagring & filflytting**: `localStorage`-lagring med grønn statuslinje, JSON-eksport/import for å jobbe videre hjemme, og 100 % offline Excel-eksport (.xlsx via SheetJS).
+  - **Fullverdig utskrift & PDF**: `print.css` optimalisert for ren liggende A4-utskrift uten knapper og verktøylinjer.
+  - **Nettstedsnavigasjon**: Integrert med felles toppmeny, Vipps-støtte (`assets/vipps.js`), feilrapporterings-modal (`assets/feedback.js`) og fremhevet i seksjon 3 på forsiden.
+
+---
+
 ## [2.4.0] - 2026-10-27
 
 ### Lagt til

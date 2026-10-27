@@ -1,0 +1,117 @@
+/* 
+ * print.css - Rent og blekkvennlig A4-utskriftsoppsett for Quiz Kraft (ranheimkraft.no)
+ */
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 1cm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  .app-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Skjul alle knapper, menyer, filvelgere og hjelpebokser */
+  .no-print,
+  .site-header,
+  .site-nav,
+  .site-footer,
+  #vipps-widget,
+  #feedback-modal,
+  .toolbar-container,
+  .status-banner,
+  .info-footer,
+  .btn-remove-round,
+  .btn-delete-team,
+  .col-actions {
+    display: none !important;
+  }
+
+  /* Gjør inndatafelter om til ren lesetekst på trykk */
+  .quiz-title-input {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 20pt !important;
+    font-weight: bold !important;
+    color: #000000 !important;
+  }
+
+  .quiz-date-input {
+    border: none !important;
+    padding: 0 !important;
+    font-size: 12pt !important;
+    font-weight: normal !important;
+    color: #000000 !important;
+  }
+
+  .team-name-input,
+  .score-input,
+  .round-title-input {
+    border: none !important;
+    background: transparent !important;
+    color: #000000 !important;
+    font-size: inherit !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .spreadsheet-wrapper {
+    box-shadow: none !important;
+    border: 2px solid #000000 !important;
+  }
+
+  .quiz-table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  .quiz-table th,
+  .quiz-table td {
+    border: 1px solid #000000 !important;
+    padding: 6px 8px !important;
+    color: #000000 !important;
+    background: #ffffff !important;
+  }
+
+  .quiz-table th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .col-total {
+    background-color: #fafafa !important;
+    font-weight: bold !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .row-gold td,
+  .row-silver td,
+  .row-bronze td {
+    background-color: #ffffff !important;
+  }
+
+  .tie-breaker-badge {
+    border: 1px solid #666666 !important;
+    color: #000000 !important;
+    background: #f8f8f8 !important;
+    font-size: 9pt !important;
+    padding: 2px 4px !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#08080a">
+  <title>Quiz Kraft – Interaktivt Quiz-regneark &amp; Poengtavle | Ranheim Kraft</title>
+  <meta name="description" content="Interaktivt Quiz-regneark og poengtavle for Ranheim Kraft. Seniorvennlig, projektorvisning, automatisk lagring, tie-breaker og 100 % offline drift.">
+  <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+
+  <!-- Umami Analytics (Privacy-friendly & Cookieless) -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>
+
+  <!-- Google Fonts: Syne & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          colors: {
+            brand: {
+              blue: '#004b93',
+              cyan: '#00f0ff',
+              dark: '#08080a',
+              vipps: '#ff5b24'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Quiz Kraft Stiler -->
+  <link rel="stylesheet" href="assets/quiz/style.css">
+  <link rel="stylesheet" href="assets/quiz/print.css" media="print">
+
+  <style>
+    /* Lås nettstedsrammen til faste pikselstørrelser så A+/A- kun skalerer selve quizen */
+    .site-header {
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+    }
+    .site-header a, .site-header span {
+      font-size: inherit;
+    }
+    .site-header .brand-title {
+      font-size: 14px !important;
+    }
+    .site-footer {
+      font-size: 12px !important;
+      line-height: 1.5 !important;
+    }
+    .site-footer a, .site-footer span, .site-footer button {
+      font-size: inherit;
+    }
+  </style>
+</head>
+
+<body class="selection:bg-cyan-400 selection:text-black">
+
+  <!-- NETTSTED-TOPPLINJE (Alltid mørk & konsistent med Ranheim Kraft) -->
+  <header class="site-header no-print bg-[#08080a] border-b border-white/10 text-zinc-400 select-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 text-white hover:text-white transition">
+        <img src="assets/logo.png" alt="Ranheim Kraft" class="w-6 h-6 object-contain">
+        <span class="font-syne font-black tracking-tight uppercase brand-title">RANHEIM KRAFT</span>
+      </a>
+      <nav class="flex items-center gap-4 sm:gap-6 font-mono">
+        <a href="index.html" class="hover:text-white transition">Hovedside</a>
+        <a href="galleri.html" class="hover:text-white transition">Galleri</a>
+        <a href="eliteserien.html" class="hover:text-white transition">Eliteserien</a>
+        <a href="fpl.html" class="hover:text-white transition">FPL</a>
+        <a href="qr.html" class="hover:text-white transition">QR Kraft</a>
+        <a href="quiz.html" class="text-cyan-400 font-bold transition">Quiz Kraft</a>
+        <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- SELVE QUIZ KRAFT APPLIKASJONEN -->
+  <div class="app-container">
+    
+    <!-- Toppseksjon med tittel og dato -->
+    <header class="header-bar">
+      <div class="title-group">
+        <input type="text" 
+               id="quiz-title-input" 
+               class="quiz-title-input" 
+               value="Ranheim Quiz" 
+               aria-label="Tittel på quizen" 
+               title="Klikk for å endre tittel på quizen" />
+        <input type="date" 
+               id="quiz-date-input" 
+               class="quiz-date-input" 
+               aria-label="Dato for quizen" 
+               title="Dato for quizen" />
+      </div>
+      
+      <!-- Hjelpetekst for visningsmodus -->
+      <div class="header-actions no-print">
+        <button type="button" id="btn-toggle-fullscreen" class="btn btn-neutral" title="Vis i fullskjerm på projektor eller storskjerm">
+          🖥️ Vis på fullskjerm (Projektor)
+        </button>
+      </div>
+    </header>
+
+    <!-- Trygghets-banner for automatisk lagring -->
+    <div class="status-banner" role="status" aria-live="polite">
+      <div class="status-left">
+        <span class="status-pulse" aria-hidden="true"></span>
+        <span id="storage-status-text">✅ Alt er lagret automatisk på denne maskinen</span>
+      </div>
+      <div class="status-right no-print">
+        <small id="storage-timestamp"></small>
+      </div>
+    </div>
+
+    <!-- Kontrollpanel / Knapperader -->
+    <nav class="toolbar-container no-print" aria-label="Handlinger for quizen">
+      
+      <!-- Hovedknapperad (Lag, Runder, Sortering, Angre) -->
+      <div class="btn-group-primary">
+        <button type="button" id="btn-add-team" class="btn btn-green">
+          ➕ Legg til nytt lag
+        </button>
+        <button type="button" id="btn-add-round" class="btn btn-blue">
+          ➕ Legg til ny runde
+        </button>
+        <button type="button" id="btn-sort-scores" class="btn btn-gold">
+          🏆 Sorter etter poeng (Finn vinner)
+        </button>
+        <button type="button" id="btn-undo" class="btn btn-undo" disabled>
+          ↩️ Angre siste endring
+        </button>
+      </div>
+
+      <!-- Sekundærknapperad (Tekststørrelse, Modus, Filer, Excel, Utskrift) -->
+      <div class="btn-group-secondary">
+        <button type="button" id="btn-font-larger" class="btn btn-outline" title="Gjør all tekst større">
+          <strong>A+</strong> Gjør teksten større
+        </button>
+        <button type="button" id="btn-font-smaller" class="btn btn-outline" title="Gjør all tekst mindre">
+          <strong>A-</strong> Gjør teksten mindre
+        </button>
+        <button type="button" id="btn-toggle-theme" class="btn btn-outline">
+          🌓 Bytt til mørk skjerm
+        </button>
+        <button type="button" id="btn-export-json" class="btn btn-outline" title="Last ned quiz-fil til PC-en for å fortsette hjemme">
+          💾 Lagre quizen på PC-en
+        </button>
+        <button type="button" id="btn-import-json" class="btn btn-outline" title="Hent opp tidligere lagret quiz-fil fra PC-en">
+          📂 Åpne lagret quiz
+        </button>
+        <input type="file" id="file-import-json" accept=".json" class="visually-hidden" aria-label="Velg quiz-fil fra datamaskin">
+        <button type="button" id="btn-export-excel" class="btn btn-outline" title="Last ned en ekte Excel-fil (.xlsx) som kan åpnes i Excel">
+          📊 Last ned til Excel (.xlsx)
+        </button>
+        <button type="button" id="btn-print-table" class="btn btn-outline" title="Skriv ut en ren A4-poengtavle eller lag PDF">
+          🖨️ Skriv ut på papir / Lag PDF
+        </button>
+        <button type="button" id="btn-reset-quiz" class="btn btn-outline" title="Start en ny quiz fra bunnen av">
+          🔄 Start helt ny quiz
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hovedvisning: Regneark Tabell -->
+    <main>
+      <div id="spreadsheet-container" class="spreadsheet-wrapper" role="region" aria-label="Regneark poengoversikt">
+        <!-- Genereres dynamisk av spreadsheet.js -->
+      </div>
+    </main>
+
+    <!-- Hjelp og veiledning for hurtig inntasting -->
+    <footer class="info-footer no-print">
+      <h3>💡 Enkle tips for lynrask inntasting:</h3>
+      <ul>
+        <li><strong>Rask poengføring nedover:</strong> Skriv inn poeng for et lag og trykk <kbd>Enter</kbd> eller <kbd>Pil Ned</kbd> for å hoppe rett ned til neste lag i samme runde.</li>
+        <li><strong>Halvpoeng:</strong> Både komma og punktum fungerer helt likt (f.eks. <code>8,5</code> og <code>8.5</code>).</li>
+        <li><strong>Tie-breaker:</strong> Ved poenglikhet rangerer knappen <em>"Sorter etter poeng"</em> laget med flest poeng i siste spilte runde først.</li>
+        <li><strong>Jobbe videre hjemme:</strong> Trykk <em>"Lagre quizen på PC-en"</em> for å få en fil du kan ta med deg og åpne på din egen maskin med <em>"Åpne lagret quiz"</em>.</li>
+        <li><strong>Fungerer uten internett:</strong> Denne appen og Excel-nedlasting fungerer 100 % frakoblet på en bærbar PC.</li>
+      </ul>
+    </footer>
+
+  </div>
+
+  <!-- BUNNSEKSJON (VIPPS, FEEDBACK, FOOTER) -->
+  <div class="site-footer no-print bg-[#08080a] border-t border-white/10 text-zinc-400 mt-12 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 space-y-6">
+      
+      <!-- VIPPS STØTTE-KOMPONENT -->
+      <div id="vipps-widget"></div>
+
+      <!-- Minimalistisk bunnlinje -->
+      <div class="pt-6 border-t border-white/10 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div>&copy; <span id="year"></span> Ranheim Kraft &bull; All rights reserved.</div>
+        <div class="flex items-center gap-4">
+          <a href="index.html" class="hover:text-white transition">Hovedside</a>
+          <span>&bull;</span>
+          <button type="button" onclick="openFeedbackModal()" class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400 hover:text-white"><span>🐛</span> <span>Rapporter feil</span></button>
+          <span>&bull;</span>
+          <a href="changelog.html" class="hover:text-white transition">Changelog</a>
+          <span>&bull;</span>
+          <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skript og biblioteker (100 % lokalt og offline) -->
+  <script src="assets/quiz/xlsx.full.min.js"></script>
+  <script src="assets/quiz/scoring.js"></script>
+  <script src="assets/quiz/storage.js"></script>
+  <script src="assets/quiz/excel-export.js"></script>
+  <script src="assets/quiz/spreadsheet.js"></script>
+  <script src="assets/quiz/app.js"></script>
+  <script defer src="assets/vipps.js"></script>
+  <script defer src="assets/feedback.js"></script>
+  <script>
+    const yEl = document.getElementById('year');
+    if (yEl) yEl.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
