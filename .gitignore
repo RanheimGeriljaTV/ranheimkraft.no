@@ -1,13 +1,39 @@
-# Environment & Secrets (Never commit secrets!)
+# =========================================================================
+# Sikkerhet, Hemmeligheter & API-nøkler (Aldri commit til GitHub!)
+# =========================================================================
 .env
 .env.*
 !.env.example
-local.properties
-*.pem
+*.env
+*.secret
+*secret*
+*credentials*
+*token*
 *.key
+*.pem
 *.p12
+*.cert
+*.crt
+local.properties
 
-# Python
+# Vipps & Betalingssikkerhet
+*vipps*.json
+*vipps*.env
+*vipps*.key
+*merchant*
+*payment*
+
+# Google Cloud, Apps Script & Backend Secrets
+client_secret*.json
+service_account*.json
+credentials.json
+token.json
+sheets*.json
+*.credentials
+
+# =========================================================================
+# Python & Kjøretidsmiljø
+# =========================================================================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -34,13 +60,17 @@ wheels/
 *.egg
 .pytest_cache/
 
-# Node & Build artifacts
+# =========================================================================
+# Node & Byggeartefakter
+# =========================================================================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Operating System Files
+# =========================================================================
+# Operativsystem- & Editor-filer
+# =========================================================================
 .DS_Store
 .DS_Store?
 ._*
@@ -50,18 +80,22 @@ ehthumbs.db
 Thumbs.db
 Thumbs.db:encryptable
 desktop.ini
-
-# Editor & IDE files
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 
-# Temporary / Scratch & Test files
+# =========================================================================
+# Midlertidige test- og skriptfiler
+# =========================================================================
 *.log
 *.tmp
 *.bak
+test_*.py
 test_*.png
 test_*.jpg
+verify_*.py
+update_*.py
+clean_*.py
 scratch/

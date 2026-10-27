@@ -6,6 +6,19 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.3.1] - 2026-10-27
+
+### Endret & Sikret
+- **Navnejustering**: Fjernet punktum fra «RANHEIM KRAFT» i hovedoverskriften for ren merkevaretypografi.
+- **Opprydding i dokumentasjon (`README.md` & `apps-script/README.md`)**:
+  - Fjernet all omtale av interne databaser, regneark og passordsystemer for å beskytte arkitekturen.
+  - Oppdatert prosjektbeskrivelse, komponenter og filstruktur i tråd med Swiss Kinetic.
+- **Sikkerhetsherding i `.gitignore`**:
+  - Etablert eksplisitte regler mot eksponering av betalings- og Vipps-hemmeligheter (`*vipps*`, `*payment*`, `*merchant*`).
+  - Blokkerer API-nøkler, sertifikater, tjenestekontoer og midlertidige testfiler.
+
+---
+
 ## [2.3.0] - 2026-10-27
 
 ### Lagt til & Forbedret
@@ -26,9 +39,9 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 - **Swiss Kinetic Bildegalleri (\galleri.html\)**:
   - Modernisert hele bildegalleriet til det samme avant-garde sveitsiske designet som forsiden (\Syne\ og \Plus Jakarta Sans\).
   - Fjernet halvtone-mønstre og linse-effekter for et krystallklart, kontrastrikt galleriuttrykk.
-  - Bevart full Google Apps Script-integrasjon mot Google Disk med passordvalidering, modal, fullskjermvisning og samlet ZIP-nedlasting.
+  - Bevart full sikker sky-integrasjon mot Google Disk med passordvalidering, modal, fullskjermvisning og samlet ZIP-nedlasting.
 - **Hero-oppsett & Logo-plassering (\index.html\)**:
-  - Flyttet isbjørnen (\logo.png\) direkte over \RANHEIM KRAFT.\-overskriften og hevet overskriften med redusert toppavstand.
+  - Flyttet isbjørnen (\logo.png\) direkte over \RANHEIM KRAFT\-overskriften og hevet overskriften med redusert toppavstand.
   - Fjernet Trondheim- og koordinattekst (\Trondheim • 63.42° N\) fra toppmenyen.
   - Fjernet dekorativt tekstfyll som «UAVHENGIG STUDIOPORTAL • 2026».
 - **Fjernet MatchPic Culler**:
@@ -88,8 +101,8 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 ## [1.8.0] - 2026-10-26
 
 ### Lagt til
-- **Live Google Disk Bildegalleri**: Koblet `galleri.html` direkte til Google Regneark og Google Disk via Google Apps Script Web App API (`AKfycby...`).
-- **Sanntids gallerioversikt**: Nettsiden henter nå automatisk oppdaterte album, bildelister, datoer og beskrivelser rett fra privat Google Regneark uten behov for nye kodeoppdateringer.
+- **Live Google Disk Bildegalleri**: Koblet `galleri.html` direkte til bildekilden via sikker sky-integrasjon.
+- **Sanntids gallerioversikt**: Nettsiden henter nå automatisk oppdaterte album, bildelister, datoer og beskrivelser rett fra bildekilden uten behov for nye kodeoppdateringer.
 - **Passordsikkerhet & Referrer Policy**: Bildestrømmen er sikret med `referrerpolicy="no-referrer"` på miniatyrer og lightbox for full kompatibilitet med Google Disk, kombinert med passordbeskyttelse.
 
 ---
@@ -181,7 +194,7 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 - **Passordbeskyttet Bildegalleri (`galleri.html`)**: Ny underside for visning av kamp- og lagbilder koblet direkte mot Google Disk.
 - **Flere mapper med egne passord**: Støtte for unike passord per album (f.eks. Ranheim vs Bryne, Ranheim Gatelag).
 - **Lightbox & ZIP-nedlasting**: Fullskjerms bildevisning med berøringssveip og mulighet for å laste ned hele mapper samlet i én ZIP-fil.
-- **Google Apps Script Backend (`apps-script/Code.gs`)**: Dørvakt-skript for sikker passordverifisering og generering av forhåndsvisninger/ZIP uten API-nøkler i frontend.
+- **Sikker tilgangskontroll**: Dørvakt-skript for sikker passordverifisering og generering av forhåndsvisninger/ZIP uten API-nøkler i frontend.
 
 ---
 

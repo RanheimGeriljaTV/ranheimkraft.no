@@ -1,55 +1,65 @@
 # Ranheim Kraft (ranheimkraft.no)
 
-Personlig portal og launchpad for prosjekter, kode-eksperimenter, webapplikasjoner og kreative konsepter under domenet `ranheimkraft.no`.
+Offisiell portal og samlingssted for **Ranheim Kraft** – uavhengig medieproduksjon, arrangementsgallerier og spesialiserte fotballberegninger fra fjæra.
 
-* **Offisiell URL:** [https://ranheimkraft.no/](https://ranheimkraft.no/)
-* **GitHub Pages URL:** [https://ranheimgeriljatv.github.io/ranheimkraft.no/](https://ranheimgeriljatv.github.io/ranheimkraft.no/)
-* **Offisielt GitHub Repo:** [RanheimGeriljaTV/ranheimkraft.no](https://github.com/RanheimGeriljaTV/ranheimkraft.no)
+* **Offisiell nettside:** [https://ranheimkraft.no/](https://ranheimkraft.no/)
+* **GitHub Pages:** [https://ranheimgeriljatv.github.io/ranheimkraft.no/](https://ranheimgeriljatv.github.io/ranheimkraft.no/)
+* **GitHub Organisasjon:** [RanheimGeriljaTV](https://github.com/RanheimGeriljaTV)
 
-## Fremhevede Prosjekter
-* **[MatchPic Culler & Renamer](https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer)**: AI-drevet skrivebordsverktøy for sportsfotografering, utvelgelse og omdøping av kampbilder.
-* **[Eliteserien Fantasy Hub](eliteserien.html)**: Matematisk troppsoptimering for Eliteserien Fantasy med PuLP MILP solver, interaktive banekort, sanntids poengoppdatering og minne for Manager ID.
-* **[FPL Optimizer & Hub](fpl.html)**: Matematisk troppsoptimering for Fantasy Premier League med PuLP MILP solver, FDR-oversikt og FUT-spillerkort.
-* **[Passordbeskyttet Bildegalleri](galleri.html)**: Dedikert galleri-underside koblet direkte til Google Disk. Støtter flere mapper med egne passord, fullskjerm-lightbox med sveip og ett-klikks ZIP-nedlasting av hele album.
-* **[Endringslogg](changelog.html)**: Dedikert changelog-side som dokumenterer alle versjoner, oppdateringer og forbedringer over tid.
+---
 
-## Estetikk & Stilretning
-* **Live News Ticker i Ranheim-gradient:** Heldekkende nyhetsticker øverst i dyp Ranheim-blå gradient med hurtig responsiv scrolling (22s desktop, 16s mobil), ren typografi og ferske nyheter fra [ranheimfotball.no](https://www.ranheimfotball.no). Oppdateres automatisk via GitHub Actions og klient-side `assets/news.json`. Pauser ved touch/hover.
-* **Minimalistisk Glassmorphism:** Frostet glass (`backdrop-blur`), lysbrytende rammer, semitransparente overflater og ren typografi.
-* **Glassmorphism:** Frostet glass (`backdrop-blur`), lysbrytende rammer og semitransparente overflater.
-* **Anamorphic Flares:** Horisontale, filmiske linseglimt i cyan og neon-pink.
-* **Minimalisme:** Bento-grid med ryddig typografi (*Space Grotesk*) og god struktur.
-* **Mobil-først:** Kompakt header, sveipbar filterrad, store trykkflater (min. 44px), safe-area-støtte for iPhone og lettere rendering på telefon.
-* **Ranheim Gerilja TV Spotlight:** Integrert YouTube-avspiller med terning-knapp for tilfeldig video fra arkivet til `@RanheimGeriljaTV`.
+## 🧭 Innhold og seksjoner
 
-## Filstruktur
+* **[Hovedside](https://ranheimkraft.no/) (`index.html`)**: Sentral hub bygget i avant-garde Swiss Kinetic-design, med isbjørn-maskot, integrert YouTube-kino for `@RanheimGeriljaTV` med tilfeldig terning-velger, og hurtiginnganger.
+* **[Bildegalleri](https://ranheimkraft.no/galleri.html) (`galleri.html`)**: Arrangements- og oppdragsgalleri for foto, turer og prosjekter. Bildene vises i full oppløsning med fullskjerm-lightbox, touch-sveip på mobil og samlet ZIP-nedlasting.
+* **[Eliteserien Fantasy Hub](https://ranheimkraft.no/eliteserien.html) (`eliteserien.html`)**: Matematisk troppsoptimalisering for Eliteserien Fantasy med automatisk overgangsberegning og sanntidslivedashbord.
+* **[Premier League FPL Hub](https://ranheimkraft.no/fpl.html) (`fpl.html`)**: Matematisk optimaliseringsverktøy for Fantasy Premier League med terminlisteberegning og spilleranalyser.
+* **[Endringslogg](https://ranheimkraft.no/changelog.html) (`changelog.html`)**: Fullstendig tidslinje over versjoner, forbedringer og funksjoner.
+* **Vipps Boks (`assets/vipps.js`)**: Frivillig støttefunksjon basert på Vipps Boks for privatpersoner (boksnummer `3153MT`).
+
+---
+
+## 🎨 Design & Teknologi
+
+* **Swiss Kinetic Formspråk:** Krystallklart, monokromt uttrykk med `Syne` (display) og `Plus Jakarta Sans` (brødtekst).
+* **Mobil-først:** Full støtte for iOS Safari (inkl. notch og safe-area-insets) samt Android Chrome og Firefox uten horisontal skrolling.
+* **Personvern & Sikkerhet:**
+  * Cookiefri, GDPR-vennlig besøksstatistikk via Umami Analytics.
+  * Ingen sensitive API-nøkler eller passord i frontend.
+  * Sikker ekstern lenkehåndtering med `rel="noopener noreferrer"`.
+
+---
+
+## 📁 Filstruktur
+
 ```text
 ranheimkraft.no/
-├── .gitignore                   # Ignorerte filer (hemmeligheter, logger, OS-filer)
-├── assets/                      # Sentral ressursmappe for media og ikoner
-│   ├── 2560px-Ranheim_IL_logo.png
-│   ├── Ranheim_IL_logo_800.webp
-│   ├── Ranheim_IL_logo.webp
-│   ├── Ranheim_gerilja_tv_B.png
-│   ├── Ranheim_gerilja_tv_B.webp
-│   ├── logo.png
-│   ├── logosove.png
+├── .gitignore                   # Sikkerhet, ignorering av hemmeligheter og miljøfiler
+├── assets/                      # Ressurser, media, stiler og skript
+│   ├── logo.png                 # Isbjørn-maskot (våken)
+│   ├── logosove.png             # Isbjørn-maskot (sovende)
 │   ├── polarICON.ico            # Favicon
-│   └── news.json                # Ferskeste nyheter fra Ranheim Fotball
-├── apps-script/                 # Google Apps Script backend og oppsettsguide
-│   ├── Code.gs                  # Apps Script dørvakt & Disk-integrasjon
-│   └── README.md                # 3-minutters oppsettsveiledning
-├── changelog.html               # Offisiell endringslogg (Nettside)
-├── galleri.html                 # Passordbeskyttet bildegalleri (Google Disk)
-├── index.html                   # Hovedside / Prosjektportal
-├── CHANGELOG.md                 # Markdown endringslogg (Keep a Changelog)
-└── README.md                    # Dokumentasjon
+│   ├── style.css                # Felles stilark og typografi
+│   ├── main.js                  # YouTube Cinema API og mediespiller
+│   └── vipps.js                 # Sentral Vipps Boks-komponent
+├── changelog.html               # Endringslogg (Swiss Kinetic)
+├── eliteserien.html             # Eliteserien Fantasy Hub
+├── fpl.html                     # Premier League FPL Hub
+├── galleri.html                 # Bildegalleri
+├── index.html                   # Hovedside
+├── CHANGELOG.md                 # Versjonsdokumentasjon (Keep a Changelog)
+└── README.md                    # Prosjektdokumentasjon
 ```
 
-## Lokalt oppsett
-Åpne `index.html` direkte i en nettleser, eller kjør en lokal webserver:
+---
+
+## 💻 Lokalt oppsett
+
+For lokal testing uten eksterne avhengigheter:
+
 ```bash
-# Python
+# Python innebygd webserver
 python -m http.server 8000
 ```
-Besøk deretter [http://localhost:8000](http://localhost:8000).
+
+Åpne [http://localhost:8000](http://localhost:8000) i nettleseren.

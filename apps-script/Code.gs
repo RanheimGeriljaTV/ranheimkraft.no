@@ -1,12 +1,11 @@
 /**
  * Ranheim Kraft – Galleri-backend (Google Apps Script)
  * ----------------------------------------------------
- * Lim inn denne filen i: Google Regneark → Utvidelser → Apps Script.
+ * Lim inn denne filen i: Google Apps Script.
  *
- * Regnearket (fanen "Gallerier") er kontrollpanelet ditt – én rad per galleri:
- *   ID | Tittel | Dato | Beskrivelse | Mappe-lenke | Passord | Aktiv
+ * Backend API for gallerioversikt og sikker autentisering.
  *
- * - Passordene ligger KUN i ditt private regneark, aldri i GitHub-repoet.
+ * - Autentisering håndteres sikkert på serversiden.
  * - Tomt passord = åpent galleri (ingen passord kreves).
  * - Aktiv = "nei" skjuler galleriet uten å slette raden.
  * - Nye bilder i Disk-mappen dukker opp automatisk (hurtigbuffer: 5 min).
@@ -18,7 +17,7 @@ const CACHE_SECONDS = 300;   // hvor lenge bildelister mellomlagres
 const MAX_FAILS = 8;         // feil passord-forsøk per galleri før midlertidig sperre
 const LOCK_SECONDS = 600;    // sperretid (10 min) etter for mange feil
 
-/* ---------- Meny i regnearket ---------- */
+/* ---------- Administrasjon & Konfigurasjon ---------- */
 
 function onOpen() {
   SpreadsheetApp.getUi()
