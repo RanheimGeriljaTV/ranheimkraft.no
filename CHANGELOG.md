@@ -6,6 +6,17 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.5.2] - 2026-10-27
+
+### Endret & Optimalisert
+- **Quiz Kraft fullskjerm- og Excel-oppgradering (`quiz.html` & `assets/quiz/`)**:
+  - **Stilren topplinje i fullskjerm**: Fjernet den svevende bunnlinjen til fordel for en integrert topplinje i storskjermmodus. Dette eliminerer at verktøylinjen skygger for nederste tabellrader på projektor.
+  - **Kompakt lagrings-badge**: Lagringsindikatoren er nå en integrert, diskret pille i tittelraden i stedet for et banner i full bredde, noe som gir mer plass til selve regnearket.
+  - **Profesjonell ExcelJS-eksport (`assets/quiz/exceljs.min.js`)**: Oppgradert Excel-eksport med ExcelJS som produserer ekte formaterte `.xlsx`-arbeidsbøker med kullsvarte kantlinjer, marineblå tittelheader, fargetabell og integrert analyse i samme ark – 100 % lokalt og offline.
+  - **Målrettet poengsortering**: Sortering etter poengsum kjøres nå direkte og diskret underveis i quizen uten uønsket automatisk konfetti.
+
+---
+
 ## [2.5.1] - 2026-10-27
 
 ### Endret & Forbedret

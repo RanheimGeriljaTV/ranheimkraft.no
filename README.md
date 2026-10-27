@@ -51,6 +51,7 @@ ranheimkraft.no/
 │   │   ├── confetti.js          # Vinnerkonfetti-animasjon
 │   │   ├── excel-export.js      # 3-arks Excel-eksport (.xlsx)
 │   │   ├── app.js               # Initialisering, modaler og kontroller
+│   │   ├── exceljs.min.js       # ExcelJS offline bibliotek for formaterte regneark
 │   │   └── xlsx.full.min.js     # SheetJS offline Excel-bibliotek
 │   ├── feedback.js              # Serverløst tilbakemeldingsskjema
 │   ├── logo.png                 # Isbjørn-maskot (våken)

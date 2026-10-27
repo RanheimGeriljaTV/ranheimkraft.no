@@ -85,12 +85,13 @@ if (document.readyState === 'loading') {
                 f.write(code)
             print("  ✓ Kjørt post-prosessering for app.js")
 
-        # 5. Post-prosessering for excel-export.js (korrekt sti til SheetJS)
+        # 5. Post-prosessering for excel-export.js (korrekt sti til ExcelJS / SheetJS)
         excel_path = os.path.join(assets_quiz, "excel-export.js")
         if os.path.exists(excel_path):
             with open(excel_path, "r", encoding="utf-8") as f:
                 e_code = f.read()
             e_code = e_code.replace("vendor/xlsx.full.min.js", "assets/quiz/xlsx.full.min.js")
+            e_code = e_code.replace("vendor/exceljs.min.js", "assets/quiz/exceljs.min.js")
             with open(excel_path, "w", encoding="utf-8") as f:
                 f.write(e_code)
 
@@ -152,6 +153,7 @@ if (document.readyState === 'loading') {
 
                 # Oppdater skriptliste i footer_part hvis nye skript mangler
                 script_tags = """  <!-- Skript og biblioteker (100 % lokalt og offline) -->
+  <script src="assets/quiz/exceljs.min.js"></script>
   <script src="assets/quiz/xlsx.full.min.js"></script>
   <script src="assets/quiz/confetti.js"></script>
   <script src="assets/quiz/scoring.js"></script>

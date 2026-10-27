@@ -91,38 +91,23 @@
   <!-- SELVE QUIZ KRAFT APPLIKASJONEN -->
   <div class="app-container" id="app-container">
     
-    <!-- Egen overskrift i presentasjonsmodus / Fullskjerm -->
+    <!-- Slank topplinje i fullskjerm / Projektor (Erstatter all bunnlinje og maksimerer tabellen) -->
     <div id="presentation-header" class="presentation-header">
       <div class="pres-title-wrap">
         <span class="pres-trophy">🏆</span>
         <h1 id="pres-display-title" class="pres-title">Ranheim Quiz</h1>
         <span id="pres-display-date" class="pres-date"></span>
       </div>
-      <div id="pres-timer-display" class="pres-timer-pill" style="display: none;">
-        ⏱️ <span id="pres-timer-clock">05:00</span>
+      <div class="pres-header-actions">
+        <button type="button" class="btn btn-outline btn-compact" id="pres-btn-filter-all" title="Vis alle lag">👥 Alle lag</button>
+        <button type="button" class="btn btn-outline btn-compact" id="pres-btn-filter-top10" title="Vis topp 10">🏆 Topp 10</button>
+        <button type="button" class="btn btn-outline btn-compact" id="pres-btn-toggle-2col" title="Bytt mellom 1 og 2 kolonner">🔲 2 Kolonner</button>
+        <button type="button" class="btn btn-outline btn-compact" id="pres-btn-cliffhanger" title="Skjul siste runde">🤫 Hemmelig finale</button>
+        <button type="button" class="btn btn-danger btn-compact" id="pres-btn-exit-fullscreen" title="Avslutt fullskjerm (Esc)">✕ Lukk (Esc)</button>
       </div>
     </div>
 
-    <!-- Diskret svevende kontroll-linje i Fullskjerm -->
-    <div id="presentation-floating-bar" class="presentation-floating-bar">
-      <div class="pres-control-group">
-        <button type="button" class="pres-btn" id="pres-btn-filter-all" title="Vis alle lag">Alle</button>
-        <button type="button" class="pres-btn" id="pres-btn-filter-top10" title="Vis topp 10">Topp 10</button>
-        <button type="button" class="pres-btn" id="pres-btn-filter-top5" title="Vis topp 5">Topp 5</button>
-        <button type="button" class="pres-btn" id="pres-btn-toggle-2col" title="Bytt mellom 1 og 2 kolonner på lerretet">2 Kolonner</button>
-        <button type="button" class="pres-btn" id="pres-btn-carousel" title="Start/Stopp automatisk sideveksling">Karusell</button>
-        <button type="button" class="pres-btn" id="pres-btn-cliffhanger" title="Skjul siste runde på storskjerm">Hemmelig finale</button>
-        <button type="button" class="pres-btn" id="pres-btn-analysis" title="Se hvem som vant hver runde og se graf">Analyse</button>
-        <button type="button" class="pres-btn" id="pres-btn-timer" title="Åpne nedtellingstimer">⏱️ Timer</button>
-      </div>
-      <div class="pres-control-group">
-        <button type="button" class="pres-btn pres-btn-exit" id="pres-btn-exit-fullscreen" title="Avslutt fullskjerm (Esc)">
-          ✕ Lukk (Esc)
-        </button>
-      </div>
-    </div>
-
-    <!-- Toppseksjon for vanlig redigeringsmodus -->
+    <!-- Toppseksjon for vanlig redigeringsmodus (med kompakt lagringsindikator i samme linje) -->
     <header class="header-bar no-presentation">
       <div class="title-group">
         <input type="text" 
@@ -136,50 +121,44 @@
                class="quiz-date-input" 
                aria-label="Dato for quizen" 
                title="Dato for quizen" />
+
+        <!-- Kompakt lagringsindikator som IKKE tar en hel linje -->
+        <span class="storage-badge" id="storage-status-badge" title="Alt lagres automatisk på denne maskinen">
+          <span class="status-pulse" aria-hidden="true"></span>
+          <span id="storage-status-text">Lagret</span>
+          <small id="storage-timestamp"></small>
+        </span>
       </div>
       
       <div class="header-actions no-print">
         <button type="button" id="btn-toggle-fullscreen" class="btn btn-gold" title="Vis i fullskjerm på projektor eller storskjerm">
-          🖥️ Vis på fullskjerm (Projektor)
+          🖥️ Fullskjerm (Projektor)
         </button>
       </div>
     </header>
-
-    <!-- Trygghets-banner for automatisk lagring -->
-    <div class="status-banner no-presentation" role="status" aria-live="polite">
-      <div class="status-left">
-        <span class="status-pulse" aria-hidden="true"></span>
-        <span id="storage-status-text">✅ Alt er lagret automatisk på denne maskinen</span>
-      </div>
-      <div class="status-right no-print">
-        <small id="storage-timestamp"></small>
-      </div>
-    </div>
 
     <!-- Kontrollpanel / Knapperader for redigeringsmodus -->
     <nav class="toolbar-container no-presentation no-print" aria-label="Handlinger for quizen">
       
       <!-- Hovedknapperad (Lag, Runder, Sortering, Angre) -->
       <div class="btn-group-primary">
-        <!-- Rask inntasting av antall lag -->
         <div class="count-input-group">
           <label for="input-team-count">Antall lag:</label>
           <input type="number" id="input-team-count" min="1" max="100" class="input-count" aria-label="Antall lag" title="Skriv inn ønsket antall lag" />
-          <button type="button" id="btn-add-team" class="btn btn-green btn-compact" title="Legg til 1 ekstra lag">➕ Nytt lag</button>
+          <button type="button" id="btn-add-team" class="btn btn-green btn-compact" title="Legg til 1 ekstra lag">➕ Lag</button>
         </div>
 
-        <!-- Rask inntasting av antall runder -->
         <div class="count-input-group">
           <label for="input-round-count">Antall runder:</label>
           <input type="number" id="input-round-count" min="1" max="30" class="input-count" aria-label="Antall runder" title="Skriv inn ønsket antall runder" />
-          <button type="button" id="btn-add-round" class="btn btn-blue btn-compact" title="Legg til 1 ekstra runde">➕ Ny runde</button>
+          <button type="button" id="btn-add-round" class="btn btn-blue btn-compact" title="Legg til 1 ekstra runde">➕ Runde</button>
         </div>
 
         <button type="button" id="btn-sort-scores" class="btn btn-gold">
-          🏆 Sorter etter poeng (Vinner 🎉)
+          🏆 Sorter etter poeng (Finn vinner)
         </button>
         <button type="button" id="btn-open-analysis" class="btn btn-neutral" title="Gå igjennom runde for runde hvem som var best, og se grafer">
-          📈 Rundeanalyse
+          📈 Rundeanalyse & Grafer
         </button>
         <button type="button" id="btn-undo" class="btn btn-undo" disabled>
           ↩️ Angre
@@ -188,48 +167,48 @@
 
       <!-- Visnings- og Storskjermknapper (Kjekt for 15–25+ lag) -->
       <div class="btn-group-views">
-        <span class="toolbar-label">Visning for lerret / mange lag:</span>
+        <span class="toolbar-label">Visning:</span>
         <button type="button" id="btn-view-all" class="btn btn-chip active">👥 Alle lag</button>
         <button type="button" id="btn-view-top10" class="btn btn-chip">🏆 Topp 10</button>
         <button type="button" id="btn-view-top5" class="btn btn-chip">🥇 Topp 5</button>
-        <button type="button" id="btn-toggle-2col" class="btn btn-chip">🔲 2 Kolonner (Side-om-side)</button>
-        <button type="button" id="btn-carousel" class="btn btn-chip">▶️ Rullerende visning</button>
-        <button type="button" id="btn-cliffhanger" class="btn btn-chip">🤫 Skjul siste runde (Hemmelig finale)</button>
+        <button type="button" id="btn-toggle-2col" class="btn btn-chip">🔲 2 Kolonner</button>
+        <button type="button" id="btn-carousel" class="btn btn-chip">▶️ Karusell</button>
+        <button type="button" id="btn-cliffhanger" class="btn btn-chip">🤫 Hemmelig finale</button>
         <button type="button" id="btn-open-timer" class="btn btn-chip">⏱️ Quiz-timer</button>
       </div>
 
       <!-- Filer, Excel, Skriftstørrelse og Utskrift -->
       <div class="btn-group-secondary">
-        <button type="button" id="btn-font-larger" class="btn btn-outline" title="Gjør all tekst større">
+        <button type="button" id="btn-font-larger" class="btn btn-outline btn-compact" title="Gjør all tekst større">
           <strong>A+</strong> Større tekst
         </button>
-        <button type="button" id="btn-font-smaller" class="btn btn-outline" title="Gjør all tekst mindre">
+        <button type="button" id="btn-font-smaller" class="btn btn-outline btn-compact" title="Gjør all tekst mindre">
           <strong>A-</strong> Mindre tekst
         </button>
-        <button type="button" id="btn-toggle-theme" class="btn btn-outline">
-          🌓 Bytt til mørk skjerm
+        <button type="button" id="btn-toggle-theme" class="btn btn-outline btn-compact">
+          🌓 Mørk skjerm
         </button>
-        <button type="button" id="btn-export-json" class="btn btn-outline" title="Last ned quiz-fil til PC-en for å fortsette hjemme">
-          💾 Lagre quizen på PC-en
+        <button type="button" id="btn-export-json" class="btn btn-outline btn-compact" title="Last ned quiz-fil til PC-en for å fortsette hjemme">
+          💾 Lagre på PC
         </button>
-        <button type="button" id="btn-import-json" class="btn btn-outline" title="Hent opp tidligere lagret quiz-fil fra PC-en">
-          📂 Åpne lagret quiz
+        <button type="button" id="btn-import-json" class="btn btn-outline btn-compact" title="Hent opp tidligere lagret quiz-fil fra PC-en">
+          📂 Åpne quiz
         </button>
         <input type="file" id="file-import-json" accept=".json" class="visually-hidden" aria-label="Velg quiz-fil fra datamaskin">
-        <button type="button" id="btn-export-excel" class="btn btn-outline" title="Last ned en komplett Excel-fil (.xlsx) med rundevinnere og grafdata">
+        <button type="button" id="btn-export-excel" class="btn btn-outline btn-compact" title="Last ned en pen, formatert Excel-fil (.xlsx) med kantlinjer og fet skrift">
           📊 Last ned til Excel (.xlsx)
         </button>
-        <button type="button" id="btn-print-table" class="btn btn-outline" title="Skriv ut en ren A4-poengtavle eller lag PDF">
-          🖨️ Skriv ut på papir / Lag PDF
+        <button type="button" id="btn-print-table" class="btn btn-outline btn-compact" title="Skriv ut en ren A4-poengtavle eller lag PDF">
+          🖨️ Skriv ut / PDF
         </button>
-        <button type="button" id="btn-reset-quiz" class="btn btn-outline" title="Start en ny quiz fra bunnen av">
-          🔄 Start helt ny quiz
+        <button type="button" id="btn-reset-quiz" class="btn btn-outline btn-compact" title="Start en ny quiz fra bunnen av">
+          🔄 Ny quiz
         </button>
       </div>
     </nav>
 
-    <!-- Hovedvisning: Regneark Tabell -->
-    <main>
+    <!-- Hovedvisning: Regneark Tabell (Maksimeres i fullskjerm) -->
+    <main class="main-content">
       <div id="spreadsheet-container" class="spreadsheet-wrapper" role="region" aria-label="Regneark poengoversikt">
         <!-- Genereres dynamisk av spreadsheet.js -->
       </div>
@@ -294,12 +273,12 @@
           <div class="chart-canvas-container">
             <canvas id="quiz-chart-canvas"></canvas>
           </div>
-          <p class="chart-hint">💡 <em>Fargede linjer viser poengutviklingen for hvert lag. Denne grafen og alle rådataene kan også lastes ned som ekte Excel-bok via "Last ned til Excel".</em></p>
+          <p class="chart-hint">💡 <em>Fargede linjer viser poengutviklingen for hvert lag. Denne grafen og alle rådataene kan også lastes ned som formatert Excel-bok via "Last ned til Excel".</em></p>
         </div>
 
         <div class="analysis-footer">
           <button type="button" id="btn-analysis-download-excel" class="btn btn-green">
-            📊 Last ned komplett Excel-ark (.xlsx) med disse analysene
+            📊 Last ned formatert Excel-ark (.xlsx) med disse analysene
           </button>
         </div>
       </div>
@@ -309,9 +288,10 @@
     <footer class="info-footer no-presentation no-print">
       <h3>💡 Enkle tips for quizmaster:</h3>
       <ul>
-        <li><strong>Runde-analyse:</strong> Trykk på <em>"Rundeanalyse & Grafer"</em> for å gå igjennom runde for runde hvem som var best, og se linjediagram over utviklingen!</li>
-        <li><strong>Excel med analyse og grafer:</strong> Knappen <em>"Last ned til Excel"</em> produserer automatisk tre ferdige ark: Sammenlagt, Rundevinnere og Rundeutvikling klargjort for Excels diagrammer.</li>
-        <li><strong>Storskjerm for mange lag:</strong> Hvis det er med 20–25 lag, bruk <em>"2 Kolonner"</em> eller <em>"Rullerende visning"</em> på projektoren.</li>
+        <li><strong>Direkte antall lag/runder:</strong> Skriv tallet rett i <em>"Antall lag"</em> eller <em>"Antall runder"</em> for å utvide tabellen umiddelbart.</li>
+        <li><strong>Storskjerm:</strong> Trykk <em>"Fullskjerm"</em> for ren stadion-visning der regnearket maksimeres uten forstyrrende menyer.</li>
+        <li><strong>Runde-analyse:</strong> Trykk <em>"Rundeanalyse & Grafer"</em> for å se hvem som vant hver enkelt runde.</li>
+        <li><strong>Excel med kantlinjer og fet skrift:</strong> Trykk <em>"Last ned til Excel"</em> for en fiks ferdig poengtavle samlet i ett ark.</li>
       </ul>
     </footer>
 
@@ -341,6 +321,7 @@
   </div>
 
   <!-- Skript og biblioteker (100 % lokalt og offline) -->
+  <script src="assets/quiz/exceljs.min.js"></script>
   <script src="assets/quiz/xlsx.full.min.js"></script>
   <script src="assets/quiz/confetti.js"></script>
   <script src="assets/quiz/scoring.js"></script>

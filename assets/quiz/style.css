@@ -117,23 +117,26 @@ body {
 }
 
 /* =========================================
-   PRESENTASJONSMODUS / PROJEKTORMODUS
+   PRESENTASJONSMODUS / PROJEKTORMODUS (100 % MAKSIMERT TABELL)
    ========================================= */
 
-/* Skjul presentasjons-topptekst i vanlig modus */
 .presentation-header {
   display: none;
 }
 
 .presentation-floating-bar {
-  display: none;
+  display: none !important;
 }
 
 /* NÅR PRESENTASJON / FULLSKJERM ER AKTIV */
 body.presentation-mode,
 :fullscreen body {
   background-color: var(--bg-page);
-  overflow-y: auto;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
 }
 
 body.presentation-mode .no-presentation,
@@ -145,8 +148,39 @@ body.presentation-mode .info-footer,
 :fullscreen #footer,
 :fullscreen .footer,
 :fullscreen [class*="vipps"],
-:fullscreen [id*="vipps"] {
+:fullscreen [id*="vipps"],
+body.presentation-mode .presentation-floating-bar,
+:fullscreen .presentation-floating-bar {
   display: none !important;
+}
+
+body.presentation-mode .app-container,
+:fullscreen .app-container {
+  padding: 0.3rem 0.5rem;
+  margin: 0;
+  max-width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+body.presentation-mode .main-content,
+:fullscreen .main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+body.presentation-mode .spreadsheet-wrapper,
+:fullscreen .spreadsheet-wrapper {
+  flex: 1;
+  height: 100%;
+  margin: 0;
+  border: 2.5px solid var(--border-strong);
+  overflow: auto;
 }
 
 body.presentation-mode .presentation-header,
@@ -154,119 +188,43 @@ body.presentation-mode .presentation-header,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4rem 1rem;
-  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  margin-bottom: 0.3rem;
   background-color: var(--bg-surface);
-  border: 2px solid var(--border-strong);
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .pres-title-wrap {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
+}
+
+.pres-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .pres-trophy {
-  font-size: 1.5rem;
-  animation: bounce 2s infinite ease-in-out;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+  font-size: 1.3rem;
 }
 
 .pres-title {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 900;
   letter-spacing: -0.5px;
 }
 
 .pres-date {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--text-muted);
   font-weight: 700;
   padding-left: 0.4rem;
-  border-left: 2px solid var(--border-light);
-}
-
-.pres-timer-pill {
-  font-size: 1.2rem;
-  font-weight: 800;
-  background-color: #fee2e2;
-  color: #991b1b;
-  border: 2px solid #ef4444;
-  padding: 0.2rem 0.7rem;
-  border-radius: 20px;
-}
-
-/* SVEVENDE KONTROLL-LINJE I FULLSKJERM (KOMPAKT & DISKRET) */
-body.presentation-mode .presentation-floating-bar,
-:fullscreen .presentation-floating-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: fixed;
-  bottom: 0.7rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10000;
-  background-color: rgba(18, 18, 18, 0.92);
-  backdrop-filter: blur(8px);
-  border: 1.5px solid #555555;
-  border-radius: 20px;
-  padding: 0.25rem 0.6rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  gap: 0.6rem;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
-  max-width: 96vw;
-  flex-wrap: wrap;
-}
-
-.presentation-floating-bar.pres-idle {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.pres-control-group {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-}
-
-.pres-btn {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 0.25rem 0.55rem;
-  border-radius: 12px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.pres-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-1px);
-}
-
-.pres-btn.active {
-  background: var(--btn-gold);
-  border-color: #f59e0b;
-}
-
-.pres-btn-exit {
-  background: #dc2626;
-  border-color: #ef4444;
-}
-.pres-btn-exit:hover {
-  background: #b91c1c;
+  border-left: 1.5px solid var(--border-light);
 }
 
 /* RENE PRESENTASJONS-CELLER UTEN INPUT-BOKSER */
@@ -276,7 +234,7 @@ body.presentation-mode .presentation-floating-bar,
 
 .quiz-table-presentation th,
 .quiz-table-presentation td {
-  padding: 0.55rem 0.7rem;
+  padding: 0.5rem 0.65rem;
 }
 
 .pres-team-name {
@@ -286,7 +244,7 @@ body.presentation-mode .presentation-floating-bar,
 }
 
 .pres-score {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 800;
   display: block;
   text-align: center;
@@ -400,31 +358,30 @@ body.presentation-mode .presentation-floating-bar,
   font-weight: 600;
 }
 
-.status-banner {
-  display: flex;
+/* Kompakt lagringsmerke i topplinjen */
+.storage-badge {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.35rem;
   background-color: var(--status-bg);
   color: var(--status-text);
-  border: 2px solid var(--status-border);
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
+  border: 1.5px solid var(--status-border);
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
   font-weight: 700;
-  font-size: 1.05rem;
-  margin-bottom: 1.2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.status-left {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+.storage-time {
+  font-size: 0.78rem;
+  color: var(--status-text);
+  opacity: 0.85;
 }
 
 .status-pulse {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background-color: var(--status-border);
   animation: pulse-ring 2s infinite;

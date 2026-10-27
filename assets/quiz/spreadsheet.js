@@ -726,7 +726,7 @@ function deleteRound(rIdx) {
   notifyChange(true);
 }
 
-function sortTeams(withConfetti = true) {
+function sortTeams() {
   if (!appState || !window.QuizScoring) return;
   saveUndoSnapshot();
 
@@ -736,10 +736,6 @@ function sortTeams(withConfetti = true) {
 
   renderTable();
   notifyChange(true);
-
-  if (withConfetti && window.QuizConfetti) {
-    window.QuizConfetti.launchConfetti();
-  }
 }
 
 function clearAllScores() {

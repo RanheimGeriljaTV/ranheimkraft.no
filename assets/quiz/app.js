@@ -66,18 +66,18 @@ function initQuizApp() {
   // 4. Initialiser regneark-visningen
   window.QuizSpreadsheet.initSpreadsheet(state, handleStateChange);
 
-  // 5. Status-banner for automatisk lagring
+  // 5. Kompakt statusvisning for automatisk lagring
   const statusTimestampEl = document.getElementById('storage-timestamp');
   window.QuizStorage.onStatusChange((isoDate) => {
     if (statusTimestampEl && isoDate) {
       const d = new Date(isoDate);
-      const timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      statusTimestampEl.textContent = `(sist kl. ${timeStr})`;
+      const timeStr = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      statusTimestampEl.textContent = `(kl. ${timeStr})`;
     }
   });
   if (state.updatedAt && statusTimestampEl) {
     const d = new Date(state.updatedAt);
-    statusTimestampEl.textContent = `(sist kl. ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})`;
+    statusTimestampEl.textContent = `(kl. ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})`;
   }
 
   // 6. Handlinger: Legg til lag, runde, sortering, angre
@@ -126,7 +126,7 @@ function initQuizApp() {
 
   if (btnSortScores) {
     btnSortScores.addEventListener('click', () => {
-      window.QuizSpreadsheet.sortTeams(true); // Med konfetti 🎉
+      window.QuizSpreadsheet.sortTeams();
     });
   }
 
@@ -146,7 +146,6 @@ function initQuizApp() {
   // 7. PRESENTASJONSMODUS & FULLSKJERM
   const btnToggleFullscreen = document.getElementById('btn-toggle-fullscreen');
   const presBtnExit = document.getElementById('pres-btn-exit-fullscreen');
-  const floatingBar = document.getElementById('presentation-floating-bar');
 
   function enterPresentationMode() {
     document.body.classList.add('presentation-mode');
@@ -188,22 +187,6 @@ function initQuizApp() {
       enterPresentationMode();
     }
   });
-
-  // Skjul svevende kontroll-linje etter 3.5 sekunder ro
-  let idleTimer = null;
-  function resetFloatingIdle() {
-    if (!floatingBar) return;
-    floatingBar.classList.remove('pres-idle');
-    clearTimeout(idleTimer);
-    if (document.body.classList.contains('presentation-mode') || document.fullscreenElement) {
-      idleTimer = setTimeout(() => {
-        floatingBar.classList.add('pres-idle');
-      }, 3500);
-    }
-  }
-
-  window.addEventListener('mousemove', resetFloatingIdle);
-  window.addEventListener('touchstart', resetFloatingIdle);
 
   // 8. VISNINGER FOR 15–25+ LAG (Alle, Topp 10, Topp 5)
   const btnViewAll = document.getElementById('btn-view-all');
