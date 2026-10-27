@@ -11,14 +11,15 @@ Offisiell portal og samlingssted for **Ranheim Kraft** – uavhengig medieproduk
 ## 🧭 Innhold og seksjoner
 
 * **[Hovedside](https://ranheimkraft.no/) (`index.html`)**: Sentral hub bygget i avant-garde Swiss Kinetic-design, med isbjørn-maskot, integrert YouTube-kino for `@RanheimGeriljaTV` med tilfeldig terning-velger, og hurtiginnganger.
-* **[Quiz Kraft](https://ranheimkraft.no/quiz.html) (`quiz.html`)**: Interaktivt regneark og poengtavle for quizkvelder. Universell utforming, seniorvennlig projektorvisning, A+/A- skriftstørrelse, sanntidssummering, automatisk lagring, tie-breaker og 100 % offline Excel-eksport (.xlsx).
+* **[Quiz Kraft](https://ranheimkraft.no/quiz.html) (`quiz.html`)**: Interaktivt regneark og poengtavle for quizkvelder. Rask inntasting av lag/runder, universell utforming, seniorvennlig projektorvisning, A+/A- skriftstørrelse, sanntidssummering, nedtellingstimer med lyd, rundeanalyse med grafer, vinnerkonfetti, automatisk lagring, tie-breaker og 3-arks offline Excel-eksport (.xlsx).
 * **[QR Kraft](https://ranheimkraft.no/qr.html) (`qr.html`)**: Gratis, reklamefri og avansert QR-kodegenerator for nettsider, WiFi og vCard med egne gradienter, logoer og mønstre. 100 % lokalt og privat.
 * **[Bildegalleri](https://ranheimkraft.no/galleri.html) (`galleri.html`)**: Arrangements- og oppdragsgalleri for foto, turer og prosjekter. Bildene vises i full oppløsning med fullskjerm-lightbox, touch-sveip på mobil og samlet ZIP-nedlasting.
 * **[Eliteserien Fantasy Hub](https://ranheimkraft.no/eliteserien.html) (`eliteserien.html`)**: Matematisk troppsoptimalisering for Eliteserien Fantasy med automatisk overgangsberegning og sanntidslivedashbord.
 * **[Premier League FPL Hub](https://ranheimkraft.no/fpl.html) (`fpl.html`)**: Matematisk optimaliseringsverktøy for Fantasy Premier League med terminlisteberegning og spilleranalyser.
 * **[Endringslogg](https://ranheimkraft.no/changelog.html) (`changelog.html`)**: Fullstendig tidslinje over versjoner, forbedringer og funksjoner.
 * **Vipps Boks (`assets/vipps.js`)**: Frivillig støttefunksjon basert på Vipps Boks for privatpersoner (boksnummer `3153MT`).
-* **Feilrapportering (`assets/feedback.js`)**: Spam-sikker og serverløs feilrapporterings-modal via Web3Forms med automatisk diagnostikk.
+* **Feilrapportering (`assets/feedback.js`)**: Spam-sikker og serverløs feilrapporterings-modal via Web3Forms med automatisk feilsøkingsinfo.
+* **Auto-Sync (`.github/workflows/sync-subprojects.yml` & `scripts/sync_subprojects.py`)**: Automatisk skysynkronisering mot oppstrømsrepoer (Quiz-Kraft, QR-Kraft) hver 6. time eller ved ett klikk.
 
 ---
 
@@ -37,7 +38,8 @@ Offisiell portal og samlingssted for **Ranheim Kraft** – uavhengig medieproduk
 
 ```text
 ranheimkraft.no/
-├── .gitignore                   # Sikkerhet, ignorering av hemmeligheter og miljøfiler
+├── .github/workflows/
+│   └── sync-subprojects.yml     # GitHub Actions tidsplan og manuell synk
 ├── assets/                      # Ressurser, media, stiler og skript
 │   ├── quiz/                    # Quiz Kraft komponenter
 │   │   ├── style.css            # Tabell, regneark og temaer
@@ -45,8 +47,10 @@ ranheimkraft.no/
 │   │   ├── scoring.js           # Desimaltolking og tie-breaker
 │   │   ├── spreadsheet.js       # Tabellmotor og tastaturnavigasjon
 │   │   ├── storage.js           # localStorage, import/eksport og angre
-│   │   ├── excel-export.js      # Excel-eksport (.xlsx)
-│   │   ├── app.js               # Initialisering og kontroller
+│   │   ├── round-analysis.js    # Rundeanalyse og poenggrafer
+│   │   ├── confetti.js          # Vinnerkonfetti-animasjon
+│   │   ├── excel-export.js      # 3-arks Excel-eksport (.xlsx)
+│   │   ├── app.js               # Initialisering, modaler og kontroller
 │   │   └── xlsx.full.min.js     # SheetJS offline Excel-bibliotek
 │   ├── feedback.js              # Serverløst tilbakemeldingsskjema
 │   ├── logo.png                 # Isbjørn-maskot (våken)
@@ -55,6 +59,8 @@ ranheimkraft.no/
 │   ├── style.css                # Felles stilark og typografi
 │   ├── main.js                  # YouTube Cinema API og mediespiller
 │   └── vipps.js                 # Sentral Vipps Boks-komponent
+├── scripts/
+│   └── sync_subprojects.py      # Synkroniseringsmotor for underprosjekter
 ├── changelog.html               # Endringslogg (Swiss Kinetic)
 ├── eliteserien.html             # Eliteserien Fantasy Hub
 ├── fpl.html                     # Premier League FPL Hub
