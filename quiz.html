@@ -106,18 +106,18 @@
     <!-- Diskret svevende kontroll-linje i Fullskjerm -->
     <div id="presentation-floating-bar" class="presentation-floating-bar">
       <div class="pres-control-group">
-        <button type="button" class="pres-btn" id="pres-btn-filter-all" title="Vis alle lag">👥 Alle lag</button>
-        <button type="button" class="pres-btn" id="pres-btn-filter-top10" title="Vis topp 10">🏆 Topp 10</button>
-        <button type="button" class="pres-btn" id="pres-btn-filter-top5" title="Vis topp 5">🥇 Topp 5</button>
-        <button type="button" class="pres-btn" id="pres-btn-toggle-2col" title="Bytt mellom 1 og 2 kolonner på lerretet">🔲 2 Kolonner</button>
-        <button type="button" class="pres-btn" id="pres-btn-carousel" title="Start/Stopp automatisk sideveksling">▶️ Karusell</button>
-        <button type="button" class="pres-btn" id="pres-btn-cliffhanger" title="Skjul siste runde på storskjerm">🤫 Hemmelig finale</button>
-        <button type="button" class="pres-btn" id="pres-btn-analysis" title="Se hvem som vant hver runde og se graf">📈 Runde-analyse</button>
+        <button type="button" class="pres-btn" id="pres-btn-filter-all" title="Vis alle lag">Alle</button>
+        <button type="button" class="pres-btn" id="pres-btn-filter-top10" title="Vis topp 10">Topp 10</button>
+        <button type="button" class="pres-btn" id="pres-btn-filter-top5" title="Vis topp 5">Topp 5</button>
+        <button type="button" class="pres-btn" id="pres-btn-toggle-2col" title="Bytt mellom 1 og 2 kolonner på lerretet">2 Kolonner</button>
+        <button type="button" class="pres-btn" id="pres-btn-carousel" title="Start/Stopp automatisk sideveksling">Karusell</button>
+        <button type="button" class="pres-btn" id="pres-btn-cliffhanger" title="Skjul siste runde på storskjerm">Hemmelig finale</button>
+        <button type="button" class="pres-btn" id="pres-btn-analysis" title="Se hvem som vant hver runde og se graf">Analyse</button>
         <button type="button" class="pres-btn" id="pres-btn-timer" title="Åpne nedtellingstimer">⏱️ Timer</button>
       </div>
       <div class="pres-control-group">
         <button type="button" class="pres-btn pres-btn-exit" id="pres-btn-exit-fullscreen" title="Avslutt fullskjerm (Esc)">
-          ✕ Avslutt (Esc)
+          ✕ Lukk (Esc)
         </button>
       </div>
     </div>
@@ -161,20 +161,28 @@
       
       <!-- Hovedknapperad (Lag, Runder, Sortering, Angre) -->
       <div class="btn-group-primary">
-        <button type="button" id="btn-add-team" class="btn btn-green">
-          ➕ Legg til nytt lag
-        </button>
-        <button type="button" id="btn-add-round" class="btn btn-blue">
-          ➕ Legg til ny runde
-        </button>
+        <!-- Rask inntasting av antall lag -->
+        <div class="count-input-group">
+          <label for="input-team-count">Antall lag:</label>
+          <input type="number" id="input-team-count" min="1" max="100" class="input-count" aria-label="Antall lag" title="Skriv inn ønsket antall lag" />
+          <button type="button" id="btn-add-team" class="btn btn-green btn-compact" title="Legg til 1 ekstra lag">➕ Nytt lag</button>
+        </div>
+
+        <!-- Rask inntasting av antall runder -->
+        <div class="count-input-group">
+          <label for="input-round-count">Antall runder:</label>
+          <input type="number" id="input-round-count" min="1" max="30" class="input-count" aria-label="Antall runder" title="Skriv inn ønsket antall runder" />
+          <button type="button" id="btn-add-round" class="btn btn-blue btn-compact" title="Legg til 1 ekstra runde">➕ Ny runde</button>
+        </div>
+
         <button type="button" id="btn-sort-scores" class="btn btn-gold">
-          🏆 Sorter etter poeng (Finn vinner 🎉)
+          🏆 Sorter etter poeng (Vinner 🎉)
         </button>
-        <button type="button" id="btn-open-analysis" class="btn btn-blue" title="Gå igjennom runde for runde hvem som var best, og se grafer">
-          📈 Rundeanalyse & Grafer
+        <button type="button" id="btn-open-analysis" class="btn btn-neutral" title="Gå igjennom runde for runde hvem som var best, og se grafer">
+          📈 Rundeanalyse
         </button>
         <button type="button" id="btn-undo" class="btn btn-undo" disabled>
-          ↩️ Angre siste endring
+          ↩️ Angre
         </button>
       </div>
 

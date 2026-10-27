@@ -94,7 +94,17 @@ if (document.readyState === 'loading') {
             with open(excel_path, "w", encoding="utf-8") as f:
                 f.write(e_code)
 
-        # 6. Post-prosessering for print.css
+        # 6. Post-prosessering for print.css og style.css
+        style_css = os.path.join(assets_quiz, "style.css")
+        if os.path.exists(style_css):
+            with open(style_css, "r", encoding="utf-8") as f:
+                s_code = f.read()
+            stray = "  font-weight: 700;\n  padding: 0.35rem 0.6rem;\n  border-radius: 6px;\n  cursor: pointer;\n  transition: all 0.15s ease;\n}"
+            s_code = s_code.replace(stray, "")
+            s_code = s_code.replace(stray.replace("\n", "\r\n"), "")
+            with open(style_css, "w", encoding="utf-8") as f:
+                f.write(s_code)
+
         print_css = os.path.join(assets_quiz, "print.css")
         if os.path.exists(print_css):
             with open(print_css, "r", encoding="utf-8") as f:

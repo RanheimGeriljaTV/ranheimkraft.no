@@ -175,6 +175,105 @@ function renderTable() {
 
   container.innerHTML = html;
   bindTableEvents(container);
+  syncCountInputs();
+}
+
+/**
+ * Synkroniserer nummer-inndatafeltene for antall lag og runder i verktøylinjen
+ */
+function syncCountInputs() {
+  const teamInput = document.getElementById('input-team-count');
+  const roundInput = document.getElementById('input-round-count');
+  if (teamInput && appState) {
+    teamInput.value = appState.teams ? appState.teams.length : 0;
+  }
+  if (roundInput && appState) {
+    roundInput.value = appState.roundCount || 0;
+  }
+}
+
+/**
+ * Setter antall lag direkte ved å skrive inn et tall
+ */
+function setTeamCount(newCount) {
+  if (!appState) return;
+  newCount = parseInt(newCount, 10);
+  if (isNaN(newCount) || newCount < 1) newCount = 1;
+  const currentCount = appState.teams.length;
+  if (newCount === currentCount) return;
+
+  if (newCount < currentCount) {
+    const willRemove = appState.teams.slice(newCount);
+    const hasScores = willRemove.some(t => t.scores && t.scores.some(s => s && s.trim() !== ''));
+    if (hasScores) {
+      const ok = window.confirm(`Vil du redusere fra ${currentCount} til ${newCount} lag? Poengene til de siste lagene vil bli fjernet.`);
+      if (!ok) {
+        syncCountInputs();
+        return;
+      }
+    }
+    saveUndoSnapshot();
+    appState.teams = appState.teams.slice(0, newCount);
+  } else {
+    saveUndoSnapshot();
+    for (let i = currentCount; i < newCount; i++) {
+      appState.teams.push({
+        id: `team_${Date.now()}_${i + 1}`,
+        name: `Lag ${i + 1}`,
+        scores: Array(appState.roundCount).fill(''),
+        rank: i + 1,
+        tieBreakerNote: ''
+      });
+    }
+  }
+
+  appState.isSorted = false;
+  renderTable();
+  notifyChange(true);
+}
+
+/**
+ * Setter antall runder direkte ved å skrive inn et tall
+ */
+function setRoundCount(newCount) {
+  if (!appState) return;
+  newCount = parseInt(newCount, 10);
+  if (isNaN(newCount) || newCount < 1) newCount = 1;
+  const currentCount = appState.roundCount;
+  if (newCount === currentCount) return;
+
+  if (newCount < currentCount) {
+    const hasScores = appState.teams.some(t => t.scores && t.scores.slice(newCount).some(s => s && s.trim() !== ''));
+    if (hasScores) {
+      const ok = window.confirm(`Vil du redusere fra ${currentCount} til ${newCount} runder? Poengene i de siste rundene vil bli fjernet.`);
+      if (!ok) {
+        syncCountInputs();
+        return;
+      }
+    }
+    saveUndoSnapshot();
+    appState.roundCount = newCount;
+    appState.roundNames = appState.roundNames.slice(0, newCount);
+    appState.teams.forEach(t => {
+      if (Array.isArray(t.scores)) {
+        t.scores = t.scores.slice(0, newCount);
+      }
+    });
+  } else {
+    saveUndoSnapshot();
+    for (let r = currentCount; r < newCount; r++) {
+      appState.roundNames.push(`Runde ${r + 1}`);
+      appState.teams.forEach(t => {
+        if (!Array.isArray(t.scores)) t.scores = [];
+        t.scores.push('');
+      });
+    }
+    appState.roundCount = newCount;
+  }
+
+  appState.isSorted = false;
+  renderTable();
+  notifyChange(true);
 }
 
 /**
@@ -688,8 +787,10 @@ window.QuizSpreadsheet = {
   getState,
   renderTable,
   addTeam,
+  setTeamCount,
   deleteTeam,
   addRound,
+  setRoundCount,
   deleteRound,
   sortTeams,
   clearAllScores,

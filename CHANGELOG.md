@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.5.1] - 2026-10-27
+
+### Endret & Forbedret
+- **Quiz Kraft hurtigkontroller (`quiz.html` & `assets/quiz/`)**:
+  - **Direkte inntasting av lag og runder**: Lagt til dedikerte tallfelter i verktøylinjen (`Antall lag` og `Antall runder`) slik at arrangøren kan sette opp hele tabellen på sekunder uten å klikke «➕ Nytt lag» gjentatte ganger.
+  - **Sikker reduksjon**: Advarer arrangøren hvis antall lag eller runder reduseres når det allerede er ført poeng.
+  - **Kompakt layout & fullskjermsstyring**: Optimalisert verktøylinje og diskret svevende kontroll-linje i presentasjonsmodus for storskjerm.
+- **Synkroniseringsmotor (`scripts/sync_subprojects.py`)**:
+  - Utvidet post-prosessering for automatisk validering og rensing av stilark ved innhenting fra underprosjekter.
+
+---
+
 ## [2.5.0] - 2026-10-27
 
 ### Lagt til

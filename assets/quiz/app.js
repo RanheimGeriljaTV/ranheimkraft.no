@@ -85,6 +85,32 @@ function initQuizApp() {
   const btnAddRound = document.getElementById('btn-add-round');
   const btnSortScores = document.getElementById('btn-sort-scores');
   const btnUndo = document.getElementById('btn-undo');
+  const inputTeamCount = document.getElementById('input-team-count');
+  const inputRoundCount = document.getElementById('input-round-count');
+
+  if (inputTeamCount) {
+    inputTeamCount.addEventListener('change', (e) => {
+      window.QuizSpreadsheet.setTeamCount(e.target.value);
+    });
+    inputTeamCount.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        window.QuizSpreadsheet.setTeamCount(e.target.value);
+        inputTeamCount.blur();
+      }
+    });
+  }
+
+  if (inputRoundCount) {
+    inputRoundCount.addEventListener('change', (e) => {
+      window.QuizSpreadsheet.setRoundCount(e.target.value);
+    });
+    inputRoundCount.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        window.QuizSpreadsheet.setRoundCount(e.target.value);
+        inputRoundCount.blur();
+      }
+    });
+  }
 
   if (btnAddTeam) {
     btnAddTeam.addEventListener('click', () => {
@@ -545,8 +571,8 @@ function initQuizApp() {
   }
 
   // 13. TEKSTSTØRRELSE-SKALERING (A+ / A-)
-  const fontSteps = [15, 18, 22, 26, 30, 35];
-  let currentFontIndex = 1;
+  const fontSteps = [13, 15, 17, 20, 24, 28];
+  let currentFontIndex = 1; // 15px standard
 
   const btnFontLarger = document.getElementById('btn-font-larger');
   const btnFontSmaller = document.getElementById('btn-font-smaller');
