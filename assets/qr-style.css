@@ -1,0 +1,184 @@
+/**
+ * QR Kraft – Skreddersydd stilsett
+ * Designet for sømløs integrasjon med ranheimkraft.no
+ */
+
+/* 1. Halftone & Bakgrunnseffekter */
+.comic-halftone {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.anamorphic-streak {
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 240, 255, 0.15) 20%, 
+    rgba(0, 240, 255, 0.7) 50%, 
+    rgba(255, 91, 36, 0.5) 75%, 
+    transparent 100%
+  );
+  filter: drop-shadow(0 0 6px #00f0ff);
+  pointer-events: none;
+}
+
+/* 2. Glassmorphism Kort */
+.glass-card {
+  background: rgba(13, 17, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .glass-card {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(13, 17, 26, 0.95);
+  }
+}
+
+/* 3. Egendefinerte Range Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #1e2433;
+  border-radius: 9999px;
+  outline: none;
+  transition: background 0.2s;
+}
+
+input[type="range"]:hover {
+  background: #2b3347;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00f0ff;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.9);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00f0ff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+}
+
+/* 4. Fargevelgere (Color Pickers) */
+input[type="color"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  background: transparent;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+/* 5. Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #08080a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2433;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f0ff;
+}
+
+/* 6. QR Forhåndsvisningsramme */
+.qr-preview-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+  transition: all 0.25s ease;
+}
+
+.qr-preview-wrapper.transparent-bg {
+  background-image: 
+    linear-gradient(45deg, #eee 25%, transparent 25%), 
+    linear-gradient(-45deg, #eee 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, #eee 75%), 
+    linear-gradient(-45deg, transparent 75%, #eee 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  background-color: #f8fafc;
+}
+
+.qr-preview-wrapper canvas,
+.qr-preview-wrapper svg {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* 7. Presets Knapper */
+.preset-btn {
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.preset-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.preset-btn:active {
+  transform: translateY(0);
+}
+
+/* 8. Puls-effekt for Vipps */
+@keyframes vippsPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 91, 36, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 91, 36, 0);
+  }
+}
+
+.vipps-glow {
+  animation: vippsPulse 3s infinite cubic-bezier(0.66, 0, 0, 1);
+}
