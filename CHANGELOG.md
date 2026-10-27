@@ -6,6 +6,25 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.2.0] - 2026-10-27
+
+### Endret & Forbedret
+- **Swiss Kinetic Bildegalleri (\galleri.html\)**:
+  - Modernisert hele bildegalleriet til det samme avant-garde sveitsiske designet som forsiden (\Syne\ og \Plus Jakarta Sans\).
+  - Fjernet halvtone-mønstre og linse-effekter for et krystallklart, kontrastrikt galleriuttrykk.
+  - Bevart full Google Apps Script-integrasjon mot Google Disk med passordvalidering, modal, fullskjermvisning og samlet ZIP-nedlasting.
+- **Hero-oppsett & Logo-plassering (\index.html\)**:
+  - Flyttet isbjørnen (\logo.png\) direkte over \RANHEIM KRAFT.\-overskriften og hevet overskriften med redusert toppavstand.
+  - Fjernet Trondheim- og koordinattekst (\Trondheim • 63.42° N\) fra toppmenyen.
+  - Fjernet dekorativt tekstfyll som «UAVHENGIG STUDIOPORTAL • 2026».
+- **Fjernet MatchPic Culler**:
+  - Fjernet lenke og kort for MatchPic Culler ettersom repositoriet er satt til privat.
+  - Seksjon 03 er nå et balansert 2-kolonners rutenett for Eliteserien Fantasy Hub og Premier League FPL.
+- **Mobiloptimalisering**:
+  - Sikret presis typografiskalering (\	ext-4xl min-[400px]:text-5xl sm:text-7xl md:text-8xl\) og trygg viewport-håndtering på iOS (Safari) og Android (Chrome/Firefox).
+
+---
+
 ## [2.1.0] - 2026-10-27
 
 ### Endret & Forbedret

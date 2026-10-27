@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#070b14">
-  <title>RanheimKraft // Galleri</title>
+  <meta name="theme-color" content="#08080a">
+  <title>Bildegalleri // Ranheim Kraft</title>
   <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+  
   <!-- Umami Analytics (Privacy-friendly & Cookieless) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>
   
-  <!-- Fonts -->
+  <!-- Google Fonts: Syne (Swiss Avant-Garde) & Plus Jakarta Sans (Clean Minimal Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Sedgwick+Ave+Display&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,139 +24,112 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Space Grotesk', 'sans-serif'],
-            graffiti: ['"Sedgwick Ave Display"', 'cursive'],
-            comic: ['Bangers', 'cursive'],
-          },
-          colors: {
-            dark: '#080a0f',
-            glass: 'rgba(255, 255, 255, 0.04)',
-            'glass-border': 'rgba(255, 255, 255, 0.12)',
-            'neon-cyan': '#00f0ff',
-            'neon-pink': '#ff007f',
-            'neon-amber': '#ffaa00',
+            syne: ['Syne', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['monospace']
           }
         }
       }
     }
   </script>
 
-  <!-- Custom & Component Styles -->
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="assets/style.css">
+  <style>
+    body {
+      background-color: #08080a;
+    }
+  </style>
 </head>
 
-<body class="bg-[#080a0f] text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black" style="background-image: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%), radial-gradient(circle at 85% 40%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);">
-
-  <!-- Background Layer: Comic Halftone Pattern -->
-  <div class="fixed inset-0 comic-halftone pointer-events-none opacity-40 z-0"></div>
-
-  <!-- Anamorphic Lens Flare Streaks -->
-  <div class="anamorphic-streak top-24 opacity-30"></div>
-  <div class="anamorphic-streak top-80 opacity-20"></div>
+<body class="text-zinc-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-white selection:text-black">
 
   <!-- Main Container -->
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-12 flex flex-col min-h-screen" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8 pt-6 pb-20 flex flex-col min-h-screen space-y-10" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Navigation -->
-    <header class="flex items-center justify-between gap-3 pb-5 sm:pb-8 border-b border-white/5">
-      <!-- Back to Main Hub & Brand Logo -->
+    <!-- Top Minimalist Bar -->
+    <nav class="flex items-center justify-between pb-5 border-b border-white/10 text-xs font-mono">
       <div class="flex items-center gap-3">
-        <a href="index.html" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-neon-cyan transition flex items-center gap-2 group text-xs font-mono">
-          <svg class="w-4 h-4 text-neon-cyan group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-          <span class="hidden sm:inline">Tilbake til</span>
-          <span class="font-bold text-white group-hover:text-neon-cyan">ranheimkraft.no</span>
+        <a href="index.html" class="flex items-center gap-2 text-zinc-400 hover:text-white transition group">
+          <span class="group-hover:-translate-x-0.5 transition-transform">&larr;</span>
+          <span class="text-white font-bold tracking-wider font-syne uppercase">Ranheim Kraft</span>
         </a>
       </div>
-
-      <!-- Live Title & Contact -->
-      <div class="flex items-center gap-2 sm:gap-3">
-
-
-        <a href="mailto:ksandvin@gmail.com" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 sm:py-1.5 rounded-lg bg-neon-cyan text-black hover:bg-cyan-300 font-bold text-xs tracking-wider transition transform -rotate-1 hover:rotate-0 shadow-[2px_2px_0px_rgba(0,0,0,0.9)] border border-black whitespace-nowrap">
-          <span>Ta kontakt</span>
-          <svg class="w-3.5 h-3.5 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-        </a>
+      <div class="flex items-center gap-3 sm:gap-5 text-zinc-400">
+        <a href="index.html" class="hover:text-white transition">Hovedside</a>
+        <a href="eliteserien.html" class="hover:text-white transition">Eliteserien</a>
+        <a href="fpl.html" class="hover:text-white transition">Premier League</a>
+        <a href="mailto:ksandvin@gmail.com" class="hover:text-white transition hidden sm:inline">Kontakt</a>
       </div>
-    </header>
+    </nav>
 
-    <!-- Page Title & Hero Header -->
-    <div class="pt-6 sm:pt-8 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-      <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300 text-[11px] sm:text-xs font-mono mb-3">
-          <span class="text-neon-cyan font-bold">🔒 Passordbeskyttet</span>
-          <span class="text-slate-600">&bull;</span>
-          <span class="text-slate-400">Google Disk Galleri</span>
-        </div>
-        <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white">
-          Bilde<span class="text-neon-cyan">gallerier</span>
+    <!-- Page Title & Header -->
+    <header class="pt-2 sm:pt-4 pb-8 border-b border-white/10 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <div class="space-y-3">
+        <span class="text-xs font-mono tracking-widest text-zinc-400 uppercase font-semibold">
+          [ 02 &bull; FOTOARKIV // GOOGLE DISK ]
+        </span>
+        <h1 class="text-4xl min-[400px]:text-5xl sm:text-6xl md:text-7xl font-syne font-black text-white tracking-tighter uppercase leading-none break-words">
+          BILDE<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-zinc-600">GALLERI.</span>
         </h1>
-        <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-xl font-light">
-          Passordbeskyttede bildegallerier for arrangementer, turer, prosjekter og diverse fotoalbum. Oppgi passord for ønsket galleri for å bla gjennom bildene i fullskjerm eller laste ned hele mapper som zip-fil.
+        <p class="text-zinc-400 text-xs sm:text-sm max-w-xl leading-relaxed pt-1">
+          Passordbeskyttede arrangementsgallerier for fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning rett i nettleseren med mulighet for å laste ned hele mapper samlet i én ZIP-fil.
         </p>
       </div>
 
-      <!-- Refresh / Setup Guide Toggle -->
-      <div class="flex items-center gap-2 shrink-0">
-        <button id="btn-refresh" onclick="loadGalleries()" class="px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition font-mono" title="Oppdater gallerioversikt">
+      <!-- Refresh Button -->
+      <div class="flex items-center gap-2 shrink-0 self-start sm:self-end">
+        <button id="btn-refresh" onclick="loadGalleries()" class="px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/10 border border-white/10 text-xs text-zinc-300 hover:text-white flex items-center gap-2 transition font-mono" title="Oppdater gallerioversikt">
           <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
           <span>Oppdater</span>
         </button>
       </div>
-    </div>
+    </header>
 
     <!-- MAIN VIEW 1: Gallery List (Cards) -->
-    <section id="view-list" class="py-4">
+    <section id="view-list" class="space-y-4">
       <!-- Loading indicator -->
-      <div id="list-loader" class="flex flex-col items-center justify-center py-16 text-center">
-        <div class="w-10 h-10 border-2 border-neon-cyan border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p class="text-xs font-mono text-slate-400">Henter gallerier fra Google Disk...</p>
+      <div id="list-loader" class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p class="text-xs font-mono text-zinc-400">Kobler til Google Disk-arkiv...</p>
       </div>
 
       <!-- Error banner if any -->
-      <div id="list-error" class="hidden mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300 font-mono"></div>
+      <div id="list-error" class="hidden p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 font-mono"></div>
 
       <!-- Galleries Grid -->
-      <div id="galleries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div id="galleries-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Rendered dynamically by JavaScript -->
       </div>
     </section>
 
     <!-- MAIN VIEW 2: Active Gallery View (Hidden by default) -->
-    <section id="view-gallery" class="hidden py-4">
+    <section id="view-gallery" class="hidden space-y-6">
+      
       <!-- Gallery Action Header -->
-      <div class="glass-card rounded-2xl p-5 sm:p-6 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-5 relative overflow-hidden">
-        <!-- Background subtle glow -->
-        <div class="absolute right-0 top-0 w-80 h-full bg-gradient-to-l from-cyan-500/10 via-pink-500/5 to-transparent pointer-events-none"></div>
-
-        <div>
-          <button onclick="backToList()" class="inline-flex items-center gap-1.5 text-xs font-mono text-neon-cyan hover:underline mb-2 transition">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            <span>Alle gallerier</span>
+      <div class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+        
+        <div class="space-y-3">
+          <button onclick="backToList()" class="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 hover:text-white transition">
+            <span>&larr; Alle gallerier</span>
           </button>
-          <h2 id="gallery-active-title" class="text-2xl sm:text-3xl font-bold text-white tracking-tight"></h2>
-          <div class="flex flex-wrap items-center gap-2 mt-2 text-xs font-mono text-slate-400">
-            <span id="gallery-active-date" class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300"></span>
-            <span id="gallery-active-count" class="px-2 py-0.5 rounded bg-cyan-400/10 border border-cyan-400/30 text-cyan-300"></span>
-            <span id="gallery-active-desc" class="text-slate-400"></span>
+          
+          <h2 id="gallery-active-title" class="text-2xl sm:text-4xl font-syne font-bold text-white tracking-tight"></h2>
+          
+          <div class="flex flex-wrap items-center gap-2 pt-1 text-xs font-mono">
+            <span id="gallery-active-date" class="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 text-zinc-300"></span>
+            <span id="gallery-active-count" class="px-2.5 py-1 rounded-md bg-cyan-400/10 border border-cyan-400/20 text-cyan-300"></span>
+            <span id="gallery-active-desc" class="text-zinc-400 max-w-lg"></span>
           </div>
         </div>
 
-        <!-- PROMINENT DOWNLOAD ALL BUTTON FOR DUMMIES -->
-        <div class="shrink-0 flex flex-col items-start md:items-end gap-1.5 w-full md:w-auto">
-          <a id="btn-download-all" href="#" target="_blank" rel="noopener noreferrer" class="w-full md:w-auto inline-flex items-center justify-center gap-3.5 px-6 py-4 rounded-2xl bg-gradient-to-r from-neon-cyan via-cyan-300 to-neon-cyan text-black font-sans font-extrabold text-base sm:text-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 shadow-xl shadow-cyan-500/25 border-2 border-cyan-200 group/dl">
-            <span class="w-10 h-10 rounded-xl bg-black/10 flex items-center justify-center shrink-0 group-hover/dl:scale-110 transition-transform">
-              <svg class="w-6 h-6 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            </span>
-            <div class="text-left">
-              <span id="btn-download-all-text" class="block leading-tight text-base sm:text-lg font-black tracking-tight">Last ned alle bildene (.zip)</span>
-              <span class="block text-xs font-semibold text-black/75 leading-tight mt-0.5">Original oppløsning &bull; Google Disk</span>
-            </div>
-            <svg class="w-4 h-4 text-black/70 group-hover/dl:translate-x-1 transition-transform shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        <!-- DOWNLOAD ALL BUTTON (.ZIP VIA GOOGLE DRIVE) -->
+        <div class="shrink-0 flex flex-col items-start md:items-end gap-2 w-full md:w-auto">
+          <a id="btn-download-all" href="#" target="_blank" rel="noopener noreferrer" class="w-full md:w-auto inline-flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-white hover:bg-zinc-200 text-black font-syne font-bold text-sm uppercase tracking-wide transition shadow-xl group/dl">
+            <svg class="w-5 h-5 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            <span id="btn-download-all-text">Last ned alle (.zip)</span>
           </a>
-          <p class="text-[11px] font-mono text-slate-400 flex items-center gap-1.5 px-1">
-            <svg class="w-3.5 h-3.5 text-cyan-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>Åpner Google Disk &bull; Trykk «Last ned alle» for å lagre hele pakken</span>
-          </p>
+          <span class="text-[11px] font-mono text-zinc-500">Åpner Google Disk for samlet ZIP-nedlasting</span>
         </div>
       </div>
 
@@ -166,14 +140,12 @@
     </section>
 
     <!-- Footer -->
-    <footer class="mt-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3 font-mono text-center" style="padding-bottom: env(safe-area-inset-bottom);">
-      <div>
-        &copy; <span id="year"></span> Ranheim Kraft &bull; Passordbeskyttet Google Disk Galleri
-      </div>
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="hover:text-neon-cyan transition">Forside</a>
+    <footer class="mt-auto pt-8 border-t border-white/10 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-3" style="padding-bottom: env(safe-area-inset-bottom);">
+      <div>&copy; <span id="year"></span> Ranheim Kraft &bull; Passordbeskyttet Google Disk Galleri</div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="hover:text-white transition">Hovedside</a>
         <span>&bull;</span>
-        <a href="changelog.html" class="hover:text-neon-cyan transition">Changelog</a>
+        <a href="changelog.html" class="hover:text-white transition">Changelog</a>
         <span>&bull;</span>
         <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
       </div>
@@ -182,37 +154,32 @@
   </div>
 
   <!-- PASSWORD PROMPT MODAL -->
-  <div id="modal-password" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
-    <div class="glass-card rounded-2xl p-6 sm:p-8 w-full max-w-md border border-cyan-500/30 shadow-2xl relative">
-      <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-        <div class="flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-cyan-400/10 border border-cyan-400/30 flex items-center justify-center text-cyan-300">
-            🔒
-          </span>
-          <div>
-            <h3 class="text-base font-bold text-white">Lås opp galleri</h3>
-            <p id="modal-gallery-name" class="text-xs text-slate-400 font-mono truncate max-w-[240px]"></p>
-          </div>
+  <div id="modal-password" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
+    <div class="bg-[#0c0c0e] rounded-2xl p-6 sm:p-8 w-full max-w-md border border-white/15 shadow-2xl relative space-y-5">
+      <div class="flex items-center justify-between pb-3 border-b border-white/10">
+        <div class="space-y-1">
+          <h3 class="text-base font-syne font-bold text-white">Lås opp galleri</h3>
+          <p id="modal-gallery-name" class="text-xs text-zinc-400 font-mono truncate max-w-[260px]"></p>
         </div>
-        <button onclick="closePasswordModal()" class="text-slate-400 hover:text-white p-1 text-lg leading-none">&times;</button>
+        <button onclick="closePasswordModal()" class="text-zinc-400 hover:text-white p-1 text-2xl leading-none">&times;</button>
       </div>
 
       <form onsubmit="submitPassword(event)" class="space-y-4">
         <div>
-          <label for="input-password" class="block text-xs font-mono text-slate-300 mb-1.5">Oppgi passord for dette galleriet:</label>
+          <label for="input-password" class="block text-xs font-mono text-zinc-300 mb-2">Oppgi passord for dette galleriet:</label>
           <div class="relative">
-            <input type="password" id="input-password" autocomplete="current-password" required placeholder="Passord..." class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 focus:border-neon-cyan focus:outline-none text-white text-sm font-mono placeholder-slate-600">
-            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono">👁️</button>
+            <input type="password" id="input-password" autocomplete="current-password" required placeholder="Passord..." class="w-full px-4 py-3 rounded-xl bg-black border border-white/20 focus:border-white focus:outline-none text-white text-sm font-mono placeholder-zinc-600 transition">
+            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs font-mono p-1">👁️</button>
           </div>
         </div>
 
-        <div id="modal-error" class="hidden text-xs text-rose-400 font-mono bg-rose-500/10 p-2.5 rounded-lg border border-rose-500/20"></div>
+        <div id="modal-error" class="hidden text-xs text-rose-400 font-mono bg-rose-500/10 p-3 rounded-xl border border-rose-500/20"></div>
 
         <div class="flex items-center justify-end gap-3 pt-2">
-          <button type="button" onclick="closePasswordModal()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-slate-300 transition">
+          <button type="button" onclick="closePasswordModal()" class="px-4 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/10 text-xs font-mono text-zinc-300 transition">
             Avbryt
           </button>
-          <button type="submit" id="btn-submit-pwd" class="px-5 py-2 rounded-xl bg-neon-cyan hover:bg-cyan-300 text-black font-bold text-xs tracking-wider font-mono transition shadow-lg shadow-cyan-500/20 flex items-center gap-2">
+          <button type="submit" id="btn-submit-pwd" class="px-5 py-2.5 rounded-xl bg-white hover:bg-zinc-200 text-black font-syne font-bold text-xs uppercase tracking-wider transition flex items-center gap-2">
             <span>Lås opp &rarr;</span>
           </button>
         </div>
@@ -221,40 +188,40 @@
   </div>
 
   <!-- FULLSCREEN LIGHTBOX MODAL -->
-  <div id="lightbox" class="fixed inset-0 z-50 bg-[#05070b] flex flex-col justify-between hidden select-none">
+  <div id="lightbox" class="fixed inset-0 z-50 bg-[#000000f0] backdrop-blur-lg flex flex-col justify-between hidden select-none">
     <!-- Lightbox Top bar -->
-    <div class="flex items-center justify-between p-4 z-10 bg-gradient-to-b from-black/80 to-transparent">
-      <div class="flex items-center gap-3 text-xs font-mono text-slate-300">
-        <span id="lb-counter" class="px-2 py-0.5 rounded bg-white/10 border border-white/10">1 / 1</span>
-        <span id="lb-filename" class="text-slate-400 truncate max-w-[200px] sm:max-w-md"></span>
+    <div class="flex items-center justify-between p-4 z-10 bg-gradient-to-b from-black to-transparent">
+      <div class="flex items-center gap-3 text-xs font-mono text-zinc-300">
+        <span id="lb-counter" class="px-2.5 py-1 rounded bg-white/10 border border-white/10 font-bold">1 / 1</span>
+        <span id="lb-filename" class="text-zinc-400 truncate max-w-[200px] sm:max-w-md"></span>
       </div>
-      <div class="flex items-center gap-2">
-        <a id="lb-download-single" href="#" target="_blank" download class="px-3.5 py-1.5 rounded-lg bg-neon-cyan hover:bg-cyan-300 text-black font-sans font-bold text-xs transition flex items-center gap-1.5 shadow-md shadow-cyan-500/20" title="Last ned dette bildet i full kvalitet">
+      <div class="flex items-center gap-3">
+        <a id="lb-download-single" href="#" target="_blank" download class="px-4 py-2 rounded-xl bg-white hover:bg-zinc-200 text-black font-syne font-bold text-xs transition flex items-center gap-2 shadow-lg" title="Last ned dette bildet">
           <svg class="w-4 h-4 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-          <span>Last ned dette bildet</span>
+          <span class="hidden sm:inline">Last ned bilde</span>
         </a>
-        <button onclick="closeLightbox()" class="p-2 text-slate-400 hover:text-white text-xl leading-none transition" title="Lukk (Esc)">&times;</button>
+        <button onclick="closeLightbox()" class="p-2 text-zinc-400 hover:text-white text-2xl leading-none transition" title="Lukk (Esc)">&times;</button>
       </div>
     </div>
 
     <!-- Image Display Area -->
     <div class="relative flex-1 flex items-center justify-center p-2 sm:p-6 overflow-hidden" onclick="onLightboxBgClick(event)">
       <!-- Prev Button -->
-      <button onclick="prevPhoto(event)" class="absolute left-2 sm:left-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center transition shadow-xl" title="Forrige bilde (Venstre piltast)">
+      <button onclick="prevPhoto(event)" class="absolute left-2 sm:left-6 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition shadow-2xl cursor-pointer" title="Forrige bilde">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
       </button>
 
       <!-- Center Image -->
-      <img id="lb-img" src="" alt="Galleri forstørret bilde" referrerpolicy="no-referrer" class="max-h-[82vh] max-w-[94vw] object-contain rounded shadow-2xl transition-opacity duration-200">
+      <img id="lb-img" src="" alt="Galleri bilde" referrerpolicy="no-referrer" class="max-h-[82vh] max-w-[94vw] object-contain rounded-xl shadow-2xl transition-opacity duration-200">
 
       <!-- Next Button -->
-      <button onclick="nextPhoto(event)" class="absolute right-2 sm:right-4 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-black/90 border border-white/20 text-white flex items-center justify-center transition shadow-xl" title="Neste bilde (Høyre piltast)">
+      <button onclick="nextPhoto(event)" class="absolute right-2 sm:right-6 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition shadow-2xl cursor-pointer" title="Neste bilde">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
       </button>
     </div>
 
     <!-- Lightbox Bottom bar -->
-    <div class="p-3 text-center text-[11px] font-mono text-slate-500 bg-gradient-to-t from-black/80 to-transparent">
+    <div class="p-3 text-center text-xs font-mono text-zinc-500 bg-gradient-to-t from-black to-transparent">
       Bruk piltastene &larr; &rarr; eller sveip for å bla &bull; Trykk Esc for å lukke
     </div>
   </div>
@@ -264,13 +231,11 @@
 
     /* =====================================================================
        KONFIGURASJON:
-       Lim inn din Google Apps Script Nettapp-URL her.
-       (Instruksjoner finnes i apps-script/README.md)
-       Hvis variabelen er tom, viser siden demonstrations-modus med eksempler!
+       Google Apps Script Nettapp-URL.
        ===================================================================== */
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGmkFmROkW39rHdvkmliYypX9Raj5eTXanvMBVCNn0RQsTemFlayRtklv4dtc5vMwddA/exec';
 
-    // Demo-galleriene vises kun ved lokal testing – aldri på den offentlige siden
+    // Demo-galleriene vises kun ved lokal testing dersom backend ikke svarer
     const IS_LOCAL = ['localhost', '127.0.0.1', ''].includes(location.hostname);
 
     // In-memory state
@@ -280,13 +245,13 @@
     let currentPhotos = [];
     let currentPhotoIndex = 0;
 
-    // Demonstration / Sample Fallback Data if Apps Script is not yet linked
+    // Demonstration fallback data
     const DEMO_GALLERIES = [
       {
         id: 'ranheim-vs-bryne-2026',
         title: 'Ranheim vs. Bryne (4–2)',
         date: '2026-10-18',
-        description: 'Målfest og høstdrama i fjæra. Ekstraomganger og feiring foran supporterne.',
+        description: 'Målfest og drama i fjæra. Ekstraomganger og feiring foran supporterne.',
         locked: true,
         count: 42
       },
@@ -308,7 +273,6 @@
       }
     ];
 
-    // Sample placeholder photos for demo galleries
     function getDemoPhotos(galleryId) {
       const samples = [
         'https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80',
@@ -316,20 +280,18 @@
         'https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?w=800&q=80',
         'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80',
         'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
-        'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&q=80',
-        'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&q=80',
-        'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&q=80'
+        'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&q=80'
       ];
       return samples.map((url, i) => ({
         id: `demo-${i + 1}`,
-        name: `Kampbilde_${String(i + 1).padStart(3, '0')}.jpg`,
+        name: `Bilde_${String(i + 1).padStart(3, '0')}.jpg`,
         thumbUrl: url,
         fullUrl: url.replace('w=800', 'w=1600'),
         downloadUrl: url
       }));
     }
 
-    // 1. Load galleries list from Apps Script (or demo)
+    // 1. Load galleries list from Apps Script (or fallback)
     async function loadGalleries() {
       const loader = document.getElementById('list-loader');
       const errBox = document.getElementById('list-error');
@@ -343,20 +305,19 @@
         loader.classList.add('hidden');
         allGalleries = [];
         grid.innerHTML = `
-          <div class="col-span-full glass-card rounded-2xl p-8 text-center">
-            <div class="font-graffiti text-3xl text-neon-cyan mb-2">Kommer snart</div>
-            <p class="text-sm text-slate-400">Galleriene er under oppsett. Ta kontakt hvis du venter på bilder.</p>
+          <div class="col-span-full p-8 rounded-2xl bg-white/[0.02] border border-white/10 text-center space-y-2">
+            <div class="font-syne font-bold text-2xl text-white">Kommer snart</div>
+            <p class="text-xs text-zinc-400">Galleriene er under oppsett. Ta kontakt hvis du venter på bilder.</p>
           </div>`;
         return;
       }
 
       if (!APPS_SCRIPT_URL) {
-        // Lokal demo-modus
         setTimeout(() => {
           loader.classList.add('hidden');
           allGalleries = DEMO_GALLERIES;
           renderGalleries(allGalleries, true);
-        }, 400);
+        }, 300);
         return;
       }
 
@@ -374,60 +335,65 @@
       } catch (err) {
         loader.classList.add('hidden');
         console.warn('Apps Script kontakt feilet', err);
-        showListError('Klarte ikke hente gallerier akkurat nå. Prøv å laste siden på nytt om litt.');
+        // Fallback for local testing or timeout
+        if (IS_LOCAL) {
+          allGalleries = DEMO_GALLERIES;
+          renderGalleries(allGalleries, true);
+        } else {
+          showListError('Klarte ikke hente gallerier akkurat nå. Prøv å laste siden på nytt om litt.');
+        }
       }
     }
 
-    // 2. Render Gallery Cards
+    // 2. Render Gallery Cards (Swiss Kinetic Minimalist Style)
     function renderGalleries(list, isDemo) {
       const grid = document.getElementById('galleries-grid');
       grid.innerHTML = '';
 
       if (isDemo) {
         const banner = document.createElement('div');
-        banner.className = 'col-span-full mb-2 p-3.5 rounded-xl bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono text-cyan-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
+        banner.className = 'col-span-full p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs font-mono text-zinc-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2';
         banner.innerHTML = `
           <div class="flex items-center gap-2">
-            <span class="text-base">💡</span>
-            <span><strong>Eksempel-modus:</strong> Viser forhåndsvisningsgallerier. Koble til ditt eget Google-regneark i <code>apps-script/Code.gs</code>.</span>
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span><strong>Eksempel-modus:</strong> Viser forhåndsvisningsgallerier.</span>
           </div>
-          <span class="text-[11px] text-cyan-400">Passord for eksemplene: <code>ranheim</code></span>
+          <span class="text-zinc-400">Passord for eksemplene: <code class="text-white bg-white/10 px-1.5 py-0.5 rounded">ranheim</code></span>
         `;
         grid.appendChild(banner);
       }
 
-      list.forEach(g => {
+      list.forEach((g, idx) => {
         const card = document.createElement('article');
-        card.className = 'glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between cursor-pointer group';
+        card.className = 'p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/30 transition flex flex-col justify-between cursor-pointer group space-y-5';
         card.onclick = () => requestOpenGallery(g.id);
 
         card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-medium ${g.locked ? 'bg-amber-400/10 text-amber-300 border border-amber-400/30' : 'bg-emerald-400/10 text-emerald-300 border border-emerald-400/30'}">
-                ${g.locked ? '🔒 Passordbeskyttet' : '🔓 Åpent galleri'}
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase font-semibold ${g.locked ? 'bg-amber-400/10 text-amber-300 border border-amber-400/20' : 'bg-emerald-400/10 text-emerald-300 border border-emerald-400/20'}">
+                ${g.locked ? '🔒 Passord' : '🔓 Åpen'}
               </span>
-              <span class="text-xs text-slate-400 font-mono">${g.date || ''}</span>
+              <span class="text-xs text-zinc-500 font-mono">${g.date || ''}</span>
             </div>
 
-            <h3 class="text-xl font-bold text-white group-hover:text-neon-cyan transition-colors leading-snug">
+            <h3 class="text-xl font-syne font-bold text-white group-hover:text-cyan-400 transition leading-snug">
               ${g.title}
             </h3>
 
-            <p class="text-xs text-slate-300 mt-2 leading-relaxed line-clamp-2">
-              ${g.description || 'Klikk for å låse opp og se bilder.'}
+            <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">
+              ${g.description || 'Klikk for å låse opp og se bildene.'}
             </p>
           </div>
 
-          <div class="pt-4 mt-5 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-            <span class="text-cyan-300 flex items-center gap-1.5">
-              <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+            <span class="text-zinc-400 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
               <span>${g.count ? g.count + ' bilder' : 'Bildegalleri'}</span>
             </span>
 
-            <span class="inline-flex items-center gap-1 font-bold text-neon-cyan group-hover:translate-x-1 transition-transform">
-              <span>Åpne galleri</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <span class="text-white font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+              <span>Åpne</span> &rarr;
             </span>
           </div>
         `;
@@ -442,16 +408,14 @@
       errBox.classList.remove('hidden');
     }
 
-    // 3. Request to Open a Gallery (Check if password required)
+    // 3. Request to Open a Gallery
     function requestOpenGallery(galleryId) {
       const g = allGalleries.find(x => x.id === galleryId);
       if (!g) return;
 
       if (!g.locked) {
-        // Open directly without password
         unlockGallery(galleryId, '');
       } else {
-        // Open password modal
         pendingGalleryId = galleryId;
         document.getElementById('modal-gallery-name').textContent = g.title;
         document.getElementById('input-password').value = '';
@@ -493,24 +457,27 @@
       const errBox = document.getElementById('modal-error');
 
       // Demo mode fallback
-      if (!APPS_SCRIPT_URL) {
+      if (!APPS_SCRIPT_URL || IS_LOCAL) {
         if (password && password.trim().toLowerCase() !== 'ranheim' && password.trim().toLowerCase() !== '1234') {
-          errBox.textContent = 'Feil passord! (Tips i demo-modus: skriv "ranheim")';
-          errBox.classList.remove('hidden');
+          // If real URL available, try real URL first, otherwise show demo error
+          if (!APPS_SCRIPT_URL) {
+            errBox.textContent = 'Feil passord! (Tips i demo-modus: skriv "ranheim")';
+            errBox.classList.remove('hidden');
+            return;
+          }
+        } else if (!APPS_SCRIPT_URL) {
+          const g = allGalleries.find(x => x.id === galleryId);
+          closePasswordModal();
+          displayGallery({
+            id: g.id,
+            title: g.title,
+            date: g.date,
+            description: g.description,
+            folderUrl: 'https://drive.google.com/drive/folders/DEMO_FOLDER_ID',
+            images: getDemoPhotos(g.id)
+          });
           return;
         }
-
-        const g = allGalleries.find(x => x.id === galleryId);
-        closePasswordModal();
-        displayGallery({
-          id: g.id,
-          title: g.title,
-          date: g.date,
-          description: g.description,
-          folderUrl: 'https://drive.google.com/drive/folders/DEMO_FOLDER_ID',
-          images: getDemoPhotos(g.id)
-        });
-        return;
       }
 
       // Real Google Apps Script Backend call
@@ -524,7 +491,6 @@
 
         if (data.ok && data.gallery) {
           closePasswordModal();
-          // Transform drive image objects into displayable thumbnail URLs
           const transformed = {
             ...data.gallery,
             images: data.gallery.images.map(img => ({
@@ -541,6 +507,19 @@
           errBox.classList.remove('hidden');
         }
       } catch (err) {
+        if (IS_LOCAL && (!password || password.trim().toLowerCase() === 'ranheim')) {
+          const g = allGalleries.find(x => x.id === galleryId);
+          closePasswordModal();
+          displayGallery({
+            id: g.id,
+            title: g.title,
+            date: g.date,
+            description: g.description,
+            folderUrl: 'https://drive.google.com/drive/folders/DEMO_FOLDER_ID',
+            images: getDemoPhotos(g.id)
+          });
+          return;
+        }
         errBox.textContent = 'Klarte ikke kontakte server. Prøv igjen.';
         errBox.classList.remove('hidden');
       }
@@ -559,10 +538,9 @@
       document.getElementById('gallery-active-count').textContent = `${currentPhotos.length} bilder`;
       document.getElementById('gallery-active-desc').textContent = galleryData.description || '';
 
-      // Set Download All Button link directly to Google Drive folder
+      // Set Download All Button link
       const downloadBtn = document.getElementById('btn-download-all');
       downloadBtn.href = galleryData.folderUrl || '#';
-      downloadBtn.title = 'Åpner Google Disk-mappen der du kan trykke "Last ned alle" som én samlet .zip-fil';
       const downloadText = document.getElementById('btn-download-all-text');
       if (downloadText) {
         downloadText.textContent = `Last ned alle ${currentPhotos.length} bildene (.zip)`;
@@ -574,7 +552,7 @@
 
       if (currentPhotos.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full py-16 text-center text-slate-400 font-mono text-xs">
+          <div class="col-span-full py-16 text-center text-zinc-500 font-mono text-xs">
             Ingen bilder funnet i denne mappen ennå.
           </div>
         `;
@@ -583,14 +561,14 @@
 
       currentPhotos.forEach((photo, idx) => {
         const item = document.createElement('div');
-        item.className = 'group relative aspect-square rounded-xl overflow-hidden bg-black/50 border border-white/10 hover:border-cyan-400/50 transition cursor-pointer';
+        item.className = 'group relative aspect-square rounded-xl overflow-hidden bg-black border border-white/10 hover:border-white/40 transition cursor-pointer';
         item.onclick = () => openLightbox(idx);
 
         item.innerHTML = `
-          <img src="${photo.thumbUrl}" alt="${photo.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=0.15" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <img src="${photo.thumbUrl}" alt="${photo.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=0.2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2.5">
             <span class="text-[11px] font-mono text-white truncate">${photo.name}</span>
-            <span class="text-[10px] text-neon-cyan font-mono flex items-center gap-1">
+            <span class="text-[10px] text-cyan-400 font-mono flex items-center gap-1">
               <span>Se forstørret</span> &rarr;
             </span>
           </div>
@@ -599,7 +577,6 @@
         grid.appendChild(item);
       });
 
-      // Scroll to top of gallery smoothly
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -645,7 +622,7 @@
       if (currentPhotoIndex < currentPhotos.length - 1) {
         currentPhotoIndex++;
       } else {
-        currentPhotoIndex = 0; // loop
+        currentPhotoIndex = 0;
       }
       updateLightboxImage();
     }
@@ -655,7 +632,7 @@
       if (currentPhotoIndex > 0) {
         currentPhotoIndex--;
       } else {
-        currentPhotoIndex = currentPhotos.length - 1; // loop
+        currentPhotoIndex = currentPhotos.length - 1;
       }
       updateLightboxImage();
     }
@@ -690,8 +667,8 @@
     function handleSwipe() {
       const diff = touchEndX - touchStartX;
       if (Math.abs(diff) > 40) {
-        if (diff < 0) nextPhoto(); // swipe left -> next
-        else prevPhoto(); // swipe right -> prev
+        if (diff < 0) nextPhoto();
+        else prevPhoto();
       }
     }
 
