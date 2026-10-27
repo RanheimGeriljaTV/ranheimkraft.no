@@ -6,6 +6,20 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.3.0] - 2026-10-27
+
+### Lagt til & Forbedret
+- **Gjenbrukbar Vipps Boks-komponent (`assets/vipps.js`)**:
+  - Etablert sentral Vipps-støttemodul basert på Vipps Boks (boksnummer `3153MT`).
+  - Offisiell Vipps-profil: oransje farge (`#ff5b24`), pilleformet knapp med hvit Vipps-logo og -smil.
+  - Hjelpetekst under knappen: *"Åpner Vipps direkte på mobil, eller søk opp boks **3153MT** i Vipps."*
+  - Integrert på alle sider (`index.html`, `galleri.html`, `changelog.html`, og i bunnlinjen på `eliteserien.html` og `fpl.html`).
+- **Swiss Kinetic Changelog (`changelog.html`)**:
+  - Full redesign til avant-garde sveitsisk typografi (`Syne` og `Plus Jakarta Sans`).
+  - Fjernet halvtone-mønster og linseeffekter for et rent, monokromt uttrykk i tråd med resten av nettstedet.
+
+---
+
 ## [2.2.0] - 2026-10-27
 
 ### Endret & Forbedret
