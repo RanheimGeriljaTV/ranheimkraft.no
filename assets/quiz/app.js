@@ -130,6 +130,20 @@ function initQuizApp() {
     });
   }
 
+  const btnSortNames = document.getElementById('btn-sort-names');
+  if (btnSortNames) {
+    btnSortNames.addEventListener('click', () => {
+      window.QuizSpreadsheet.sortTeamsByName();
+    });
+  }
+
+  const btnClearScores = document.getElementById('btn-clear-scores');
+  if (btnClearScores) {
+    btnClearScores.addEventListener('click', () => {
+      window.QuizSpreadsheet.clearAllScores();
+    });
+  }
+
   if (btnUndo) {
     btnUndo.addEventListener('click', () => {
       const prevState = window.QuizStorage.popUndoState();
@@ -146,6 +160,7 @@ function initQuizApp() {
   // 7. PRESENTASJONSMODUS & FULLSKJERM
   const btnToggleFullscreen = document.getElementById('btn-toggle-fullscreen');
   const presBtnExit = document.getElementById('pres-btn-exit-fullscreen');
+  const presBtnFindWinner = document.getElementById('pres-btn-find-winner');
 
   function enterPresentationMode() {
     document.body.classList.add('presentation-mode');
@@ -172,6 +187,15 @@ function initQuizApp() {
   }
   if (presBtnExit) {
     presBtnExit.addEventListener('click', exitPresentationMode);
+  }
+  if (presBtnFindWinner) {
+    presBtnFindWinner.addEventListener('click', () => {
+      if (window.QuizSpreadsheet.getHideLastRound()) {
+        window.QuizSpreadsheet.setHideLastRound(false);
+        updateCliffhangerButtons(false);
+      }
+      window.QuizSpreadsheet.sortTeams();
+    });
   }
 
   document.addEventListener('fullscreenchange', () => {
@@ -274,19 +298,40 @@ function initQuizApp() {
   const btnCliffhanger = document.getElementById('btn-cliffhanger');
   const presBtnCliffhanger = document.getElementById('pres-btn-cliffhanger');
 
-  function toggleCliffhanger() {
-    const nextVal = !window.QuizSpreadsheet.getHideLastRound();
-    window.QuizSpreadsheet.setHideLastRound(nextVal);
+  function updateCliffhangerButtons(active) {
     [btnCliffhanger, presBtnCliffhanger].forEach(b => {
       if (b) {
-        b.classList.toggle('active', nextVal);
-        b.textContent = nextVal ? '🔓 Vis siste runde' : '🤫 Skjul siste runde';
+        b.classList.toggle('active', active);
+        b.textContent = active ? '🔓 Vis siste runde' : '🤫 Skjul siste runde';
       }
     });
   }
 
+  function toggleCliffhanger() {
+    const nextVal = !window.QuizSpreadsheet.getHideLastRound();
+    window.QuizSpreadsheet.setHideLastRound(nextVal);
+    updateCliffhangerButtons(nextVal);
+  }
+
   if (btnCliffhanger) btnCliffhanger.addEventListener('click', toggleCliffhanger);
   if (presBtnCliffhanger) presBtnCliffhanger.addEventListener('click', toggleCliffhanger);
+
+  // 11B. SANNTIDSMARKERING (FARGEUTHEVING AV VINNERE OG MANGLENDE POENG)
+  const btnToggleHighlights = document.getElementById('btn-toggle-highlights');
+  function updateHighlightsButtonUI(active) {
+    if (btnToggleHighlights) {
+      btnToggleHighlights.classList.toggle('active', active);
+      btnToggleHighlights.textContent = active ? '🎨 Utheving: PÅ' : '🎨 Utheving: AV';
+    }
+  }
+  if (btnToggleHighlights) {
+    updateHighlightsButtonUI(window.QuizSpreadsheet.getShowHighlights());
+    btnToggleHighlights.addEventListener('click', () => {
+      const next = !window.QuizSpreadsheet.getShowHighlights();
+      window.QuizSpreadsheet.setShowHighlights(next);
+      updateHighlightsButtonUI(next);
+    });
+  }
 
   // 12. QUIZ-TIMER OG LYDVARSEL
   const modalTimer = document.getElementById('quiz-timer-modal');
@@ -408,8 +453,10 @@ function initQuizApp() {
   const presBtnAnalysis = document.getElementById('pres-btn-analysis');
   const btnAnalysisClose = document.getElementById('btn-analysis-close');
   const tabBtnWinners = document.getElementById('tab-btn-winners');
+  const tabBtnCumulative = document.getElementById('tab-btn-cumulative');
   const tabBtnGraph = document.getElementById('tab-btn-graph');
   const contentWinners = document.getElementById('analysis-content-winners');
+  const contentCumulative = document.getElementById('analysis-content-cumulative');
   const contentGraph = document.getElementById('analysis-content-graph');
   const chartCanvas = document.getElementById('quiz-chart-canvas');
   const btnChartModeCumulative = document.getElementById('btn-chart-mode-cumulative');
@@ -430,16 +477,18 @@ function initQuizApp() {
   }
 
   function switchAnalysisTab(tab) {
+    [tabBtnWinners, tabBtnCumulative, tabBtnGraph].forEach(b => b && b.classList.remove('active'));
+    [contentWinners, contentCumulative, contentGraph].forEach(c => c && (c.style.display = 'none'));
+
     if (tab === 'winners') {
-      tabBtnWinners.classList.add('active');
-      tabBtnGraph.classList.remove('active');
-      contentWinners.style.display = 'block';
-      contentGraph.style.display = 'none';
+      if (tabBtnWinners) tabBtnWinners.classList.add('active');
+      if (contentWinners) contentWinners.style.display = 'block';
+    } else if (tab === 'cumulative') {
+      if (tabBtnCumulative) tabBtnCumulative.classList.add('active');
+      if (contentCumulative) contentCumulative.style.display = 'block';
     } else {
-      tabBtnWinners.classList.remove('active');
-      tabBtnGraph.classList.add('active');
-      contentWinners.style.display = 'none';
-      contentGraph.style.display = 'block';
+      if (tabBtnGraph) tabBtnGraph.classList.add('active');
+      if (contentGraph) contentGraph.style.display = 'block';
       setTimeout(renderAnalysisChart, 50);
     }
   }
@@ -500,6 +549,86 @@ function initQuizApp() {
       });
       tallyContainer.innerHTML = tallyHtml;
     }
+
+    // 3. Bygg tabell for akkumulert stilling etter hver runde (runde for runde)
+    const cumTableWrap = document.getElementById('analysis-cumulative-table-wrap');
+    if (cumTableWrap) {
+      const activeTeams = (state.teams || []).filter(t => t.active !== false);
+      let cumHtml = `
+        <table class="cumulative-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Lagnavn</th>
+      `;
+      for (let r = 0; r < state.roundCount; r++) {
+        cumHtml += `<th>Etter ${state.roundNames[r] || 'Runde ' + (r + 1)}</th>`;
+      }
+      cumHtml += `
+              <th>Sluttsum</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      // Finn leder etter hver runde
+      const roundLeaders = [];
+      for (let r = 0; r < state.roundCount; r++) {
+        let maxCum = -Infinity;
+        activeTeams.forEach(t => {
+          let cum = 0;
+          let hasAny = false;
+          for (let i = 0; i <= r; i++) {
+            const parsed = window.QuizScoring ? window.QuizScoring.parseScore(t.scores ? t.scores[i] : null) : null;
+            if (parsed !== null) { cum += parsed; hasAny = true; }
+          }
+          if (hasAny && cum > maxCum) maxCum = cum;
+        });
+        roundLeaders.push(maxCum > 0 ? maxCum : null);
+      }
+
+      activeTeams.forEach((team, tIdx) => {
+        const rank = team.rank || (tIdx + 1);
+        cumHtml += `
+          <tr>
+            <td><strong>${rank}.</strong></td>
+            <td class="col-team">${escapeHtml(team.name || 'Lag ' + (tIdx + 1))}</td>
+        `;
+        let runningTotal = 0;
+        let anyScore = false;
+        for (let r = 0; r < state.roundCount; r++) {
+          const parsed = window.QuizScoring ? window.QuizScoring.parseScore(team.scores ? team.scores[r] : null) : null;
+          if (parsed !== null) {
+            runningTotal += parsed;
+            anyScore = true;
+          }
+          const isLeader = anyScore && roundLeaders[r] !== null && runningTotal === roundLeaders[r];
+          cumHtml += `
+            <td class="${isLeader ? 'cum-leader' : ''}">
+              ${anyScore ? (window.QuizScoring ? window.QuizScoring.formatScore(runningTotal) : runningTotal) : '-'}
+            </td>
+          `;
+        }
+        const finalTotal = window.QuizScoring ? window.QuizScoring.calculateTeamTotal(team, state.roundCount) : 0;
+        cumHtml += `
+            <td><strong>${window.QuizScoring ? window.QuizScoring.formatScore(finalTotal) : finalTotal}</strong></td>
+          </tr>
+        `;
+      });
+
+      cumHtml += `</tbody></table>`;
+      cumTableWrap.innerHTML = cumHtml;
+    }
+  }
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
 
   function renderAnalysisChart() {
@@ -519,6 +648,7 @@ function initQuizApp() {
   if (btnAnalysisClose) btnAnalysisClose.addEventListener('click', closeAnalysisModal);
 
   if (tabBtnWinners) tabBtnWinners.addEventListener('click', () => switchAnalysisTab('winners'));
+  if (tabBtnCumulative) tabBtnCumulative.addEventListener('click', () => switchAnalysisTab('cumulative'));
   if (tabBtnGraph) tabBtnGraph.addEventListener('click', () => switchAnalysisTab('graph'));
 
   if (btnChartModeCumulative) {

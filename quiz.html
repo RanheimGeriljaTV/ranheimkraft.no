@@ -99,6 +99,7 @@
         <span id="pres-display-date" class="pres-date"></span>
       </div>
       <div class="pres-header-actions">
+        <button type="button" class="btn btn-gold btn-compact" id="pres-btn-find-winner" title="Avslør hemmelig finale og kår vinnerne!">🏆 Finn vinner</button>
         <button type="button" class="btn btn-outline btn-compact" id="pres-btn-font-larger" title="Gjør teksten større på lerretet">A+</button>
         <button type="button" class="btn btn-outline btn-compact" id="pres-btn-font-smaller" title="Gjør teksten mindre på lerretet">A-</button>
         <button type="button" class="btn btn-outline btn-compact" id="pres-btn-filter-all" title="Vis alle lag">👥 Alle lag</button>
@@ -156,8 +157,14 @@
           <button type="button" id="btn-add-round" class="btn btn-blue btn-compact" title="Legg til 1 ekstra runde">➕ Runde</button>
         </div>
 
-        <button type="button" id="btn-sort-scores" class="btn btn-gold">
+        <button type="button" id="btn-sort-scores" class="btn btn-gold" title="Sorter lagene etter sammenlagt poengsum med tie-breaker">
           🏆 Sorter etter poeng (Finn vinner)
+        </button>
+        <button type="button" id="btn-sort-names" class="btn btn-outline" title="Sorter lagene alfabetisk etter lagnavn (A–Å)">
+          🔤 Sorter etter navn (A-Å)
+        </button>
+        <button type="button" id="btn-clear-scores" class="btn btn-outline btn-compact" title="Tøm alle poengsummer i tabellen (lagnavn beholdes)">
+          🧹 Tøm poeng
         </button>
         <button type="button" id="btn-open-analysis" class="btn btn-neutral" title="Gå igjennom runde for runde hvem som var best, og se grafer">
           📈 Rundeanalyse & Grafer
@@ -174,6 +181,7 @@
         <button type="button" id="btn-view-top10" class="btn btn-chip">🏆 Topp 10</button>
         <button type="button" id="btn-view-top5" class="btn btn-chip">🥇 Topp 5</button>
         <button type="button" id="btn-toggle-2col" class="btn btn-chip">🔲 2 Kolonner</button>
+        <button type="button" id="btn-toggle-highlights" class="btn btn-chip active" title="Slå av eller på fargefremheving for rundevinnere og manglende poeng">🎨 Utheving: PÅ</button>
         <button type="button" id="btn-carousel" class="btn btn-chip">▶️ Karusell</button>
         <button type="button" id="btn-cliffhanger" class="btn btn-chip">🤫 Hemmelig finale</button>
         <button type="button" id="btn-open-timer" class="btn btn-chip">⏱️ Quiz-timer</button>
@@ -247,7 +255,8 @@
 
         <div class="analysis-tabs">
           <button type="button" class="analysis-tab-btn active" id="tab-btn-winners">🏆 Hvem var best i hver runde?</button>
-          <button type="button" class="analysis-tab-btn" id="tab-btn-graph">📊 Interaktiv Graf (Utvikling)</button>
+          <button type="button" class="analysis-tab-btn" id="tab-btn-cumulative">📋 Stilling etter hver runde (Tall)</button>
+          <button type="button" class="analysis-tab-btn" id="tab-btn-graph">📊 Linjegraf</button>
         </div>
 
         <!-- Fane 1: Rundevinnere -->
@@ -265,7 +274,16 @@
           </div>
         </div>
 
-        <!-- Fane 2: Graf -->
+        <!-- Fane 2: Akkumulert stilling tabell (Runde for runde summer) -->
+        <div id="analysis-content-cumulative" class="analysis-tab-content" style="display: none;">
+          <h3>📋 Sammenlagt stilling etter hver runde:</h3>
+          <p class="chart-hint">Viser eksakt hvor mange poeng hvert lag hadde sammenlagt etter runde 1, 2, 3 osv.</p>
+          <div id="analysis-cumulative-table-wrap" class="cumulative-table-wrap">
+            <!-- Fylles dynamisk -->
+          </div>
+        </div>
+
+        <!-- Fane 3: Graf -->
         <div id="analysis-content-graph" class="analysis-tab-content" style="display: none;">
           <div class="chart-controls-bar">
             <span>Visning:</span>

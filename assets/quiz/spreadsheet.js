@@ -17,7 +17,27 @@ let isLastRoundHidden = false; // "Cliffhanger / Hemmelig finale"
 function initSpreadsheet(state, onStateChange) {
   appState = state;
   onStateChangeCallback = onStateChange;
+
+  const savedHighlights = localStorage.getItem('quiz_kraft_highlights');
+  if (savedHighlights !== null) {
+    appState.showHighlights = (savedHighlights === 'true');
+  } else if (appState.showHighlights === undefined) {
+    appState.showHighlights = true;
+  }
+
   renderTable();
+}
+
+function setShowHighlights(enabled) {
+  if (!appState) return;
+  appState.showHighlights = !!enabled;
+  localStorage.setItem('quiz_kraft_highlights', appState.showHighlights ? 'true' : 'false');
+  renderTable();
+}
+
+function getShowHighlights() {
+  if (!appState) return true;
+  return appState.showHighlights !== false;
 }
 
 function updateState(newState) {
@@ -284,11 +304,58 @@ function setRoundCount(newCount) {
 }
 
 /**
+ * Beregner en myk, gradientert farge for SUM-kolonnen basert på plassering / poeng.
+ * Sikrer ekstremt høy lesbarhet med kullsort tekst i lys modus og hvit tekst i mørk modus.
+ */
+function getSumGradientStyle(total, minTotal, maxTotal, isInactive) {
+  if (isInactive || total === null || total === undefined || total === 0 || maxTotal === 0) {
+    return '';
+  }
+  const ratio = (maxTotal > minTotal) ? ((total - minTotal) / (maxTotal - minTotal)) : 1.0;
+
+  // Lys modus: Myk champagnegull (topp) til ren lys grå/skifer (bunn)
+  const r = Math.round(241 + ratio * (254 - 241));
+  const g = Math.round(245 + ratio * (240 - 245));
+  const b = Math.round(249 + ratio * (138 - 249));
+
+  // Mørk modus: Dyp bronse (topp) til mørk skifer (bunn)
+  const dr = Math.round(30 + ratio * (78 - 30));
+  const dg = Math.round(41 + ratio * (62 - 41));
+  const db = Math.round(59 + ratio * (19 - 59));
+
+  return `background-color: rgb(${r}, ${g}, ${b}) !important; color: #000000 !important; --dark-sum-bg: rgb(${dr}, ${dg}, ${db});`;
+}
+
+function applySumGradientToElement(el, total, minTotal, maxTotal, isInactive) {
+  if (!el) return;
+  if (isInactive || total === null || total === undefined || total === 0 || maxTotal === 0) {
+    el.style.backgroundColor = '';
+    el.style.color = '';
+    el.style.removeProperty('--dark-sum-bg');
+    return;
+  }
+  const ratio = (maxTotal > minTotal) ? ((total - minTotal) / (maxTotal - minTotal)) : 1.0;
+
+  const r = Math.round(241 + ratio * (254 - 241));
+  const g = Math.round(245 + ratio * (240 - 245));
+  const b = Math.round(249 + ratio * (138 - 249));
+
+  const dr = Math.round(30 + ratio * (78 - 30));
+  const dg = Math.round(41 + ratio * (62 - 41));
+  const db = Math.round(59 + ratio * (19 - 59));
+
+  el.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+  el.style.color = '#000000';
+  el.style.setProperty('--dark-sum-bg', `rgb(${dr}, ${dg}, ${db})`);
+}
+
+/**
  * Bygger HTML-strengen for selve tabellen
  */
 function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, lastPlayedIdx, isCompact) {
   const isPres = isPresentationMode;
   const allTeams = appState.teams || [];
+  const highlightsEnabled = appState.showHighlights !== false;
 
   // Beregn rundevinnere og hvilke runder som er påbegynt
   const roundMaxScores = [];
@@ -309,6 +376,12 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
     roundMaxScores.push(max > 0 ? max : null);
     roundHasStarted.push(started);
   }
+
+  // Beregn min og maks total for gradert fargelegging av SUM-kolonnen
+  const activeTeams = allTeams.filter(t => t.active !== false);
+  const activeTotals = activeTeams.map(t => window.QuizScoring ? window.QuizScoring.calculateTeamTotal(t, roundCount) : 0);
+  const maxTotal = activeTotals.length > 0 ? Math.max(...activeTotals) : 0;
+  const minTotal = activeTotals.length > 0 ? Math.min(...activeTotals) : 0;
 
   let html = `
     <table class="quiz-table ${isPres ? 'quiz-table-presentation' : ''} ${isCompact ? 'quiz-table-compact' : ''}" role="grid" aria-label="Quiz Poengtavle">
@@ -337,10 +410,10 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
     `;
   }
 
-  // Sammenlagt og Merknad
+  // Sammenlagt og Merknad (Merknad skjules i presentasjonsmodus for å spare 180px lerretplass)
   html += `
           <th class="col-total" scope="col">SUM</th>
-          <th class="col-note" scope="col">Merknad</th>
+          ${!isPres ? `<th class="col-note" scope="col">Merknad</th>` : ''}
           ${!isPres ? `<th class="col-actions no-print" scope="col">Fjern</th>` : ''}
         </tr>
       </thead>
@@ -350,7 +423,7 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
   if (teamsList.length === 0) {
     html += `
       <tr>
-        <td colspan="${roundCount + (isPres ? 3 : 4)}" class="empty-table-msg">
+        <td colspan="${roundCount + (isPres ? 3 : 5)}" class="empty-table-msg">
           Ingen lag i denne visningen.
         </td>
       </tr>
@@ -389,7 +462,10 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
           </td>
           <td class="col-team">
             ${isPres ? `
-              <span class="pres-team-name">${escapeHtml(team.name || 'Lag ' + (realIdx + 1))}</span>
+              <div class="pres-team-cell">
+                <span class="pres-team-name">${escapeHtml(team.name || 'Lag ' + (realIdx + 1))}</span>
+                ${team.tieBreakerNote ? `<span class="pres-tiebreaker-tag">${escapeHtml(team.tieBreakerNote)}</span>` : ''}
+              </div>
             ` : `
               <div class="team-name-cell-wrap">
                 <label class="checkbox-attendance-wrap" title="${isInactive ? 'Klikk for å aktivere laget (deltar i kveld)' : 'Fjern hake hvis laget ikke deltar i kveld'}">
@@ -413,8 +489,8 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
         const isHiddenFinal = isLastRoundHidden && r === lastPlayedIdx;
 
         // Farge på rundevinner og manglende poeng
-        const isWinner = !isInactive && roundMaxScores[r] !== null && parsed !== null && parsed === roundMaxScores[r];
-        const isMissing = !isInactive && roundHasStarted[r] && (rawScore === '' || rawScore === null || rawScore === undefined);
+        const isWinner = highlightsEnabled && !isInactive && roundMaxScores[r] !== null && parsed !== null && parsed === roundMaxScores[r];
+        const isMissing = highlightsEnabled && !isInactive && roundHasStarted[r] && (rawScore === '' || rawScore === null || rawScore === undefined);
 
         let roundCellClass = 'col-round';
         if (isHiddenFinal) roundCellClass += ' col-round-hidden';
@@ -424,7 +500,7 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
         html += `
           <td class="${roundCellClass}" title="${isWinner ? '🏆 Beste poengsum i ' + (roundNames[r] || 'runde ' + (r + 1)) : (isMissing ? '⚠️ Dette laget mangler poeng i ' + (roundNames[r] || 'runde ' + (r + 1)) : '')}">
             ${isPres ? `
-              <span class="pres-score">${isHiddenFinal ? '❓' : (rawScore !== '' ? (isWinner ? '👑 ' + escapeHtml(rawScore) : escapeHtml(rawScore)) : '-')}</span>
+              <span class="pres-score">${isHiddenFinal ? '❓' : (rawScore !== '' ? escapeHtml(rawScore) : '-')}</span>
             ` : `
               <input type="text" 
                      inputmode="decimal"
@@ -448,14 +524,16 @@ function buildTableHtml(teamsList, startIndexOffset, roundCount, roundNames, las
         displayTotal = '🔒 ?';
       }
 
+      const sumGradientStyle = getSumGradientStyle(total, minTotal, maxTotal, isInactive);
+
       html += `
-          <td class="col-total">
+          <td class="col-total" style="${sumGradientStyle}">
             <span class="total-display" id="total-${realIdx}" aria-live="polite">${displayTotal}</span>
           </td>
-          <td class="col-note">
-            ${isInactive ? '<span class="note-inactive">Deltar ikke</span>' : (team.tieBreakerNote ? `<span class="tie-breaker-badge">${escapeHtml(team.tieBreakerNote)}</span>` : '<span class="note-empty">-</span>')}
-          </td>
           ${!isPres ? `
+            <td class="col-note">
+              ${isInactive ? '<span class="note-inactive">Deltar ikke</span>' : (team.tieBreakerNote ? `<span class="tie-breaker-badge">${escapeHtml(team.tieBreakerNote)}</span>` : '<span class="note-empty">-</span>')}
+            </td>
             <td class="col-actions no-print">
               <button type="button" class="btn-delete-team" data-team-idx="${realIdx}" title="Slett dette laget">Slett</button>
             </td>
@@ -531,6 +609,7 @@ function updateRoundHighlights(container) {
   if (!container || !appState) return;
   const roundCount = appState.roundCount || 0;
   const allTeams = appState.teams || [];
+  const highlightsEnabled = appState.showHighlights !== false;
 
   const roundMaxScores = [];
   const roundHasStarted = [];
@@ -551,6 +630,12 @@ function updateRoundHighlights(container) {
     roundHasStarted.push(started);
   }
 
+  // Beregn min og maks total for å oppdatere de graderte sum-fargene i sanntid
+  const activeTeams = allTeams.filter(t => t.active !== false);
+  const activeTotals = activeTeams.map(t => window.QuizScoring ? window.QuizScoring.calculateTeamTotal(t, roundCount) : 0);
+  const maxTotal = activeTotals.length > 0 ? Math.max(...activeTotals) : 0;
+  const minTotal = activeTotals.length > 0 ? Math.min(...activeTotals) : 0;
+
   const rows = container.querySelectorAll('tr.team-row');
   rows.forEach(row => {
     const tIdx = parseInt(row.dataset.teamIdx, 10);
@@ -558,12 +643,19 @@ function updateRoundHighlights(container) {
     if (!team) return;
     const isInactive = team.active === false;
 
+    // Oppdater gradert farge på sum-cellen
+    const total = window.QuizScoring ? window.QuizScoring.calculateTeamTotal(team, roundCount) : 0;
+    const tdTotal = row.querySelector('td.col-total');
+    if (tdTotal) {
+      applySumGradientToElement(tdTotal, total, minTotal, maxTotal, isInactive);
+    }
+
     for (let r = 0; r < roundCount; r++) {
       const rawScore = team.scores ? team.scores[r] : '';
       const parsed = window.QuizScoring ? window.QuizScoring.parseScore(rawScore) : null;
 
-      const isWinner = !isInactive && roundMaxScores[r] !== null && parsed !== null && parsed === roundMaxScores[r];
-      const isMissing = !isInactive && roundHasStarted[r] && (rawScore === '' || rawScore === null || rawScore === undefined);
+      const isWinner = highlightsEnabled && !isInactive && roundMaxScores[r] !== null && parsed !== null && parsed === roundMaxScores[r];
+      const isMissing = highlightsEnabled && !isInactive && roundHasStarted[r] && (rawScore === '' || rawScore === null || rawScore === undefined);
 
       const input = row.querySelector(`.score-input[data-round-idx="${r}"]`);
       if (input) {
@@ -896,16 +988,54 @@ function sortTeams() {
   notifyChange(true);
 }
 
+/**
+ * Sorterer lagene alfabetisk etter lagnavn (A–Å)
+ */
+function sortTeamsByName() {
+  if (!appState) return;
+  saveUndoSnapshot();
+
+  const activeTeams = appState.teams.filter(t => t.active !== false);
+  const inactiveTeams = appState.teams.filter(t => t.active === false);
+
+  activeTeams.sort((a, b) => {
+    const nameA = (a.name || '').trim();
+    const nameB = (b.name || '').trim();
+    return nameA.localeCompare(nameB, 'no', { sensitivity: 'base', numeric: true });
+  });
+
+  activeTeams.forEach((t, i) => {
+    t.rank = i + 1;
+    t.tieBreakerNote = '';
+  });
+
+  inactiveTeams.forEach(t => {
+    t.rank = '-';
+    t.tieBreakerNote = 'Deltar ikke';
+  });
+
+  appState.teams = [...activeTeams, ...inactiveTeams];
+  appState.isSorted = false;
+
+  renderTable();
+  notifyChange(true);
+}
+
 function clearAllScores() {
   if (!appState) return;
-  const ok = window.confirm('Vil du nullstille alle poeng til blankt? Lagene og rundene beholdes.');
+  const ok = window.confirm('Er du sikker på at du vil tømme alle innførte poengsummer?\n\nLagnavn, antall runder og frammøte blir bevart.');
   if (!ok) return;
 
   saveUndoSnapshot();
   appState.teams.forEach(team => {
     team.scores = Array(appState.roundCount).fill('');
     team.tieBreakerNote = '';
-    team.rank = 1;
+    if (team.active !== false) {
+      team.rank = null;
+    } else {
+      team.rank = '-';
+      team.tieBreakerNote = 'Deltar ikke';
+    }
   });
   appState.isSorted = false;
 
@@ -947,7 +1077,10 @@ window.QuizSpreadsheet = {
   setRoundCount,
   deleteRound,
   sortTeams,
+  sortTeamsByName,
   clearAllScores,
+  setShowHighlights,
+  getShowHighlights,
   setViewFilter,
   getViewFilter,
   set2ColumnLayout,

@@ -609,16 +609,26 @@ body.presentation-mode .presentation-header,
 }
 
 .col-total {
-  min-width: 110px;
-  width: 125px;
+  min-width: 100px;
+  width: 115px;
   text-align: center;
-  background-color: var(--total-col-bg) !important;
-  color: var(--total-col-text) !important;
+  background-color: var(--total-col-bg);
+  color: var(--total-col-text);
+  transition: background-color 0.2s ease;
+}
+
+body.dark-theme .col-total[style*="--dark-sum-bg"] {
+  background-color: var(--dark-sum-bg) !important;
+  color: #ffffff !important;
 }
 
 .col-note {
-  min-width: 180px;
-  font-size: 0.88rem;
+  min-width: 85px;
+  max-width: 120px;
+  width: 95px;
+  font-size: 0.78rem;
+  text-align: center;
+  padding: 0.2rem 0.35rem;
 }
 
 .col-actions {
@@ -815,10 +825,76 @@ body.dark-theme .team-row-inactive {
   transition: all 0.15s ease;
 }
 
-
 .btn-delete-team:hover {
   background-color: var(--btn-danger);
   color: #ffffff;
+}
+
+/* Presentasjonstilpasning for lagnavn og merknad */
+.pres-team-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.15rem;
+}
+
+.pres-tiebreaker-tag {
+  display: inline-block;
+  background-color: #fef08a;
+  color: #854d0e;
+  border: 1px solid #eab308;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+body.dark-theme .pres-tiebreaker-tag {
+  background-color: #713f12;
+  color: #fef08a;
+  border-color: #ca8a04;
+}
+
+/* Akkumulert stilling tabell i analyseboksen */
+.cumulative-table-wrap {
+  overflow-x: auto;
+  margin-top: 1rem;
+  border: 2px solid var(--border-cell);
+  border-radius: 8px;
+}
+
+.cumulative-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.cumulative-table th, 
+.cumulative-table td {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border-cell);
+  text-align: center;
+}
+
+.cumulative-table th {
+  background-color: var(--th-bg);
+  color: var(--th-text);
+  font-weight: 800;
+}
+
+.cumulative-table td.col-team {
+  text-align: left;
+  font-weight: 700;
+}
+
+.cumulative-table td.cum-leader {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-weight: 900;
+}
+body.dark-theme .cumulative-table td.cum-leader {
+  background-color: #064e3b;
+  color: #86efac;
 }
 
 .row-gold td {

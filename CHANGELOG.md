@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.5.4] - 2026-10-27
+
+### Lagt til & Forbedret
+- **Quiz Kraft arrangørverktøy og analyseoppgradering (`quiz.html` & `assets/quiz/`)**:
+  - **🏆 «Finn vinner» direkte i fullskjerm**: Ett-klikks avsløring av hemmelig finale og automatisk sortering for vinnerkåring på projektor.
+  - **🔤 Alfabetisk sortering (A–Å)**: Egen knapp for å sortere tabellen alfabetisk etter lagnavn, ideelt når innleverte svarskjemaer skal føres inn.
+  - **🧹 Tøm poeng**: Egen handling for å nullstille alle poengsummer med bekreftelsesvarsel, men beholde alle lag- og rundenavn for neste quiz.
+  - **🎨 Uthevingsbryter (PÅ / AV)**: Hurtigknapp i verktøylinjen for å slå fargemarkering av rundevinnere og manglende poeng av eller på.
+  - **📋 Akkumulert stilling i analyse**: Ny fane i analysemodulen som viser sammenlagt poengsum etter hver enkelt runde i en tabell med uthevet sammenlagtleder.
+
+---
+
 ## [2.5.3] - 2026-10-27
 
 ### Lagt til & Forbedret
