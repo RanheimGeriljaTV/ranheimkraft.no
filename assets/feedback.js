@@ -6,8 +6,8 @@
 /* =========================================================================
    1. KONFIGURASJON (Trygg for offentlig GitHub-repo)
    ========================================================================= */
-// Erstatt med din Web3Forms Access Key fra https://web3forms.com (Gratis, krever ingen backend)
-const FORM_ACCESS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY'; 
+// Web3Forms Public Access Key (klient-nøkkel for sikker serverløs innsending)
+const FORM_ACCESS_KEY = 'bdd9638c-4d2d-4a68-a65d-dfdbea23f21c';
 
 // Offisiell GitHub Issues lenke for prosjektet
 const GITHUB_ISSUES_URL = 'https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/new';
