@@ -158,12 +158,14 @@ async function loadLiveNews() {
     } catch (e) {}
   }
 
-  // 3. Render ticker items
+  // 3. Render ticker items (Begrens til 8 ferskeste og tilpass farten for rolig lesing)
   if (items && Array.isArray(items) && items.length > 0) {
     const track = document.getElementById('ticker-track');
     if (!track) return;
 
-    const renderList = [...items, ...items];
+    // Bruk de 8 ferskeste nyhetene for en ren og relevant nyhetsstripe
+    const freshNews = items.slice(0, 8);
+    const renderList = [...freshNews, ...freshNews];
     track.innerHTML = renderList.map(item => `
       <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
         <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
@@ -171,6 +173,13 @@ async function loadLiveNews() {
         <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
       </a>
     `).join('');
+
+    // Beregn en rolig og behagelig lesehastighet (ca. 45 piksler per sekund)
+    requestAnimationFrame(() => {
+      const halfWidth = track.scrollWidth / 2;
+      const duration = Math.max(50, Math.round(halfWidth / 45));
+      track.style.animationDuration = `${duration}s`;
+    });
   }
 }
 

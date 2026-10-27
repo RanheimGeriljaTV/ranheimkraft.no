@@ -6,6 +6,16 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.6.1] - 2026-10-27
+
+### Endret & Forbedret
+- **Rolig lesetempo for nyhetsstripen (`assets/main.js`, `assets/style.css`)**:
+  - Begrenset nyhetskildene til de 8 ferskeste sakene for et relevant og ryddig utvalg.
+  - Implementert dynamisk hastighetsberegning basert på overskriftenes faktiske bredde (kalibrert til ca. 45 piksler/sekund). Dette senker farten med nesten 80 %, slik at artiklene flyter forbi i et behagelig og lettlest tempo.
+  - Pauser umiddelbart ved berøring på mobil eller mouse-hover på PC.
+
+---
+
 ## [2.6.0] - 2026-10-27
 
 ### Lagt til & Sikret
