@@ -6,6 +6,17 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.1.0] - 2026-10-27
+
+### Endret & Forbedret
+- **Nytt radikalt design: «Swiss Kinetic»**:
+  - Forlot tradisjonelt bento-rutenett til fordel for et modig, minimalistisk sveitsisk kunstgalleri-oppsett med avant-garde typografi (`Syne 900` og `Plus Jakarta Sans`).
+  - **Mascot Hero-banner**: Isbjørnen (`logo.png`) er stolt integrert hvilende over den massive overskriften, med en interaktiv easter-egg som bytter til sovende bjørn (`logosove.png`) ved hover.
+  - **Kompakt videospiller**: Nedskalert videospilleren til en velproporsjonert 16:9-kino ved siden av tekstinnholdet i stedet for å dominere hele skjermen.
+  - **Fjernet all clutter**: Ingen bakgrunnsgraffiti, ingen halvtone-støy, og null overflødige merkelapper. Krystallklart og tiltalende for vanlige besøkende.
+
+---
+
 ## [2.0.1] - 2026-10-26
 
 ### Endret & Forbedret

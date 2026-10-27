@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#070b14">
+  <meta name="theme-color" content="#08080a">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>RanheimKraft</title>
+  <title>Ranheim Kraft</title>
   <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+  
   <!-- Umami Analytics (Privacy-friendly & Cookieless) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>
   
-  <!-- Google Fonts: Space Grotesk (Minimalist Tech) & Sedgwick Ave (Graffiti/Street) & Bangers (Comic pop) -->
+  <!-- Google Fonts: Syne (Swiss Avant-Garde Display) & Plus Jakarta Sans (Clean Minimal Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Sedgwick+Ave+Display&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -23,508 +24,176 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Space Grotesk', 'sans-serif'],
-            graffiti: ['"Sedgwick Ave Display"', 'cursive'],
-            comic: ['Bangers', 'cursive'],
-          },
-          colors: {
-            dark: '#080a0f',
-            glass: 'rgba(255, 255, 255, 0.04)',
-            'glass-border': 'rgba(255, 255, 255, 0.12)',
-            'neon-cyan': '#00f0ff',
-            'neon-pink': '#ff007f',
-            'neon-amber': '#ffaa00',
+            syne: ['Syne', 'sans-serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['monospace']
           }
         }
       }
     }
   </script>
-
-  <!-- Custom & Component Styles -->
+  
   <link rel="stylesheet" href="assets/style.css">
   <script src="https://www.youtube.com/iframe_api"></script>
+  <style>
+    body {
+      background-color: #08080a;
+    }
+  </style>
 </head>
 
-<body class="bg-[#080a0f] text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black" style="background-image: radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.07) 0%, transparent 40%), radial-gradient(circle at 85% 40%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);">
-
-  <!-- Background Layer: Subtle Comic Halftone Pattern -->
-  <div class="fixed inset-0 comic-halftone pointer-events-none opacity-40 z-0"></div>
-
-  <!-- Anamorphic Lens Flare Streaks across the page -->
-  <div class="anamorphic-streak top-28 opacity-40 hidden md:block"></div>
-  <div class="anamorphic-streak top-96 opacity-20 hidden md:block"></div>
-
-  <!-- Live Sports News Ticker: Ranheim Fotball Siste Nytt (Edge-to-Edge Full Width, Ranheim Gradient) -->
-  <aside class="ticker-container relative z-30 w-full border-b border-cyan-400/25 bg-gradient-to-r from-[#071330] via-[#0f2766] to-[#071330] text-xs sm:text-sm select-none shadow-[0_4px_25px_rgba(3,10,30,0.6)]">
-    <div class="w-full flex items-center justify-between">
-      <!-- Fixed Left Badge (Ranheim Blue Gradient, Clean crisp text, No logo, No blinking dot) -->
-      <a href="https://www.ranheimfotball.no/nyheter" target="_blank" rel="noopener noreferrer" class="flex items-center px-2.5 sm:px-4 py-1.5 sm:py-2.5 bg-gradient-to-r from-cyan-500/20 to-blue-600/30 hover:from-cyan-500/30 hover:to-blue-600/40 text-cyan-200 font-bold tracking-wider shrink-0 z-20 border-r border-cyan-400/30 transition-all">
-        <span class="text-[10px] sm:text-xs md:text-sm font-sans font-black uppercase tracking-wider text-cyan-200 whitespace-nowrap">SISTE NYTT</span>
-      </a>
-
-      <!-- Auto-scrolling News Tape (Full Width, Pauses on Hover) -->
-      <div class="overflow-hidden relative flex-1 min-w-0 py-1 sm:py-2 cursor-pointer" title="Hold over for å pause / klikk for å lese">
-        <!-- Edge Fades matching Ranheim gradient -->
-        <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-6 sm:w-10 bg-gradient-to-r from-[#071330] to-transparent z-10"></div>
-        <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-6 sm:w-10 bg-gradient-to-l from-[#071330] to-transparent z-10"></div>
-
-        <div id="ticker-track" class="ticker-content flex items-center gap-6 sm:gap-10 pl-3 sm:pl-6">
-          <a href="https://www.ranheimfotball.no/nyheter/sterk-borteseier-pa-raufoss-for-gutta-og-ellevill-cupfest-i-vente-i-fjaera" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Sterk borteseier på Raufoss for gutta og ellevill cupfest i vente i fjæra!</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/tre-deilige-poeng-pa-toten-gutta-slo-tilbake-og-vant-3-1-mot-raufoss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Tre deilige poeng på Toten: Gutta slo tilbake og vant 3-1 mot Raufoss</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/coop-midt-norge-og-extra-forlenger-avtalen-med-ranheim" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Coop Midt-Norge og EXTRA forlenger avtalen med Ranheim</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/offensiv-selvtillit-pa-reisefot-ranheim-gjester-tabelljumboen" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Offensiv selvtillit på reisefot: Ranheim gjester tabelljumboen</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/denne-uken-i-historien-malfester-hostdrama-og-uforglemmelige-oyeblikk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Denne uken i historien: Målfester, høstdrama og uforglemmelige øyeblikk</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/en-innholdsrik-uke-42-er-i-boks-herlig-hjemmeseier-i-fjaera-og-malshow-fra-g16" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">En innholdsrik uke: Herlig hjemmeseier i fjæra og målshow fra G16</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/malfest-i-fjaera-gutta-snudde-til-overbevisende-4-2-seier-mot-bryne" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Målfest i fjæra: Gutta snudde til overbevisende 4-2-seier mot Bryne</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <!-- Duplicated for seamless loop -->
-          <a href="https://www.ranheimfotball.no/nyheter/sterk-borteseier-pa-raufoss-for-gutta-og-ellevill-cupfest-i-vente-i-fjaera" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Sterk borteseier på Raufoss for gutta og ellevill cupfest i vente i fjæra!</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/tre-deilige-poeng-pa-toten-gutta-slo-tilbake-og-vant-3-1-mot-raufoss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Tre deilige poeng på Toten: Gutta slo tilbake og vant 3-1 mot Raufoss</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/coop-midt-norge-og-extra-forlenger-avtalen-med-ranheim" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Coop Midt-Norge og EXTRA forlenger avtalen med Ranheim</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/offensiv-selvtillit-pa-reisefot-ranheim-gjester-tabelljumboen" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Offensiv selvtillit på reisefot: Ranheim gjester tabelljumboen</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/denne-uken-i-historien-malfester-hostdrama-og-uforglemmelige-oyeblikk" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Denne uken i historien: Målfester, høstdrama og uforglemmelige øyeblikk</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/en-innholdsrik-uke-42-er-i-boks-herlig-hjemmeseier-i-fjaera-og-malshow-fra-g16" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">En innholdsrik uke: Herlig hjemmeseier i fjæra og målshow fra G16</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-          <a href="https://www.ranheimfotball.no/nyheter/malfest-i-fjaera-gutta-snudde-til-overbevisende-4-2-seier-mot-bryne" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-            <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-            <span class="hover:underline">Målfest i fjæra: Gutta snudde til overbevisende 4-2-seier mot Bryne</span>
-            <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Right Source Link (Pinned to Right Edge) -->
-      <a href="https://www.ranheimfotball.no" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center gap-1.5 px-4 sm:px-5 py-1.5 sm:py-2.5 text-xs sm:text-sm text-cyan-200 hover:text-white border-l border-cyan-400/20 shrink-0 transition font-mono z-20 bg-[#071330]/80 hover:bg-[#0f2766]/90">
-        <span class="font-semibold">ranheimfotball.no</span>
-        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </a>
-    </div>
-  </aside>
+<body class="text-zinc-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-white selection:text-black">
 
   <!-- Main Container -->
-  <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-8 sm:py-12 flex flex-col min-h-screen" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
+  <div class="max-w-5xl mx-auto px-4 sm:px-8 pt-6 pb-20 space-y-14" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Navigation / Status Header -->
-    <header class="flex items-center justify-between gap-3 pb-5 sm:pb-10 border-b border-white/5">
-      <!-- Brand Logo & Graffiti Tag -->
-      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
-        <div class="relative group shrink-0">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-cyan-500 to-pink-500 p-[1px] shadow-lg shadow-cyan-500/20 overflow-hidden">
-            <picture>
-              <source srcset="assets/Ranheim_gerilja_tv_B.webp" type="image/webp">
-              <img src="assets/Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV Logo" class="w-full h-full object-cover rounded-[11px] bg-dark">
-            </picture>
-          </div>
-          
-        </div>
+    <!-- Top Minimalist Bar -->
+    <nav class="flex items-center justify-between pb-5 border-b border-white/10 text-xs font-mono">
+      <div class="flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+        <span class="text-white font-bold tracking-wider font-syne uppercase">Ranheim Kraft</span>
+        <span class="hidden sm:inline text-zinc-500 font-normal border-l border-white/10 pl-3">Trondheim &bull; 63.42&deg; N</span>
+      </div>
+      <div class="flex items-center gap-3 sm:gap-5 text-zinc-400">
+        <a href="galleri.html" data-umami-event="header_galleri_click" class="hover:text-white transition">Bildegalleri</a>
+        <a href="eliteserien.html" data-umami-event="header_es_click" class="hover:text-white transition">Eliteserien</a>
+        <a href="fpl.html" data-umami-event="header_fpl_click" class="hover:text-white transition">Premier League</a>
+        <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
+      </div>
+    </nav>
 
-        <div class="min-w-0">
-          <div class="flex items-center gap-1.5 sm:gap-2">
-            <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap">
-              RANHEIM<span class="text-neon-cyan">KRAFT</span>
-            </h1>
-            <span class="hidden min-[400px]:inline text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-white/5 text-slate-400 border border-white/10 font-mono">
-              .NO
-            </span>
-          </div>
+    <!-- HERO: GIANT AVANT-GARDE TYPOGRAPHY WITH ISBJØRN RESTING ON TOP -->
+    <header class="relative pt-2 pb-12 border-b border-white/10">
+      
+      <!-- The Bear Mascot Resting on the Giant Letters (Interactive: Sleeps on hover) -->
+      <div class="flex justify-end pr-2 sm:pr-6 -mb-8 sm:-mb-12 relative z-20">
+        <div class="p-3 sm:p-4 rounded-2xl bg-[#08080a] border border-white/10 shadow-2xl group cursor-pointer transition-transform hover:scale-105" title="Ranheim-isbjørnen (Vekslende sovestilling ved hover)">
+          <img id="mascot-bear" src="assets/logo.png" alt="Ranheim-isbjørnen" class="w-44 sm:w-60 h-auto object-contain transition-all duration-300 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)]" onmouseover="this.src='assets/logosove.png'" onmouseout="this.src='assets/logo.png'">
         </div>
       </div>
 
-      <!-- Clean Header Navigation (Text-only on desktop, no emoji buttons on mobile) -->
-      <nav class="hidden sm:flex items-center gap-2 shrink-0">
-        <a href="eliteserien.html" data-umami-event="header_es_click" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition">
-          Eliteserien
-        </a>
-        <a href="fpl.html" data-umami-event="header_fpl_click" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition">
-          Premier League
-        </a>
-        <a href="galleri.html" data-umami-event="header_galleri_click" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium text-slate-300 hover:text-white transition">
-          Galleri
-        </a>
-      </nav>
+      <!-- Massive Typography -->
+      <div class="space-y-1 relative z-10">
+        <span class="text-xs font-mono tracking-widest text-zinc-400 uppercase font-semibold">
+          [ 01 &bull; STUDIO &bull; ARCHIVE &bull; LAB ]
+        </span>
+        <h1 class="text-5xl sm:text-7xl md:text-8xl font-syne font-black text-white tracking-tighter uppercase leading-none">
+          RANHEIM<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-zinc-600">KRAFT.</span>
+        </h1>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-6">
+        <p class="text-zinc-400 text-sm max-w-md leading-relaxed">
+          Uavhengig medieproduksjon, arrangementsgallerier og spesialiserte fotballberegninger fra fjæra.
+        </p>
+        <div class="text-xs font-mono text-zinc-500 shrink-0">
+          UAVHENGIG STUDIOPORTAL &bull; 2026
+        </div>
+      </div>
     </header>
 
-    <!-- Street Art Graffiti Background Tags (Sedgwick Ave Display) -->
-    <div class="pointer-events-none select-none -z-10 overflow-hidden">
-      <!-- KRAFT tag (top-left) -->
-      <div class="absolute top-28 left-0 sm:left-4 text-5xl sm:text-7xl md:text-8xl font-graffiti text-cyan-400/[0.045] -rotate-6 tracking-wider">
-        KRAFT
-      </div>
-      <!-- KK tag (top-right / middle) -->
-      <div class="absolute top-36 right-4 sm:right-28 text-6xl sm:text-8xl md:text-9xl font-graffiti text-pink-400/[0.04] rotate-12 tracking-widest">
-        KK
-      </div>
-      <!-- RANHEIM GERILJA tag (bottom-left) -->
-      <div class="absolute top-[48%] left-1 sm:left-8 text-3xl sm:text-5xl md:text-6xl font-graffiti text-cyan-400/[0.035] -rotate-2 tracking-wide">
-        RANHEIM GERILJA
-      </div>
-    </div>
-
-    <!-- Main Content Bento Grid -->
-    <main id="projects" class="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 pt-5 sm:pt-8 pb-4 flex-grow relative">
-      <!-- Background Graffiti tag for projects section -->
-      <div class="pointer-events-none select-none -z-10 absolute inset-0 overflow-hidden flex items-center justify-between">
-        <span class="text-7xl sm:text-9xl font-graffiti text-pink-500/[0.025] -rotate-12 -translate-x-10">KK</span>
-        <span class="text-7xl sm:text-9xl font-graffiti text-cyan-400/[0.025] rotate-6 translate-x-10">KRAFT</span>
+    <!-- SECTION 1: COMPACT VIDEO (ASYMMETRICAL 2-COLUMN) -->
+    <section class="space-y-4">
+      <div class="flex items-baseline justify-between border-b border-white/10 pb-3">
+        <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">01 / Levende Bilder</span>
+        <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-white hover:underline">YouTube-kanal &rarr;</a>
       </div>
 
-      <!-- BENTO TILE 1: 📺 Ranheim Gerilja TV (Top Left - 7 cols) -->
-      <article class="bento-tile col-span-12 lg:col-span-7 glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between border border-red-500/25 hover:border-red-500/40 relative overflow-hidden group">
-        <div>
-          <!-- Header: Channel Logo + Links -->
-          <div class="flex items-center justify-between gap-3 pb-3 mb-3 border-b border-white/5">
-            <div class="flex items-center gap-2.5 min-w-0">
-              <div class="w-9 h-9 rounded-lg overflow-hidden border border-white/20 bg-dark shrink-0">
-                <picture>
-                  <source srcset="assets/Ranheim_gerilja_tv_B.webp" type="image/webp">
-                  <img src="assets/Ranheim_gerilja_tv_B.png" alt="Ranheim Gerilja TV" class="w-full h-full object-cover">
-                </picture>
-              </div>
-              <div class="leading-tight truncate">
-                <div class="text-xs font-bold text-white flex items-center gap-1.5">
-                  <span class="truncate">Ranheim Gerilja TV</span>
-                  <svg class="w-3.5 h-3.5 text-red-500 fill-current shrink-0" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 20c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 4c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-                </div>
-                <span class="text-[11px] font-mono text-slate-400">@RanheimGeriljaTV</span>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2 shrink-0">
-              <span class="hidden sm:inline-block px-2 py-0.5 rounded bg-red-600/15 border border-red-500/30 text-red-300 text-[10px] font-mono font-semibold">
-                YOUTUBE
-              </span>
-              <a href="https://www.youtube.com/@RanheimGeriljaTV?sub_confirmation=1" data-umami-event="youtube_subscribe_click" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-md bg-[#ff0000] hover:bg-red-600 text-white text-[11px] font-bold tracking-wide transition flex items-center gap-1 shadow-md shadow-red-600/30">
-                <span>Abonner</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Video Player Window (Clean Cinema Autoplay, No YouTube UI) -->
-          <div id="video-container" class="relative w-full aspect-video rounded-xl overflow-hidden bg-black border border-white/10 shadow-inner group/video">
-            <div class="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none z-10"></div>
-
-            <!-- YouTube API Player Target -->
-            <div id="yt-player-target" class="w-full h-full pointer-events-none"></div>
-
-            <!-- Custom Clean Sound Toggle Pill -->
-            <button id="btn-toggle-sound" onclick="toggleSound(event)" class="absolute bottom-2.5 right-2.5 z-20 px-2.5 py-1.5 rounded-lg bg-black/80 hover:bg-black border border-white/20 text-[11px] font-mono text-cyan-300 hover:text-white transition flex items-center gap-1.5 backdrop-blur-md shadow-lg group/sound cursor-pointer">
-              <span id="sound-icon">🔇</span>
-              <span id="sound-text">Slå på lyd</span>
-            </button>
-          </div>
-
-          <!-- Video Title & Direct YouTube Link -->
-          <div class="mt-2.5 flex items-center justify-between text-xs font-mono text-slate-300 gap-2">
-            <span id="current-video-title" class="truncate font-medium text-white">Laster inn video...</span>
-            <a id="current-video-link" href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-white flex items-center gap-1 text-[11px] shrink-0 font-medium">
-              <span>Se på YouTube</span> &rarr;
-            </a>
-          </div>
-
-          <p class="text-slate-300 text-xs mt-1.5 leading-relaxed">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-2">
+        <div class="md:col-span-5 space-y-3">
+          <h2 class="text-2xl sm:text-3xl font-syne font-bold text-white tracking-tight">
+            Ranheim Gerilja TV
+          </h2>
+          <p class="text-xs text-zinc-400 leading-relaxed">
             Supporter-TV, intervjuer, bak kulissene og stemningsrapporter fra Ranheim og Tour de Trøndelag.
           </p>
-        </div>
-
-        <!-- Tile 1 Footer -->
-        <div class="w-full mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between text-[11px] font-mono">
-          <button onclick="pickRandomVideo(true)" data-umami-event="random_video_dice" title="Bytt til en annen tilfeldig video" class="text-slate-400 hover:text-white flex items-center gap-1.5 transition group/dice">
-            <span class="text-xs group-hover/dice:rotate-45 transition-transform">🎲</span>
-            <span>Bytt tilfeldig video</span>
-          </button>
-          <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="text-red-400 hover:text-red-300 flex items-center gap-1 font-semibold">
-            <span>Åpne YouTube-kanalen</span> &rarr;
-          </a>
-        </div>
-      </article>
-
-      <!-- BENTO TILE 2: 📸 Kamp- & Supportergalleri (Top Right - 5 cols) -->
-      <article class="bento-tile col-span-12 lg:col-span-5 glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between border border-amber-500/25 hover:border-amber-500/40 relative overflow-hidden group">
-        <div>
-          <!-- Badge Header -->
-          <div class="flex items-center justify-between mb-3.5">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded bg-amber-400/15 border border-amber-400/30 text-amber-300 text-xs font-mono font-semibold">
-                📸 BILDEGALLERI
-              </span>
-              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300 text-[10px] font-mono">
-                🔒 PASSORD
-              </span>
-            </div>
-            <span class="text-xs text-amber-400/90 font-mono font-semibold">GOOGLE DISK</span>
+          <div class="pt-1">
+            <span id="current-video-title" class="block text-xs font-mono text-white truncate max-w-xs font-medium">Laster video...</span>
           </div>
-
-          <a href="galleri.html" data-umami-event="card_galleri_click" class="block group/title">
-            <h3 class="text-xl sm:text-2xl font-bold text-white group-hover/title:text-amber-300 transition-colors flex items-center gap-1.5">
-              <span>Bildegalleri</span>
-              <svg class="w-4 h-4 text-amber-400 opacity-0 group-hover/title:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </h3>
-          </a>
-
-          <p class="text-slate-300 text-xs mt-2.5 leading-relaxed">
-            Passordbeskyttede bildegallerier for arrangementer, turer, prosjekter og diverse fotoalbum. Bla gjennom bildene i fullskjermsvisning rett i nettleseren, eller last ned hele mapper i én samlet zip-fil.
-          </p>
-
-          <!-- Galleri-funksjoner / Høydepunkter (Fyller plassen naturlig uten passordfelt) -->
-          <div class="mt-4 space-y-2 text-xs text-slate-300">
-            <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-black/35 border border-white/5">
-              <span class="text-amber-400 text-xs font-bold">⚡</span>
-              <span>Fullskjermsvisning med piltaster og sveip</span>
-            </div>
-            <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-black/35 border border-white/5">
-              <span class="text-amber-400 text-xs font-bold">📦</span>
-              <span>1-klikks ZIP-nedlasting av hele album</span>
-            </div>
-            <div class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-black/35 border border-white/5">
-              <span class="text-amber-400 text-xs font-bold">🔒</span>
-              <span>Lukkede mapper med eget passord per oppdrag</span>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-1.5 mt-3.5">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-amber-300 border border-amber-500/20">Google Disk</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-500/20">ZIP-pakker</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-white/5">Fullskjerm</span>
-          </div>
-
-
-        </div>
-
-        <div class="pt-4 mt-5 border-t border-white/5">
-          <a href="galleri.html" data-umami-event="card_galleri_click" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500/20 via-amber-400/15 to-transparent hover:from-amber-500/30 hover:via-amber-400/25 border border-amber-400/35 text-amber-200 hover:text-white font-medium text-xs sm:text-sm transition flex items-center justify-between group/btn shadow-sm">
-            <span>Åpne bildegalleriet</span>
-            <span class="group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
-          </a>
-        </div>
-      </article>
-
-      <!-- BENTO TILE 3: ⚽ FPL Optimizer (Bottom Left - 4 cols) -->
-      <article class="bento-tile col-span-12 md:col-span-6 lg:col-span-4 glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between border border-emerald-500/25 hover:border-emerald-500/40 relative overflow-hidden group">
-        <div>
-          <div class="flex items-center justify-between mb-3.5">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold">
-                ⚽ PREMIER LEAGUE
-              </span>
-              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300 text-[10px] font-mono">
-                FANTASY
-              </span>
-            </div>
-            <span class="text-xs text-emerald-400 font-mono font-semibold">GRATIS</span>
-          </div>
-
-          <a href="fpl.html" data-umami-event="card_fpl_click" class="block group/title">
-            <h3 class="text-lg sm:text-xl font-bold text-white group-hover/title:text-emerald-300 transition-colors flex items-center gap-1.5">
-              <span>FPL Optimizer</span>
-              <svg class="w-4 h-4 text-emerald-400 opacity-0 group-hover/title:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </h3>
-          </a>
-
-          <p class="text-slate-300 text-xs mt-2.5 leading-relaxed">
-            Få hjelp til å sette opp ditt beste Fantasy Premier League-lag. Matematisk troppsoptimalisering, automatisk byttekalkulator, FDR-terminliste og Panini-spillerkort. Husker din FPL ID.
-          </p>
-
-          <div class="flex flex-wrap gap-1.5 mt-4">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-emerald-300 border border-emerald-500/20">Optimal 11-er</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-500/20">Byttekalkulator</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-white/5">FDR-terminliste</span>
+          <div class="flex items-center gap-4 pt-2 text-xs font-mono">
+            <button onclick="pickRandomVideo(true)" data-umami-event="random_video_dice" class="hover:text-white text-zinc-400 flex items-center gap-1 cursor-pointer transition">
+              <span>🎲 Bytt</span>
+            </button>
+            <a href="https://www.youtube.com/@RanheimGeriljaTV?sub_confirmation=1" data-umami-event="youtube_subscribe_click" target="_blank" rel="noopener noreferrer" class="text-white font-bold hover:underline">
+              Abonner &rarr;
+            </a>
           </div>
         </div>
 
-        <div class="pt-4 mt-5 border-t border-white/5">
-          <a href="fpl.html" data-umami-event="card_fpl_click" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500/20 via-emerald-400/15 to-transparent hover:from-emerald-500/30 hover:via-emerald-400/25 border border-emerald-400/35 text-emerald-200 hover:text-white font-medium text-xs sm:text-sm transition flex items-center justify-between group/btn shadow-sm">
-            <span>Start FPL-kalkulator</span>
-            <span class="group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
-          </a>
-        </div>
-      </article>
-
-      <!-- BENTO TILE 4: 🇳🇴 Eliteserien Fantasy (Bottom Mid - 4 cols) -->
-      <article class="bento-tile col-span-12 md:col-span-6 lg:col-span-4 glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between border border-cyan-500/25 hover:border-cyan-500/40 relative overflow-hidden group">
-        <div>
-          <div class="flex items-center justify-between mb-3.5">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded bg-blue-500/15 border border-blue-500/30 text-blue-300 text-xs font-mono font-semibold">
-                🇳🇴 ELITESERIEN
-              </span>
-              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300 text-[10px] font-mono">
-                LIVE STATS
-              </span>
-            </div>
-            <span class="text-xs text-cyan-400 font-mono font-semibold">GRATIS</span>
+        <!-- Video Player: Compact 380px, well-proportioned -->
+        <div class="md:col-span-7">
+          <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-white/20 shadow-2xl">
+            <div id="yt-player-target" class="w-full h-full pointer-events-none"></div>
+            <button onclick="toggleSound(event)" class="absolute bottom-3 right-3 z-20 px-3 py-1.5 rounded-xl bg-black/90 hover:bg-black border border-white/20 text-xs font-mono text-white transition flex items-center gap-1.5 backdrop-blur-md cursor-pointer">
+              <span id="sound-icon">🔇</span>
+              <span id="sound-text">Lyd</span>
+            </button>
           </div>
-
-          <a href="eliteserien.html" data-umami-event="card_es_click" class="block group/title">
-            <h3 class="text-lg sm:text-xl font-bold text-white group-hover/title:text-cyan-300 transition-colors flex items-center gap-1.5">
-              <span>Eliteserien Fantasy</span>
-              <svg class="w-4 h-4 text-cyan-400 opacity-0 group-hover/title:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </h3>
-          </a>
-
-          <p class="text-slate-300 text-xs mt-2.5 leading-relaxed">
-            Alt du trenger for norsk Fantasy. Regn ut optimale bytter, sjekk interaktive fotballbanekort med spillerstatistikk, og følg runden med live poengoppdatering og automatisk lagring av Manager ID.
-          </p>
-
-          <div class="flex flex-wrap gap-1.5 mt-4">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-blue-300 border border-blue-500/20">Optimal tropp</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-emerald-300 border border-emerald-500/20">Live poeng</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-cyan-300 border border-cyan-500/20">Interaktiv bane</span>
-          </div>
-        </div>
-
-        <div class="pt-4 mt-5 border-t border-white/5">
-          <a href="eliteserien.html" data-umami-event="card_es_click" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500/20 via-blue-500/15 to-transparent hover:from-cyan-500/30 hover:via-blue-500/25 border border-cyan-400/35 text-cyan-200 hover:text-white font-medium text-xs sm:text-sm transition flex items-center justify-between group/btn shadow-sm">
-            <span>Åpne Eliteserien</span>
-            <span class="group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
-          </a>
-        </div>
-      </article>
-
-      <!-- BENTO TILE 5: 🤖 MatchPic Culler & Kode (Bottom Right - 4 cols) -->
-      <article class="bento-tile col-span-12 md:col-span-12 lg:col-span-4 glass-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between border border-purple-500/25 hover:border-purple-500/40 relative overflow-hidden group">
-        <div>
-          <div class="flex items-center justify-between mb-3.5">
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-0.5 rounded bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-mono font-semibold">
-                🤖 AI &amp; KODELAB
-              </span>
-              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300 text-[10px] font-mono">
-                DESKTOP-APP
-              </span>
-            </div>
-            <span class="text-xs text-purple-400 font-mono font-semibold">GITHUB</span>
-          </div>
-
-          <a href="https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer" data-umami-event="card_culler_click" target="_blank" rel="noopener noreferrer" class="block group/title">
-            <h3 class="text-lg sm:text-xl font-bold text-white group-hover/title:text-purple-300 transition-colors flex items-center gap-1.5">
-              <span>MatchPic Culler &amp; Renamer</span>
-              <svg class="w-4 h-4 text-purple-400 opacity-0 group-hover/title:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </h3>
-          </a>
-
-          <p class="text-slate-300 text-xs mt-2.5 leading-relaxed">
-            AI-verktøy for sportsfotografer som sparer timer med etterarbeid. Bruker kunstig intelligens og ansiktsgjenkjenning til å finne spillere og merke tusenvis av kampbilder automatisk.
-          </p>
-
-          <div class="flex flex-wrap gap-1.5 mt-4">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-purple-300 border border-purple-500/20">Gemini AI</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-pink-300 border border-pink-500/20">Ansiktsgjenkjenning</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-300 border border-white/5">Åpen kildekode</span>
-          </div>
-        </div>
-
-        <div class="pt-4 mt-5 border-t border-white/5">
-          <a href="https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer" data-umami-event="card_culler_click" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-500/20 via-pink-500/15 to-transparent hover:from-purple-500/30 hover:via-pink-500/25 border border-purple-400/35 text-purple-200 hover:text-white font-medium text-xs sm:text-sm transition flex items-center justify-between group/btn shadow-sm">
-            <span>Se koden på GitHub</span>
-            <span class="group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
-          </a>
-        </div>
-      </article>
-
-    </main>
-    <!-- Compact Contact & Channels Strip -->
-    <section class="mt-4 sm:mt-6 mb-6 sm:mb-10 p-3.5 sm:p-4 rounded-xl glass-card relative overflow-hidden">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
-        <div class="flex items-center gap-2.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>
-          <span class="text-xs sm:text-sm font-semibold text-white">Ranheim Kraft</span>
-          <span class="text-slate-400 text-xs hidden sm:inline">&bull; Kode, foto og video på ett sted</span>
-        </div>
-
-        <!-- Quick Action Buttons: YouTube, GitHub & Ta kontakt -->
-        <div class="flex items-center gap-2 shrink-0">
-          <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-red-600/15 border border-white/10 hover:border-red-500/30 text-xs text-slate-300 hover:text-red-300 transition flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 text-red-500 fill-current" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 20c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 4c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-            <span>YouTube</span>
-          </a>
-
-          <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 text-slate-300" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            <span>GitHub</span>
-          </a>
-
-          <a href="mailto:ksandvin@gmail.com" data-umami-event="contact_email_click" class="px-3 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/30 text-xs font-semibold text-cyan-200 hover:text-white transition flex items-center gap-1.5 shadow-sm">
-            <span>Ta kontakt</span>
-            <svg class="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-          </a>
         </div>
       </div>
     </section>
 
-    <!-- Minimalist Footer -->
-    <footer class="pt-6 sm:pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3 sm:gap-4 font-mono text-center" style="padding-bottom: env(safe-area-inset-bottom);">
-      <div>
-        &copy; <span id="year"></span> Ranheim Kraft &bull; All rights reserved.
+    <!-- SECTION 2: PHOTO ARCHIVE (Pure Typography) -->
+    <section class="pt-10 border-t border-white/10 space-y-4">
+      <div class="flex items-baseline justify-between border-b border-white/10 pb-3">
+        <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">02 / Fotoarkiv</span>
+        <span class="text-xs font-mono text-zinc-500">Google Disk</span>
       </div>
-      <div class="flex items-center gap-3 sm:gap-4">
-        <a href="eliteserien.html" class="hover:text-neon-cyan transition">Eliteserien Fantasy</a>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-2">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-syne font-bold text-white tracking-tight">
+            Arrangements- og oppdragsgalleri
+          </h2>
+          <p class="text-zinc-400 text-xs sm:text-sm max-w-lg leading-relaxed">
+            Passordbeskyttede arrangementsgallerier for fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning rett i nettleseren med mulighet for å laste ned hele mapper samlet i én ZIP-fil.
+          </p>
+        </div>
+        <a href="galleri.html" data-umami-event="card_galleri_click" class="px-6 py-3 rounded-full bg-white hover:bg-zinc-200 text-black font-syne font-bold text-xs uppercase tracking-wider transition shrink-0 self-start sm:self-center">
+          Åpne galleriet &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 3: UTILITIES (Modernist Grid) -->
+    <section class="pt-10 border-t border-white/10 space-y-4">
+      <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">03 / Verktøy &amp; Kode</span>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <a href="eliteserien.html" data-umami-event="card_es_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-white transition">01</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Eliteserien Fantasy Hub</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Troppsoptimalisering, automatisk bytteberegning og livedashbord.</p>
+        </a>
+
+        <a href="fpl.html" data-umami-event="card_fpl_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-white transition">02</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Premier League FPL</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Matematisk optimaliseringsverktøy med terminliste og Panini-kort.</p>
+        </a>
+
+        <a href="https://github.com/RanheimGeriljaTV/MatchPic-Culler-Renamer" target="_blank" rel="noopener noreferrer" data-umami-event="card_culler_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/20 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-white transition">03</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">MatchPic Culler &amp; AI</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Desktop-app for fotografer med automatisk ansiktsgjenkjenning av spillere.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Minimalist Footer -->
+    <footer class="pt-8 border-t border-white/10 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-3" style="padding-bottom: env(safe-area-inset-bottom);">
+      <div>&copy; <span id="year"></span> Ranheim Kraft &bull; All rights reserved.</div>
+      <div class="flex items-center gap-4">
+        <a href="mailto:ksandvin@gmail.com" data-umami-event="contact_email_click" class="hover:text-white transition">Ta kontakt</a>
         <span>&bull;</span>
-        <a href="fpl.html" class="hover:text-neon-cyan transition">FPL Optimizer</a>
-        <span>&bull;</span>
-        <a href="galleri.html" class="hover:text-neon-cyan transition">Bildegalleri</a>
-        <span>&bull;</span>
-        <a href="changelog.html" class="hover:text-neon-cyan transition">Changelog</a>
+        <a href="changelog.html" class="hover:text-white transition">Changelog</a>
         <span>&bull;</span>
         <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
-        <span>&bull;</span>
-        <span class="text-neon-cyan font-graffiti text-sm">Made with Kraft</span>
       </div>
     </footer>
 
   </div>
 
-  <!-- Main Interactive Script -->
   <script defer src="assets/main.js"></script>
-
 </body>
 </html>
