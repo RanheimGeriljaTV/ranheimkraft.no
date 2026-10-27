@@ -153,12 +153,6 @@ function initQuizApp() {
     updateTitleDisplays();
     updateDateDisplays();
 
-    // Auto-aktiver 2-kolonner hvis mange lag (f.eks. > 12)
-    if (state.teams.length > 12 && !window.QuizSpreadsheet.get2ColumnLayout()) {
-      window.QuizSpreadsheet.set2ColumnLayout(true);
-      update2ColButtons(true);
-    }
-
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
     }
@@ -559,12 +553,16 @@ function initQuizApp() {
 
   const btnFontLarger = document.getElementById('btn-font-larger');
   const btnFontSmaller = document.getElementById('btn-font-smaller');
+  const presBtnFontLarger = document.getElementById('pres-btn-font-larger');
+  const presBtnFontSmaller = document.getElementById('pres-btn-font-smaller');
 
   function applyFontScale(px) {
     document.documentElement.style.setProperty('--font-scale', `${px}px`);
     localStorage.setItem('quiz_kraft_font_scale', px);
     if (btnFontSmaller) btnFontSmaller.disabled = (currentFontIndex === 0);
     if (btnFontLarger) btnFontLarger.disabled = (currentFontIndex === fontSteps.length - 1);
+    if (presBtnFontSmaller) presBtnFontSmaller.disabled = (currentFontIndex === 0);
+    if (presBtnFontLarger) presBtnFontLarger.disabled = (currentFontIndex === fontSteps.length - 1);
   }
 
   const savedFont = parseInt(localStorage.getItem('quiz_kraft_font_scale'), 10);
@@ -590,6 +588,14 @@ function initQuizApp() {
         applyFontScale(fontSteps[currentFontIndex]);
       }
     });
+  }
+
+  if (presBtnFontLarger && btnFontLarger) {
+    presBtnFontLarger.addEventListener('click', () => btnFontLarger.click());
+  }
+
+  if (presBtnFontSmaller && btnFontSmaller) {
+    presBtnFontSmaller.addEventListener('click', () => btnFontSmaller.click());
   }
 
   // 14. LYS / MØRK MODUS

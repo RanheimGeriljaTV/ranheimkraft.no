@@ -720,6 +720,85 @@ body.dark-theme .score-input:focus {
   font-size: 0.85rem;
 }
 
+/* RUNDEVINNER CELLER (GRØNN FREMHEVING) */
+.cell-round-winner {
+  background-color: #dcfce7 !important;
+  border: 2px solid #16a34a !important;
+}
+.score-winner {
+  background-color: #dcfce7 !important;
+  color: #15803d !important;
+  font-weight: 900 !important;
+}
+body.dark-theme .cell-round-winner {
+  background-color: #064e3b !important;
+  border-color: #22c55e !important;
+}
+body.dark-theme .score-winner {
+  background-color: #064e3b !important;
+  color: #86efac !important;
+}
+
+/* MANGLENDE POENG I PÅBEGYNT RUNDE (GUL/AMBER FREMHEVING) */
+.cell-missing-score {
+  background-color: #fef3c7 !important;
+  border: 2px dashed #f59e0b !important;
+}
+.score-missing {
+  background-color: #fef3c7 !important;
+  color: #b45309 !important;
+}
+.score-missing::placeholder {
+  color: #b45309 !important;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+body.dark-theme .cell-missing-score {
+  background-color: #451a03 !important;
+  border: 2px dashed #f59e0b !important;
+}
+body.dark-theme .score-missing {
+  background-color: #451a03 !important;
+  color: #fde68a !important;
+}
+body.dark-theme .score-missing::placeholder {
+  color: #fde68a !important;
+}
+
+/* DELTAKELSE / INAKTIVE LAG */
+.team-row-inactive {
+  opacity: 0.45;
+  background-color: #f8fafc;
+}
+body.dark-theme .team-row-inactive {
+  background-color: #1c1c22;
+}
+.team-name-cell-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.checkbox-attendance-wrap {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+.team-active-checkbox {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: var(--btn-green);
+}
+.name-inactive {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.note-inactive {
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
 .note-empty {
   color: var(--text-muted);
 }

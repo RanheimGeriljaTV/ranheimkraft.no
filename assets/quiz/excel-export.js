@@ -1,6 +1,6 @@
 /**
  * excel-export.js - Generering av et helhetlig, stilrent og profesjonelt Excel-ark (.xlsx)
- * med fet skrift, tydelige kantlinjer, farger og samlet analyse i ett og samme ark.
+ * med fet skrift, kantlinjer, farger på rundevinnere og INNEBYGDE FARGEGRAFER direkte i arket.
  * Bruker lokalt pakket ExcelJS (assets/quiz/exceljs.min.js) for 100 % offline drift.
  * For Quiz Kraft (ranheimkraft.no)
  */
@@ -18,7 +18,10 @@ async function exportQuizToExcel(state) {
 
   const roundCount = state.roundCount || 5;
   const roundNames = state.roundNames || [];
-  const teams = state.teams || [];
+  const allTeams = state.teams || [];
+  // Aktive lag som deltar i kveld
+  const activeTeams = allTeams.filter(t => t.active !== false);
+  const inactiveTeams = allTeams.filter(t => t.active === false);
   const title = state.title || 'Ranheim Quiz';
   const dateStr = state.date || new Date().toISOString().split('T')[0];
 
@@ -26,11 +29,10 @@ async function exportQuizToExcel(state) {
   workbook.creator = 'Quiz Kraft (ranheimkraft.no)';
   workbook.created = new Date();
 
-  const sheet = workbook.addWorksheet('Quiz Poengtavle', {
+  const sheet = workbook.addWorksheet('Quiz Poengtavle & Grafer', {
     views: [{ showGridLines: true }]
   });
 
-  // Felles kantlinje-stil for alle celler
   const thinBorder = {
     top: { style: 'thin', color: { argb: 'FF000000' } },
     left: { style: 'thin', color: { argb: 'FF000000' } },
@@ -38,21 +40,21 @@ async function exportQuizToExcel(state) {
     right: { style: 'thin', color: { argb: 'FF000000' } }
   };
 
-  const totalCols = 2 + roundCount + 2; // Rank, Navn, Runder..., Sammenlagt, Merknad
+  const totalCols = 2 + roundCount + 2;
 
   // 1. TITTELRAD (Rad 1)
   sheet.mergeCells(1, 1, 1, totalCols);
   const titleCell = sheet.getCell(1, 1);
-  titleCell.value = `🏆 ${title.toUpperCase()} – OFFISIELL POENGTAVLE`;
+  titleCell.value = `🏆 ${title.toUpperCase()} – OFFISIELL RESULTATLISTE & POENGTAVLE`;
   titleCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: 'FFFFFFFF' } };
-  titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } }; // Marineblå
+  titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } };
   titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
-  sheet.getRow(1).height = 32;
+  sheet.getRow(1).height = 34;
 
   // 2. METADATARAD (Rad 2)
   sheet.mergeCells(2, 1, 2, totalCols);
   const metaCell = sheet.getCell(2, 1);
-  metaCell.value = `Dato: ${dateStr}  |  Arrangert for ranheimkraft.no  |  Totalt ${teams.length} lag og ${roundCount} runder`;
+  metaCell.value = `Dato: ${dateStr}  |  ranheimkraft.no  |  ${activeTeams.length} deltakende lag  |  ${roundCount} runder`;
   metaCell.font = { name: 'Arial', size: 9, italic: true, color: { argb: 'FFE2E8F0' } };
   metaCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1E3A8A' } };
   metaCell.alignment = { horizontal: 'center', vertical: 'middle' };
@@ -60,6 +62,17 @@ async function exportQuizToExcel(state) {
 
   // Tom rad 3
   sheet.getRow(3).height = 8;
+
+  // Beregn rundevinnere for aktive lag
+  const roundMaxScores = [];
+  for (let r = 0; r < roundCount; r++) {
+    let max = -Infinity;
+    activeTeams.forEach(t => {
+      const val = window.QuizScoring ? window.QuizScoring.parseScore(t.scores ? t.scores[r] : null) : null;
+      if (val !== null && val > max) max = val;
+    });
+    roundMaxScores.push(max > 0 ? max : null);
+  }
 
   // 3. TABELL-OVERSKRIFTER (Rad 4)
   const headers = ['Plassering', 'Lagnavn'];
@@ -69,21 +82,21 @@ async function exportQuizToExcel(state) {
   headers.push('SAMMENLAGT', 'Merknad / Tie-breaker');
 
   const headerRow = sheet.getRow(4);
-  headerRow.height = 24;
+  headerRow.height = 25;
 
   headers.forEach((h, colIdx) => {
     const cell = headerRow.getCell(colIdx + 1);
     cell.value = h;
     cell.font = { name: 'Arial', size: 10, bold: true, color: { argb: 'FFFFFFFF' } };
-    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF334155' } }; // Mørk skifergrå
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF334155' } };
     cell.alignment = { horizontal: 'center', vertical: 'middle' };
     cell.border = thinBorder;
   });
 
-  // 4. DATARADER FOR LAGENE (Rad 5...)
+  // 4. DATARADER FOR DELTAKENDE LAG
   let currentRowIdx = 5;
 
-  teams.forEach((team, tIdx) => {
+  activeTeams.forEach((team, tIdx) => {
     const row = sheet.getRow(currentRowIdx);
     row.height = 22;
 
@@ -111,18 +124,26 @@ async function exportQuizToExcel(state) {
     for (let r = 0; r < roundCount; r++) {
       const cellScore = row.getCell(3 + r);
       const parsed = window.QuizScoring ? window.QuizScoring.parseScore(team.scores ? team.scores[r] : null) : null;
+      const isWinner = roundMaxScores[r] !== null && parsed !== null && parsed === roundMaxScores[r];
+
       if (parsed !== null) {
         cellScore.value = parsed;
         cellScore.numFmt = '#,##0.0';
       } else {
         cellScore.value = '';
       }
-      cellScore.font = { name: 'Arial', size: 10 };
+
+      cellScore.font = { name: 'Arial', size: 10, bold: isWinner, color: isWinner ? { argb: 'FF15803D' } : undefined };
       cellScore.alignment = { horizontal: 'center', vertical: 'middle' };
       cellScore.border = thinBorder;
+
+      // FARGE PÅ RUNDEVINNER I HVER RUNDE
+      if (isWinner) {
+        cellScore.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFDCFCE7' } }; // Myk grønn rundevinner
+      }
     }
 
-    // Sammenlagt sum (Kol 3 + roundCount)
+    // Sammenlagt (Kol 3 + roundCount)
     const totalColIdx = 3 + roundCount;
     const cellTotal = row.getCell(totalColIdx);
     const total = window.QuizScoring ? window.QuizScoring.calculateTeamTotal(team, roundCount) : 0;
@@ -141,39 +162,80 @@ async function exportQuizToExcel(state) {
     cellNote.alignment = { horizontal: 'left', vertical: 'middle', indent: 1 };
     cellNote.border = thinBorder;
 
-    // Bakgrunnsfarge for topp 3 rader
+    // Topp 3 utheving (bortsett fra vinnerceller og sammenlagt)
     if (rank === 1) {
-      applyRowFill(row, 'FFFEF9C3', [totalColIdx]); // Lys gull
+      applyRowFillSelective(row, 'FFFEF9C3', roundCount, roundMaxScores, team);
     } else if (rank === 2) {
-      applyRowFill(row, 'FFF1F5F9', [totalColIdx]); // Lys sølv
+      applyRowFillSelective(row, 'FFF1F5F9', roundCount, roundMaxScores, team);
     } else if (rank === 3) {
-      applyRowFill(row, 'FFFFEDD5', [totalColIdx]); // Lys bronse
+      applyRowFillSelective(row, 'FFFFEDD5', roundCount, roundMaxScores, team);
     }
 
     currentRowIdx++;
   });
 
-  // Hjelpefunksjon for å sette fyll på celler unntatt sammenlagt
-  function applyRowFill(row, argbColor, excludeCols) {
-    for (let c = 1; c <= totalCols; c++) {
-      if (!excludeCols.includes(c)) {
-        row.getCell(c).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argbColor } };
+  // Hjelpefunksjon for å bevare grønne rundevinner-celler
+  function applyRowFillSelective(row, argbColor, rCount, maxScores, team) {
+    row.getCell(1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argbColor } };
+    row.getCell(2).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argbColor } };
+    for (let r = 0; r < rCount; r++) {
+      const parsed = window.QuizScoring ? window.QuizScoring.parseScore(team.scores ? team.scores[r] : null) : null;
+      const isWinner = maxScores[r] !== null && parsed !== null && parsed === maxScores[r];
+      if (!isWinner) {
+        row.getCell(3 + r).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argbColor } };
       }
     }
+    row.getCell(3 + rCount + 1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: argbColor } };
   }
 
-  // Tom rad før sammendrag
+  // Hvis det finnes inaktive lag i banken som ikke deltok i kveld:
+  if (inactiveTeams.length > 0) {
+    inactiveTeams.forEach((team, tIdx) => {
+      const row = sheet.getRow(currentRowIdx);
+      row.height = 20;
+
+      const cellRank = row.getCell(1);
+      cellRank.value = '-';
+      cellRank.font = { name: 'Arial', size: 9, color: { argb: 'FF94A3B8' } };
+      cellRank.alignment = { horizontal: 'center', vertical: 'middle' };
+      cellRank.border = thinBorder;
+
+      const cellName = row.getCell(2);
+      cellName.value = `${team.name || 'Lag'} (Deltok ikke)`;
+      cellName.font = { name: 'Arial', size: 9, italic: true, color: { argb: 'FF94A3B8' } };
+      cellName.alignment = { horizontal: 'left', vertical: 'middle', indent: 1 };
+      cellName.border = thinBorder;
+
+      for (let r = 0; r < roundCount; r++) {
+        const cell = row.getCell(3 + r);
+        cell.value = '';
+        cell.border = thinBorder;
+      }
+
+      const cellTotal = row.getCell(3 + roundCount);
+      cellTotal.value = '-';
+      cellTotal.alignment = { horizontal: 'center', vertical: 'middle' };
+      cellTotal.border = thinBorder;
+
+      const cellNote = row.getCell(3 + roundCount + 1);
+      cellNote.value = 'Ikke til stede';
+      cellNote.font = { name: 'Arial', size: 9, italic: true, color: { argb: 'FF94A3B8' } };
+      cellNote.border = thinBorder;
+
+      currentRowIdx++;
+    });
+  }
+
+  // Tom rad
   sheet.getRow(currentRowIdx).height = 10;
   currentRowIdx++;
 
-  // ============================================================
-  // 5. RUNDESTATISTIKK & VINNERE I SAMME ARK (Direkte under tabellen)
-  // ============================================================
+  // 5. RUNDESTATISTIKK & VINNERE RETT UNDER TABELLEN
   const roundWinners = window.QuizRoundAnalysis 
-    ? window.QuizRoundAnalysis.getRoundWinners(teams, roundCount, roundNames) 
+    ? window.QuizRoundAnalysis.getRoundWinners(activeTeams, roundCount, roundNames) 
     : [];
 
-  // Rad A: Rundevinnere
+  // Vinnere
   const winnerRow = sheet.getRow(currentRowIdx);
   winnerRow.height = 22;
   winnerRow.getCell(1).value = '🏆 Vinner(e)';
@@ -198,13 +260,13 @@ async function exportQuizToExcel(state) {
   winnerRow.getCell(3 + roundCount + 1).border = thinBorder;
   currentRowIdx++;
 
-  // Rad B: Beste poengsum
+  // Høyeste score
   const bestScoreRow = sheet.getRow(currentRowIdx);
   bestScoreRow.height = 20;
-  bestScoreRow.getCell(1).value = 'Høyeste score';
+  bestScoreRow.getCell(1).value = 'Beste score';
   bestScoreRow.getCell(1).font = { name: 'Arial', size: 9, bold: true };
   bestScoreRow.getCell(1).border = thinBorder;
-  bestScoreRow.getCell(2).value = 'Poengsum til vinner:';
+  bestScoreRow.getCell(2).value = 'Høyeste poengsum:';
   bestScoreRow.getCell(2).font = { name: 'Arial', size: 9 };
   bestScoreRow.getCell(2).border = thinBorder;
 
@@ -220,7 +282,7 @@ async function exportQuizToExcel(state) {
   bestScoreRow.getCell(3 + roundCount + 1).border = thinBorder;
   currentRowIdx++;
 
-  // Rad C: Gjennomsnitt
+  // Gjennomsnitt
   const avgRow = sheet.getRow(currentRowIdx);
   avgRow.height = 20;
   avgRow.getCell(1).value = 'Snitt';
@@ -242,44 +304,73 @@ async function exportQuizToExcel(state) {
   avgRow.getCell(3 + roundCount + 1).border = thinBorder;
   currentRowIdx++;
 
-  // Rad D: Laveste score
-  const minRow = sheet.getRow(currentRowIdx);
-  minRow.height = 20;
-  minRow.getCell(1).value = 'Laveste score';
-  minRow.getCell(1).font = { name: 'Arial', size: 9, bold: true };
-  minRow.getCell(1).border = thinBorder;
-  minRow.getCell(2).value = 'Bunnscore i runden:';
-  minRow.getCell(2).font = { name: 'Arial', size: 9 };
-  minRow.getCell(2).border = thinBorder;
-
-  for (let r = 0; r < roundCount; r++) {
-    const rw = roundWinners[r];
-    const cell = minRow.getCell(3 + r);
-    cell.value = rw && rw.hasScores ? rw.minScore : '-';
-    cell.font = { name: 'Arial', size: 9 };
-    cell.alignment = { horizontal: 'center', vertical: 'middle' };
-    cell.border = thinBorder;
-  }
-  minRow.getCell(3 + roundCount).border = thinBorder;
-  minRow.getCell(3 + roundCount + 1).border = thinBorder;
+  // Tomme rader før graf
+  sheet.getRow(currentRowIdx).height = 14;
   currentRowIdx++;
 
-  // 6. KOLONNEBREDDER
-  sheet.getColumn(1).width = 14; // Plassering
-  sheet.getColumn(2).width = 28; // Lagnavn
-  for (let r = 0; r < roundCount; r++) {
-    sheet.getColumn(3 + r).width = 13; // Runder
-  }
-  sheet.getColumn(3 + roundCount).width = 16; // Sammenlagt
-  sheet.getColumn(3 + roundCount + 1).width = 34; // Merknad
+  // ============================================================
+  // 6. INNEBYGD FARGEGRAF (POENGUTVIKLING) DIREKTE I EXCEL-ARKET
+  // ============================================================
+  sheet.mergeCells(currentRowIdx, 1, currentRowIdx, totalCols);
+  const chartTitleCell = sheet.getCell(currentRowIdx, 1);
+  chartTitleCell.value = '📈 GRAF OVER POENGUTVIKLING FOR ALLE LAG (RUNDE FOR RUNDE)';
+  chartTitleCell.font = { name: 'Arial', size: 11, bold: true, color: { argb: 'FF1E3A8A' } };
+  chartTitleCell.alignment = { horizontal: 'left', vertical: 'middle' };
+  sheet.getRow(currentRowIdx).height = 24;
+  currentRowIdx++;
 
-  // GENERER BUFFER OG LAST NED
+  try {
+    // Generer et skarpt bilde av linjediagrammet på et usynlig canvas
+    const offscreenCanvas = document.createElement('canvas');
+    offscreenCanvas.width = 950;
+    offscreenCanvas.height = 420;
+
+    if (window.QuizRoundAnalysis && typeof window.QuizRoundAnalysis.drawQuizChart === 'function') {
+      window.QuizRoundAnalysis.drawQuizChart(
+        offscreenCanvas,
+        activeTeams,
+        roundCount,
+        roundNames,
+        'cumulative'
+      );
+
+      const chartDataUrl = offscreenCanvas.toDataURL('image/png');
+      const chartImageId = workbook.addImage({
+        base64: chartDataUrl,
+        extension: 'png'
+      });
+
+      sheet.addImage(chartImageId, {
+        tl: { col: 0.5, row: currentRowIdx },
+        ext: { width: 850, height: 380 }
+      });
+
+      // Reserver plass til bildet i radene
+      for (let i = 0; i < 20; i++) {
+        sheet.getRow(currentRowIdx + i).height = 20;
+      }
+      currentRowIdx += 21;
+    }
+  } catch (err) {
+    console.warn('Kunne ikke bygge inn graf-bilde i Excel:', err);
+  }
+
+  // Kolonnebredder
+  sheet.getColumn(1).width = 14;
+  sheet.getColumn(2).width = 28;
+  for (let r = 0; r < roundCount; r++) {
+    sheet.getColumn(3 + r).width = 13;
+  }
+  sheet.getColumn(3 + roundCount).width = 16;
+  sheet.getColumn(3 + roundCount + 1).width = 34;
+
+  // GENERER OG LAST NED
   const buffer = await workbook.xlsx.writeBuffer();
   const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   const url = URL.createObjectURL(blob);
 
   const safeTitle = (title || 'Quiz').replace(/[^a-zA-Z0-9æøåÆØÅ_-]/g, '_');
-  const filename = `${safeTitle}_${dateStr}.xlsx`;
+  const filename = `${safeTitle}_${dateStr}_komplett.xlsx`;
 
   const link = document.createElement('a');
   link.href = url;
@@ -291,5 +382,6 @@ async function exportQuizToExcel(state) {
 }
 
 window.QuizExcelExport = {
-  exportQuizToExcel
+  exportQuizToExcel,
+  exportToExcel: exportQuizToExcel
 };

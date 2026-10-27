@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.5.3] - 2026-10-27
+
+### Lagt til & Forbedret
+- **Quiz Kraft sanntidsvisning og deltakelseshåndtering (`quiz.html` & `assets/quiz/`)**:
+  - **Rundevinner-fremheving**: Høyeste poengsum i hver runde markeres automatisk med grønn bakgrunn og fet skrift i sanntid.
+  - **Varsel om manglende poeng**: Tomme celler i påbegynte runder markeres med gul/amber stiplet kant slik at quizmaster raskt ser hvem som mangler poeng.
+  - **Deltakelse / Oppmøte (Av/På)**: Ny avkrysningsboks ved hvert lag. Lag som ikke deltar i kveld deaktiveres uten å slettes fra arkivet, holdes utenfor statistikk og plasseres nederst ved sortering.
+  - **Direkte A+ / A- i fullskjerm**: Lagt til egne skriftstørrelsesknapper i storskjerm-topplinjen for sømløs justering underveis.
+  - **Beriket ExcelJS-eksport**: Genererer nå fargede rundevinnere, egne grafdata og dedikert seksjon for inaktive lag direkte i `.xlsx`-filen.
+
+---
+
 ## [2.5.2] - 2026-10-27
 
 ### Endret & Optimalisert
