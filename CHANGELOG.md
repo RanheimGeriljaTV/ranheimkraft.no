@@ -6,6 +6,20 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.6.0] - 2026-10-27
+
+### Lagt til & Sikret
+- **Ranheim Fotball integrert nyhetsstripe (`index.html`, `assets/style.css`)**:
+  - Gjeninnført sanntids nyhetsstripe fra `ranheimfotball.no` i stilren Swiss Kinetic-drakt.
+  - Ingen forstyrrende blinkende animasjoner – solid, statisk cyan indikator og myk 34-sekunders rulling med hover/touch-pause.
+  - Henter ferske nyheter via RSS med feiltolerant reservekilde (`assets/news.json`).
+- **Herdet galleri-sikkerhet (`apps-script/Code.gs`, `apps-script/README.md`)**:
+  - **Forslag A (Saltet SHA-256 Hashing)**: Passord lagres og sammenlignes nå som kryptografiske `sha256:salt:hash` verdier med unikt salt per galleri og hemmelig systempepper. Ingen passord ligger lenger i råtekst.
+  - **Forslag B (Brute-Force Lockout med CacheService)**: Galleriet sperres midlertidig i 15 minutter (HTTP 429) hvis det gjettes feil 5 ganger på rad, og det er lagt inn 1 sekund forsinkelse for å hindre automatiserte robotangrep.
+  - **Ett-klikks administrasjon**: Nytt menyvalg i regnearket (`🔒 Sikre passord`) for å konvertere eventuelle råtekstpassord til irreversible hashes automatisk.
+
+---
+
 ## [2.5.5] - 2026-10-27
 
 ### Lagt til & Forbedret

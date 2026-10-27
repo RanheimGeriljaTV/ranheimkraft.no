@@ -1,21 +1,21 @@
 /**
  * Ranheim Kraft – Galleri-backend (Google Apps Script)
  * ----------------------------------------------------
- * Lim inn denne filen i: Google Apps Script.
+ * Lim inn denne filen i Google Apps Script tilknyttet ditt regneark.
  *
- * Backend API for gallerioversikt og sikker autentisering.
- *
- * - Autentisering håndteres sikkert på serversiden.
- * - Tomt passord = åpent galleri (ingen passord kreves).
+ * Backend API for gallerioversikt og sikker autentisering:
+ * - Sikkerhet (Forslag A): Saltet SHA-256 kryptografisk hashing av passord.
+ * - Sikkerhet (Forslag B): Brute-Force beskyttelse & midlertidig 15-minutters sperre ved 5 feil forsøk.
+ * - Tomt passord i arket = Åpent galleri (ingen passord kreves).
  * - Aktiv = "nei" skjuler galleriet uten å slette raden.
  * - Nye bilder i Disk-mappen dukker opp automatisk (hurtigbuffer: 5 min).
  */
 
 const SHEET_NAME = 'Gallerier';
 const HEADERS = ['ID', 'Tittel', 'Dato', 'Beskrivelse', 'Mappe-lenke', 'Passord', 'Aktiv'];
-const CACHE_SECONDS = 300;   // hvor lenge bildelister mellomlagres
-const MAX_FAILS = 8;         // feil passord-forsøk per galleri før midlertidig sperre
-const LOCK_SECONDS = 600;    // sperretid (10 min) etter for mange feil
+const CACHE_SECONDS = 300;     // Hvor lenge bildelister mellomlagres (5 min)
+const MAX_FAILS = 5;           // Maks feil passordforsøk før midlertidig lås
+const LOCK_SECONDS = 900;      // Sperretid: 15 minutter (900 sekunder)
 
 /* ---------- Administrasjon & Konfigurasjon ---------- */
 
@@ -25,7 +25,9 @@ function onOpen() {
     .addItem('1. Opprett oppsett', 'setup')
     .addItem('2. Del mappene med lenke (kreves for visning)', 'shareFolders')
     .addSeparator()
-    .addItem('Tøm hurtigbuffer (vis nye bilder med en gang)', 'clearCache')
+    .addItem('🔒 Sikre passord (Konverter klartekst til SHA-256 hash)', 'hashAllPlaintextPasswords')
+    .addSeparator()
+    .addItem('Tøm hurtigbuffer og låser (vis nye bilder / lås opp)', 'clearCache')
     .addToUi();
 }
 
@@ -42,7 +44,7 @@ function setup() {
       new Date(),
       'Bytt ut denne raden med ditt første galleri',
       'https://drive.google.com/drive/folders/LIM_INN_MAPPE_ID',
-      'byttMeg123',
+      formatHashedPassword_('byttMeg123'),
       'ja'
     ]);
     sh.setFrozenRows(1);
@@ -67,16 +69,49 @@ function shareFolders() {
   notify_(report.length ? report.join('\n') : 'Fant ingen gallerier med gyldig mappe-lenke.');
 }
 
+/** Konverterer alle råtekstpassord i arket til irreversible saltet SHA-256 hasher */
+function hashAllPlaintextPasswords() {
+  const sh = sheet_();
+  if (!sh || sh.getLastRow() < 2) {
+    notify_('Ingen gallerier funnet.');
+    return;
+  }
+  const data = sh.getDataRange().getValues();
+  const headers = data[0].map(function (h) { return String(h).trim().toLowerCase(); });
+  const passCol = headers.indexOf('passord');
+  if (passCol < 0) {
+    notify_('Fant ikke kolonnen "Passord".');
+    return;
+  }
+
+  let count = 0;
+  for (let r = 1; r < data.length; r++) {
+    const current = String(data[r][passCol] || '').trim();
+    if (current && current.indexOf('sha256:') !== 0) {
+      const hashed = formatHashedPassword_(current);
+      sh.getRange(r + 1, passCol + 1).setValue(hashed);
+      count++;
+    }
+  }
+
+  notify_(count > 0 
+    ? '✅ ' + count + ' passord ble kryptert og erstattet med sikre SHA-256 salter og hasher!' 
+    : 'Alle eksisterende passord i arket er allerede sikret med SHA-256 hash.');
+}
+
+/** Tømmer hurtigbuffer for bilder og nullstiller midlertidige passordsperrer */
 function clearCache() {
   const keys = [];
-  readGalleries_(true).forEach(function (g) { keys.push('img_' + g.folderId, 'fail_' + g.id); });
+  readGalleries_(true).forEach(function (g) {
+    keys.push('img_' + g.folderId, 'fail_gal_' + g.id);
+  });
   if (keys.length) CacheService.getScriptCache().removeAll(keys);
-  notify_('Hurtigbuffer tømt.');
+  notify_('Hurtigbuffer og eventuelle passordsperrer er tømt.');
 }
 
 /* ---------- Web-API (brukes av galleri.html) ---------- */
 
-/** GET → offentlig liste over gallerier (kun titler, ingen mappe-ID-er eller passord). */
+/** GET → offentlig liste over gallerier (kun titler og metadata, ALDRI passord eller interne ID-er). */
 function doGet() {
   return json_(list_());
 }
@@ -93,7 +128,14 @@ function list_() {
   const galleries = readGalleries_(false).map(function (g) {
     let count = null;
     try { count = images_(g.folderId).length; } catch (e) {}
-    return { id: g.id, title: g.title, date: g.date, description: g.description, locked: !!g.password, count: count };
+    return { 
+      id: g.id, 
+      title: g.title, 
+      date: g.date, 
+      description: g.description, 
+      locked: !!g.password, 
+      count: count 
+    };
   });
   return { ok: true, galleries: galleries };
 }
@@ -103,16 +145,35 @@ function open_(id, password) {
   if (!g) return { ok: false, error: 'Fant ikke galleriet.' };
 
   const cache = CacheService.getScriptCache();
-  const failKey = 'fail_' + g.id;
+  const failKey = 'fail_gal_' + g.id;
   const fails = Number(cache.get(failKey) || 0);
+
+  // Forslag B: Brute-Force lockout etter 5 feil forsøk (15 minutters sperre)
   if (fails >= MAX_FAILS) {
-    return { ok: false, error: 'For mange feil forsøk. Prøv igjen om 10 minutter.' };
+    return { 
+      ok: false, 
+      status: 429,
+      error: 'For mange feil passordforsøk. Galleriet er midlertidig låst i 15 minutter av sikkerhetshensyn.' 
+    };
   }
 
-  if (g.password && String(password || '').trim() !== g.password) {
-    cache.put(failKey, String(fails + 1), LOCK_SECONDS);
-    Utilities.sleep(800); // gjør gjetting tregt
-    return { ok: false, error: 'Feil passord.' };
+  // Forslag A: Validering via saltet SHA-256 hash
+  const isValid = verifyPassword_(password, g.password);
+
+  if (!isValid) {
+    const newFails = fails + 1;
+    cache.put(failKey, String(newFails), LOCK_SECONDS);
+    Utilities.sleep(1000); // 1 sekund forsinkelse for å sinke automatiske roboter
+    const remaining = MAX_FAILS - newFails;
+    const msg = remaining > 0
+      ? 'Feil passord. (' + remaining + ' forsøk gjenstår før 15 min sperre)'
+      : 'Feil passord. Galleriet er nå låst i 15 minutter.';
+    return { ok: false, error: msg };
+  }
+
+  // Riktig passord: Fjern eventuell feil-teller
+  if (fails > 0) {
+    cache.remove(failKey);
   }
 
   let images;
@@ -135,7 +196,76 @@ function open_(id, password) {
   };
 }
 
-/* ---------- Hjelpefunksjoner ---------- */
+/* ---------- Kryptografi & Sikkerhet (Forslag A) ---------- */
+
+/** Henter eller genererer en permanent hemmelig systemnøkkel (pepper) */
+function getSystemSecret_() {
+  const props = PropertiesService.getScriptProperties();
+  let secret = props.getProperty('PEPPER');
+  if (!secret) {
+    secret = Utilities.getUuid() + '-' + Utilities.getUuid();
+    props.setProperty('PEPPER', secret);
+  }
+  return secret;
+}
+
+/** Genererer et tilfeldig 8-tegns salt */
+function generateSalt_() {
+  return Utilities.getUuid().replace(/-/g, '').substring(0, 8);
+}
+
+/** Beregner SHA-256 hash av passord + salt + systempepper */
+function hashPassword_(password, salt) {
+  const raw = String(password || '').trim() + ':' + String(salt || '') + ':' + getSystemSecret_();
+  const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, raw, Utilities.Charset.UTF_8);
+  return bytes.map(function (b) {
+    const hex = (b < 0 ? b + 256 : b).toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }).join('');
+}
+
+/** Formaterer til lagringsstreng: sha256:SALT:HASH */
+function formatHashedPassword_(password) {
+  if (!password || !String(password).trim()) return '';
+  const salt = generateSalt_();
+  const hash = hashPassword_(password, salt);
+  return 'sha256:' + salt + ':' + hash;
+}
+
+/** Sammenligner to strenger i konstant tid mot timing-angrep */
+function timingSafeEqual_(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return diff === 0;
+}
+
+/** Validerer innkommende passord mot lagret verdi (støtter sha256:salt:hash og bakoverkompatibel råtekst) */
+function verifyPassword_(inputPassword, storedVal) {
+  if (!storedVal) return true; // intet passord satt = åpent galleri
+  const input = String(inputPassword || '').trim();
+  if (!input) return false;
+
+  const stored = String(storedVal).trim();
+
+  // Format: sha256:salt:hash
+  if (stored.indexOf('sha256:') === 0) {
+    const parts = stored.split(':');
+    if (parts.length === 3) {
+      const salt = parts[1];
+      const expectedHash = parts[2];
+      const actualHash = hashPassword_(input, salt);
+      return timingSafeEqual_(actualHash, expectedHash);
+    }
+  }
+
+  // Bakoverkompatibilitet: Råtekst (hvis noen nettopp har skrevet et ord rett i arket)
+  return timingSafeEqual_(input, stored);
+}
+
+/* ---------- Databasetilgang & Hjelpefunksjoner ---------- */
 
 function sheet_() {
   let ss = null;
@@ -185,7 +315,7 @@ function images_(folderId) {
     if (String(f.getMimeType()).indexOf('image/') === 0) out.push({ id: f.getId(), name: f.getName() });
   }
   out.sort(function (a, b) { return a.name.localeCompare(b.name, 'nb', { numeric: true }); });
-  try { cache.put(key, JSON.stringify(out), CACHE_SECONDS); } catch (e) { /* for stor liste for cache – helt ok */ }
+  try { cache.put(key, JSON.stringify(out), CACHE_SECONDS); } catch (e) { /* for stor liste for cache */ }
   return out;
 }
 

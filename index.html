@@ -63,6 +63,25 @@
       </div>
     </nav>
 
+    <!-- Ranheim Fotball Siste Nytt (Integrert Swiss Kinetic nyhetsstripe, uten blinkende prikk) -->
+    <div class="ticker-container relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition p-2 sm:p-2.5 flex items-center gap-3 text-xs font-mono select-none" title="Hold musepeker over for å pause">
+      <div class="flex items-center gap-2 shrink-0 border-r border-white/10 pr-3">
+        <!-- Solid, statisk prikk (ingen blinking) -->
+        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+        <a href="https://www.ranheimfotball.no/nyheter" target="_blank" rel="noopener noreferrer" class="text-white font-bold uppercase tracking-wider hover:text-cyan-400 transition whitespace-nowrap text-[11px] sm:text-xs">
+          Siste Nytt
+        </a>
+      </div>
+      <div class="ticker-track-wrap">
+        <div id="ticker-track" class="ticker-content flex items-center gap-8 pl-2">
+          <!-- Populerer automatisk via loadLiveNews() med fallback til assets/news.json -->
+        </div>
+      </div>
+      <a href="https://www.ranheimfotball.no" target="_blank" rel="noopener noreferrer" class="text-[11px] text-zinc-500 hover:text-white transition shrink-0 hidden md:inline">
+        ranheimfotball.no &rarr;
+      </a>
+    </div>
+
     <!-- HERO: LOGO DIRECTLY OVER GIANT HEADING (TIGHT & COMPACT) -->
     <header class="pt-1 pb-6 sm:pb-8 border-b border-white/10 space-y-4">
       

@@ -106,16 +106,25 @@
   display: none;
 }
 
-/* 7. Live Sports News Ticker Marquee */
+/* 7. Live Sports News Ticker Marquee (Swiss Kinetic, rolig og myk) */
 @keyframes ticker-slide {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
 }
 
+.ticker-track-wrap {
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+  mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+}
+
 .ticker-content {
   display: inline-flex;
   white-space: nowrap;
-  animation: ticker-slide 22s linear infinite;
+  animation: ticker-slide 34s linear infinite;
   will-change: transform;
 }
 
@@ -125,7 +134,7 @@
 
 @media (max-width: 640px) {
   .ticker-content {
-    animation-duration: 16s;
+    animation-duration: 26s;
   }
   .ticker-container:active .ticker-content {
     animation-play-state: paused;
@@ -134,7 +143,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ticker-content {
-    animation-duration: 16s;
+    animation-duration: 34s;
   }
 }
 
