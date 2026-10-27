@@ -49,10 +49,11 @@ function initFeedbackModal() {
         </div>
 
         <!-- Selve Skjemaet -->
-        <form id="feedback-form" onsubmit="submitFeedbackForm(event)" class="space-y-4">
+        <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitFeedbackForm(event)" class="space-y-4">
           
           <!-- SKJULTE SPAM- OG SYSTEMFELTER (Web3Forms + Diagnostikk) -->
           <input type="hidden" name="access_key" value="${FORM_ACCESS_KEY}">
+          <input type="hidden" name="name" value="Tilbakemelding fra nettside">
           <input type="hidden" name="subject" value="Ny feilrapport fra ranheimkraft.no">
           <input type="hidden" name="from_name" value="Ranheim Kraft Tilbakemelding">
           
@@ -210,14 +211,9 @@ async function submitFeedbackForm(e) {
   `;
 
   const formData = new FormData(form);
-  const dataObject = Object.fromEntries(formData.entries());
+  formData.set('access_key', FORM_ACCESS_KEY);
 
-  // Hvis brukeren ikke oppga e-post, gi en anonym dummy for skjemasystemet
-  if (!dataObject.email) {
-    dataObject.email = 'anonym-bruker@ranheimkraft.no';
-  }
-
-  // Sjekk om FORM_ACCESS_KEY er satt eller er demo
+  // Sjekk om FORM_ACCESS_KEY er uendret demo-nøkkel
   if (FORM_ACCESS_KEY === 'YOUR_WEB3FORMS_ACCESS_KEY') {
     // Elegant demo / fallback når nøkkelen ikke er konfigurert ennå
     setTimeout(() => {
@@ -225,19 +221,16 @@ async function submitFeedbackForm(e) {
       form.classList.add('hidden');
       successBox.classList.remove('hidden');
       form.reset();
-      console.info('Feedback mottatt lokalt (Web3Forms Access Key er ikke konfigurert ennå).', dataObject);
+      console.info('Feedback mottatt lokalt (demo-modus).');
     }, 600);
     return;
   }
 
   try {
+    // Web3Forms bruker standard multipart FormData (uten manuell Content-Type for å unngå CORS-feil)
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(dataObject)
+      body: formData
     });
 
     const result = await response.json();
