@@ -1,0 +1,54 @@
+name: 🔄 Auto-Sync Subprosjekter
+
+on:
+  # Manuell kjøring fra GitHub Actions fanen
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Velg prosjekt å synkronisere (f.eks. "quiz", "qr" eller "all")'
+        required: false
+        default: 'all'
+
+  # Tidsplan: Kjører automatisk hver 6. time
+  schedule:
+    - cron: '0 */6 * * *'
+
+  # Webhook/Dispatch: Kan trigges fra subrepoer ved push
+  repository_dispatch:
+    types: [sync-subproject, quiz-updated, qr-updated]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Synkroniser Subprosjekter
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Sjekk ut ranheimkraft.no
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Sett opp Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 🔄 Kjør synkroniseringsmotor
+        run: |
+          python scripts/sync_subprojects.py --project "${{ github.event.inputs.project || 'all' }}"
+
+      - name: 🚀 Commit og push endringer hvis oppdatert
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "chore(sync): automatisk synkronisering av subprosjekter"
+            git push
+            echo "Nye endringer ble funnet, committet og pushet!"
+          else
+            echo "Alt er allerede oppdatert. Ingen endringer nødvendig."
+          fi
