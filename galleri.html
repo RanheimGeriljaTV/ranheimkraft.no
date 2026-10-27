@@ -47,15 +47,15 @@
   <!-- Main Container -->
   <div class="max-w-6xl mx-auto px-4 sm:px-8 pt-6 pb-20 flex flex-col min-h-screen space-y-10" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Minimalist Bar -->
-    <nav class="flex items-center justify-between pb-5 border-b border-white/10 text-xs font-mono">
+    <!-- Top Minimalist Bar (Mobil-optimalisert) -->
+    <nav class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10 text-xs font-mono">
       <div class="flex items-center gap-3">
         <a href="index.html" class="flex items-center gap-2 text-zinc-400 hover:text-white transition group">
           <span class="group-hover:-translate-x-0.5 transition-transform">&larr;</span>
-          <span class="text-white font-bold tracking-wider font-syne uppercase">Ranheim Kraft</span>
+          <span class="text-white font-bold tracking-wider font-syne uppercase text-sm">Ranheim Kraft</span>
         </a>
       </div>
-      <div class="flex items-center gap-3 sm:gap-5 text-zinc-400">
+      <div class="flex items-center gap-4 sm:gap-5 text-zinc-400 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-[11px] sm:text-xs">
         <a href="index.html" class="hover:text-white transition">Hovedside</a>
         <a href="eliteserien.html" class="hover:text-white transition">Eliteserien</a>
         <a href="fpl.html" class="hover:text-white transition">Premier League</a>

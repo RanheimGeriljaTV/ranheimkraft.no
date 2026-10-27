@@ -47,13 +47,13 @@
   <!-- Main Container -->
   <div class="max-w-5xl mx-auto px-4 sm:px-8 pt-6 pb-20 space-y-8 sm:space-y-10" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Minimalist Bar -->
-    <nav class="flex items-center justify-between pb-5 border-b border-white/10 text-xs font-mono">
-      <div class="flex items-center gap-3">
-        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-        <span class="text-white font-bold tracking-wider font-syne uppercase">Ranheim Kraft</span>
+    <!-- Top Minimalist Bar (Mobil-optimalisert med horisontal berøringsskroll) -->
+    <nav class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10 text-xs font-mono">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+        <span class="text-white font-bold tracking-wider font-syne uppercase text-sm">Ranheim Kraft</span>
       </div>
-      <div class="flex items-center gap-3 sm:gap-5 text-zinc-400">
+      <div class="flex items-center gap-4 sm:gap-5 text-zinc-400 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-[11px] sm:text-xs">
         <a href="galleri.html" data-umami-event="header_galleri_click" class="hover:text-white transition">Bildegalleri</a>
         <a href="eliteserien.html" data-umami-event="header_es_click" class="hover:text-white transition">Eliteserien</a>
         <a href="fpl.html" data-umami-event="header_fpl_click" class="hover:text-white transition">Premier League</a>

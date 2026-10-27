@@ -64,19 +64,46 @@
     .site-footer a, .site-footer span, .site-footer button {
       font-size: inherit;
     }
+    @media (max-width: 640px) {
+      .header-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+      }
+      .title-group {
+        width: 100% !important;
+        gap: 0.5rem !important;
+      }
+      .quiz-title-input {
+        font-size: 1.4rem !important;
+        width: 100% !important;
+      }
+      .quiz-date-input {
+        font-size: 0.85rem !important;
+      }
+      .header-actions {
+        width: 100% !important;
+      }
+      .header-actions .btn {
+        width: 100% !important;
+        justify-content: center !important;
+      }
+    }
   </style>
 </head>
 
 <body class="selection:bg-cyan-400 selection:text-black">
 
-  <!-- NETTSTED-TOPPLINJE (Alltid mørk & konsistent med Ranheim Kraft) -->
+  <!-- NETTSTED-TOPPLINJE (Alltid mørk & konsistent med Ranheim Kraft, mobil-optimalisert) -->
   <header class="site-header no-print bg-[#08080a] border-b border-white/10 text-zinc-400 select-none">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2.5 text-white hover:text-white transition">
-        <img src="assets/logo.png" alt="Ranheim Kraft" class="w-6 h-6 object-contain">
-        <span class="font-syne font-black tracking-tight uppercase brand-title">RANHEIM KRAFT</span>
-      </a>
-      <nav class="flex items-center gap-4 sm:gap-6 font-mono">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2.5 text-white hover:text-white transition">
+          <img src="assets/logo.png" alt="Ranheim Kraft" class="w-6 h-6 object-contain">
+          <span class="font-syne font-black tracking-tight uppercase brand-title text-sm">RANHEIM KRAFT</span>
+        </a>
+      </div>
+      <nav class="flex items-center gap-3.5 sm:gap-6 font-mono overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-xs">
         <a href="index.html" class="hover:text-white transition">Hovedside</a>
         <a href="galleri.html" class="hover:text-white transition">Galleri</a>
         <a href="eliteserien.html" class="hover:text-white transition">Eliteserien</a>

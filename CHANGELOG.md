@@ -6,6 +6,20 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.5.5] - 2026-10-27
+
+### Lagt til & Forbedret
+- **Mobil-optimalisert topplinje (`index.html`, `quiz.html`, `galleri.html`)**:
+  - Fullverdig mobil-tilpasning av øverste navigasjonslinje. På telefoner organiseres logo/merkevare og navigasjonslenkene i et rent to-linjers oppsett med myk, horisontal berøringsskrolling.
+  - Eliminerer horisontalt overflyt og hindrer at lenker kuttes eller forårsaker sidevandring.
+  - Responsiv tittel- og datojustering i Quiz Kraft for optimal visning på små skjermer.
+- **Quiz Kraft Excel-bok med ark per runde & rolig typografi (`assets/quiz/`)**:
+  - **Flerarks Excel-eksport**: Excel-boken genererer nå egne dedikerte ark for hver enkelt spilte runde («Runde 1», «Runde 2», osv.) med lagene rangert etter rundens poengsum, i tillegg til «Sammenlagt», «Akkumulert stilling» og «Mestvinnende». Fanelinjen i bunnen av Excel tvinges alltid synlig.
+  - **Fast og behagelig analyse-typografi**: Rundeanalyseboksen benytter nå fast, ergonomisk skriftstørrelse (13px–15px) som forblir rolig og oversiktlig selv når tabellen skaleres opp for projektor.
+  - **Utheving av bunnscore**: Rundens laveste score markeres med rød farge i statistikken.
+
+---
+
 ## [2.5.4] - 2026-10-27
 
 ### Lagt til & Forbedret
