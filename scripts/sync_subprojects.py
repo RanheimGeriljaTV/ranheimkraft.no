@@ -250,7 +250,7 @@ def sync_tabell_kraft(root_dir):
                 shutil.copy2(os.path.join(src_js, f), os.path.join(dst_js, f))
                 print(f"  ✓ js/{f} -> tabell/js/{f}")
 
-        # 3. index.html med Umami og header-tilpasning
+        # 3. index.html med Umami Analytics
         src_html = os.path.join(temp_dir, "index.html")
         if os.path.exists(src_html):
             with open(src_html, "r", encoding="utf-8") as f:
@@ -260,26 +260,6 @@ def sync_tabell_kraft(root_dir):
             if "cloud.umami.is" not in html:
                 umami_tag = '\n  <!-- Umami Analytics -->\n  <script defer src="https://cloud.umami.is/script.js" data-website-id="7618ae03-9bb8-4228-87cc-14ec10f0fcf0"></script>'
                 html = html.replace('</head>', f'{umami_tag}\n</head>')
-
-            # Tilbake-lenke på låseskjerm
-            lock_end = '      <div id="lockError"'
-            if lock_end in html and 'Tilbake til ranheimkraft.no' not in html:
-                lock_back = """      <div class="pt-2 border-t border-white/5">
-        <a href="../index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition font-mono">
-          <span>&larr;</span>
-          <span>Tilbake til ranheimkraft.no</span>
-        </a>
-      </div>
-    </div>"""
-                html = html.replace('      </div>\n    </div>\n  </div>\n\n  <!-- ==================== HOVEDAPPLIKASJON', f'{lock_back}\n  </div>\n\n  <!-- ==================== HOVEDAPPLIKASJON')
-
-            # Navigasjon og hjem-knapp i topplinje
-            header_target = '<div class="flex items-center gap-2.5">\n          <img src="https://images.fotmob.com/image_resources/logo/teamlogo/6563.png" alt="Ranheim" class="w-7 h-7 object-contain">\n          <div>\n            <div class="flex items-center gap-1.5 leading-none">\n              <span class="text-sm font-black tracking-tight text-white">OBOS-tipper</span>'
-            header_replace = '<a href="../index.html" class="flex items-center gap-2.5 hover:opacity-80 transition group" title="Tilbake til ranheimkraft.no">\n          <img src="https://images.fotmob.com/image_resources/logo/teamlogo/6563.png" alt="Ranheim" class="w-7 h-7 object-contain">\n          <div>\n            <div class="flex items-center gap-1.5 leading-none">\n              <span class="text-sm font-black tracking-tight text-white group-hover:text-sky-400 transition">OBOS-tipper</span>'
-            if header_target in html:
-                html = html.replace(header_target, header_replace)
-                html = html.replace('<span class="text-[10px] text-slate-400 font-medium">Ranheim Kraft</span>\n          </div>\n        </div>', '<span class="text-[10px] text-slate-400 font-medium">Ranheim Kraft &larr;</span>\n          </div>\n        </a>')
-                html = html.replace('<div class="flex items-center gap-2">', '<div class="flex items-center gap-1.5">\n          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">\n            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 live-dot"></span>\n            <span>28 runder spilt</span>\n          </span>\n          <a href="../index.html" title="Tilbake til ranheimkraft.no" class="p-1.5 text-slate-400 hover:text-white rounded-lg flex items-center justify-center">\n            <i data-lucide="home" class="w-4 h-4"></i>\n          </a>')
 
             dst_html = os.path.join(dst_tabell, "index.html")
             with open(dst_html, "w", encoding="utf-8") as f:
