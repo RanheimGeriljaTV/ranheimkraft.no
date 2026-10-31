@@ -6,6 +6,22 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.7.0] - 2026-10-31
+
+### Lagt til (feat)
+- **Lansering av Tabell Kraft (`/tabell/`, `/tipping/`, `/tabell.html`)**:
+  - Fullverdig OBOS Tabell-tipper & Gamification Hub 2026 for Ranheim Kraft vennegjeng og kollegaer.
+  - Interaktiv dra-og-slipp sortering av alle 16 OBOS-lag uten innlogging eller passord.
+  - Reell 2026-tabell med live stilling (etter 28 av 30 runder) og API-henting.
+  - FUT/Sorare-inspirerte samlekort med OVR-rating (45–99), 4 power stats (ACC, PAT, STA, TAK) og bilde-nedlasting.
+  - 5 spillernivåer (Benkesliter til Klubblegende), XP-stige og trofé-rom med 6 prestasjoner.
+  - Offisiell NFF playoff-tipping (kvalifisering til Eliteserien og nedrykkskvalik).
+  - 4 valgbare poengsystemer (Klassisk avvik, Poeng + fulltreffer, Sone-bonus, Forza Ranheim 2x).
+  - Streng duplikatbeskyttelse for kallenavn og e-post, sesonglås (hardlock), felles Supabase PostgreSQL-synkronisering og profesjonelt formatert Excel-rapport (5 ark) for administrator.
+  - Tilgjengelig via snarveiene `/tabell/`, `/tipping/` og som verktøykort 03 på forsiden.
+
+---
+
 ## [2.6.2] - 2026-10-27
 
 ### Endret & Forbedret

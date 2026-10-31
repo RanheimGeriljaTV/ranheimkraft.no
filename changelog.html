@@ -56,14 +56,13 @@
         </a>
       </div>
       <div class="flex items-center gap-3 sm:gap-5 text-zinc-400">
+        <a href="quiz.html" class="text-amber-400 hover:text-white transition font-medium">Quiz Kraft</a>
+        <a href="qr.html" class="text-cyan-400 hover:text-white transition font-medium">QR Kraft</a>
+        <a href="tabell/" class="text-sky-400 hover:text-white transition font-medium">Tabell Kraft</a>
         <a href="index.html" class="hover:text-white transition">Hovedside</a>
         <button type="button" onclick="openFeedbackModal()" class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400 hover:text-white"><span>🐛</span> <span>Rapporter feil</span></button>
         <span>&bull;</span>
         <a href="galleri.html" class="hover:text-white transition">Bildegalleri</a>
-        <a href="eliteserien.html" class="hover:text-white transition">Eliteserien</a>
-        <a href="fpl.html" class="hover:text-white transition">Premier League</a>
-        <a href="qr.html" class="hover:text-white transition">QR Kraft</a>
-        <a href="quiz.html" class="text-amber-400 hover:text-white transition">Quiz Kraft</a>
         <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
       </div>
     </nav>
@@ -84,7 +83,8 @@
 
       <!-- Quick Jump Filter Badges -->
       <div class="flex items-center gap-2 pt-2 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-        <a href="#v2.6.2" class="shrink-0 px-3 py-1 rounded-full bg-white text-black text-xs font-mono font-bold hover:bg-zinc-200 transition">v2.6.2 (Nyest)</a>
+        <a href="#v2.7.0" class="shrink-0 px-3 py-1 rounded-full bg-white text-black text-xs font-mono font-bold hover:bg-zinc-200 transition">v2.7.0 (Nyest)</a>
+        <a href="#v2.6.2" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.6.2</a>
         <a href="#v2.6.1" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.6.1</a>
         <a href="#v2.6.0" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.6.0</a>
         <a href="#v2.5.5" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.5.5</a>
@@ -116,14 +116,82 @@
     <!-- Timeline Entries -->
     <main class="space-y-6 sm:space-y-8 flex-grow">
 
-                                                                  <!-- ENTRY: v2.6.2 -->
+                                                                  <!-- ENTRY: v2.7.0 -->
+      <article id="v2.7.0" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+              <span>v2.7.0</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-sky-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
+                Tabell Kraft Lansering &bull; Nyest
+              </span>
+            </span>
+          </div>
+          <div class="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>31. oktober 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>⚽</span>
+              <span>Lansering av Tabell Kraft – OBOS Tabell-tipper &amp; Gamification Hub</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li><strong class="text-white">Interaktiv tipping:</strong> Dra-og-slipp sortering av 16 OBOS-lag med live stilling etter 28 runder.</li>
+              <li><strong class="text-white">FUT-spillerkort:</strong> Holografiske samlekort med OVR-rating (45–99), 4 power stats og bilde-eksport.</li>
+              <li><strong class="text-white">NFF Playoff-kvalik:</strong> Komplett bracket for opprykkskvalik til Eliteserien og nedrykkskvalik.</li>
+              <li><strong class="text-white">Sky-synkronisering &amp; Admin-rapport:</strong> Supabase PostgreSQL-synk, sesonglås, duplikatbeskyttelse og flersidig profesjonell Excel-eksport.</li>
+              <li><strong class="text-white">Snarveier:</strong> Direkte tilgang via <a href="tabell/" class="text-sky-400 hover:underline">/tabell/</a> og <a href="tipping/" class="text-sky-400 hover:underline">/tipping/</a>.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- ENTRY: v2.7.0 -->
+      <article id="v2.7.0" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+              <span>v2.7.0</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-sky-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
+                Tabell Kraft Lansering &bull; Nyest
+              </span>
+            </span>
+          </div>
+          <div class="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>31. oktober 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>⚽</span>
+              <span>Lansering av Tabell Kraft – OBOS Tabell-tipper &amp; Gamification Hub</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li><strong class="text-white">Interaktiv tipping:</strong> Dra-og-slipp sortering av 16 OBOS-lag med live stilling etter 28 runder.</li>
+              <li><strong class="text-white">FUT-spillerkort:</strong> Holografiske samlekort med OVR-rating (45–99), 4 power stats og bilde-eksport.</li>
+              <li><strong class="text-white">NFF Playoff-kvalik:</strong> Komplett bracket for opprykkskvalik til Eliteserien og nedrykkskvalik.</li>
+              <li><strong class="text-white">Sky-synkronisering &amp; Admin-rapport:</strong> Supabase PostgreSQL-synk, sesonglås, duplikatbeskyttelse og flersidig profesjonell Excel-eksport.</li>
+              <li><strong class="text-white">Snarveier:</strong> Direkte tilgang via <a href="tabell/" class="text-sky-400 hover:underline">/tabell/</a> og <a href="tipping/" class="text-sky-400 hover:underline">/tipping/</a>.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+
       <article id="v2.6.2" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
           <div class="flex flex-wrap items-center gap-2.5">
             <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
               <span>v2.6.2</span>
               <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
-                Verktøyprioritering &amp; Tempojustering &bull; Nyest
+                Verktøyprioritering &amp; Tempojustering
               </span>
             </span>
           </div>

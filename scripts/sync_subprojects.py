@@ -220,9 +220,63 @@ def sync_qr_kraft(root_dir):
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
+def sync_tabell_kraft(root_dir):
+    print("\n==================================================")
+    print("🔄 Synkroniserer: Tabell Kraft (RanheimGeriljaTV/Kraft-Tabell-tips)")
+    print("==================================================")
+    temp_dir = tempfile.mkdtemp(prefix="sync_tabell_")
+    try:
+        cmd = ["git", "clone", "--depth", "1", "https://github.com/RanheimGeriljaTV/Kraft-Tabell-tips.git", temp_dir]
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        dst_tabell = os.path.join(root_dir, "tabell")
+        os.makedirs(dst_tabell, exist_ok=True)
+
+        # 1. css
+        src_css = os.path.join(temp_dir, "css")
+        if os.path.exists(src_css):
+            dst_css = os.path.join(dst_tabell, "css")
+            os.makedirs(dst_css, exist_ok=True)
+            for f in os.listdir(src_css):
+                shutil.copy2(os.path.join(src_css, f), os.path.join(dst_css, f))
+                print(f"  ✓ css/{f} -> tabell/css/{f}")
+
+        # 2. js
+        src_js = os.path.join(temp_dir, "js")
+        if os.path.exists(src_js):
+            dst_js = os.path.join(dst_tabell, "js")
+            os.makedirs(dst_js, exist_ok=True)
+            for f in os.listdir(src_js):
+                shutil.copy2(os.path.join(src_js, f), os.path.join(dst_js, f))
+                print(f"  ✓ js/{f} -> tabell/js/{f}")
+
+        # 3. index.html med Umami og header-tilpasning
+        src_html = os.path.join(temp_dir, "index.html")
+        if os.path.exists(src_html):
+            with open(src_html, "r", encoding="utf-8") as f:
+                html = f.read()
+
+            # Umami analytics
+            if "cloud.umami.is" not in html:
+                umami_tag = '\n  <!-- Umami Analytics -->\n  <script defer src="https://cloud.umami.is/script.js" data-website-id="7618ae03-9bb8-4228-87cc-14ec10f0fcf0"></script>'
+                html = html.replace('</head>', f'{umami_tag}\n</head>')
+
+            dst_html = os.path.join(dst_tabell, "index.html")
+            with open(dst_html, "w", encoding="utf-8") as f:
+                f.write(html)
+            print("  ✓ index.html -> tabell/index.html")
+
+        print("✅ Tabell Kraft synkronisert.")
+
+    except Exception as e:
+        print(f"❌ Feil ved synkronisering av Tabell Kraft: {e}")
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Synkroniser subprosjekter for ranheimkraft.no")
-    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr' eller 'all')")
+    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell' eller 'all')")
     args = parser.parse_args()
 
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -235,6 +289,9 @@ def main():
 
     if target in ("all", "qr", "qr-kraft"):
         sync_qr_kraft(root_dir)
+
+    if target in ("all", "tabell", "tabell-kraft", "tipping"):
+        sync_tabell_kraft(root_dir)
 
     print("\n🎉 Synkroniseringskjøring fullført!")
 
