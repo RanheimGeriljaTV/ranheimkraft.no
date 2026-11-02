@@ -171,10 +171,9 @@ async function loadLiveNews() {
       </a>
     `).join('');
 
-    // Beregn en frisk og kvikk glidehastighet (ca. 85 piksler per sekund)
+    // Rask og frisk rotasjon på ca. 30 sekunder
     requestAnimationFrame(() => {
-      const halfWidth = track.scrollWidth / 2;
-      const duration = Math.max(25, Math.round(halfWidth / 85));
+      const duration = 30;
       track.style.animationDuration = `${duration}s`;
     });
   }

@@ -6,6 +6,14 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.7.2] - 2026-11-02
+
+### Endret & Forbedret
+- **Nyhetsticker kalibrert til ca. 30 sekunder (`assets/main.js`, `assets/style.css`)**:
+  - Satt rotasjonstiden på nyhetsstripen til nøyaktig 30 sekunder for en rask og dynamisk nyhetsrulling, med full stopp/pause ved berøring og musepeker.
+
+---
+
 ## [2.7.1] - 2026-11-02
 
 ### Endret & Forbedret
