@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.7.1] - 2026-11-02
+
+### Endret & Forbedret
+- **Nyhetsoppdatering fra Ranheim Fotball (`assets/main.js`, `assets/news.json`, `scripts/sync_subprojects.py`)**:
+  - Byttet ut utdatert CORS-tjeneste med en pålitelig og lynrask `rss2json`-bro i `assets/main.js`, slik at ferske nyheter fra `ranheimfotball.no/rss-nyheter` hentes direkte i sanntid.
+  - Lagt til automatisk nyhetssynkronisering i `scripts/sync_subprojects.py` og satt GitHub Actions-rutinen til å kjøre hver 3. time (`.github/workflows/sync-subprojects.yml`).
+  - Oppdatert den statiske nyhetsdatabasen (`assets/news.json`) med de nyeste sakene fra november (inkl. «Slik sikrer vi 6.plassen»).
+- **Raskere nyhetsticker (`assets/main.js`, `assets/style.css`)**:
+  - Økt glidehastigheten på nyhetsstripen fra ~54 px/s til **~85 px/s** (varighet ned fra ~93s til ~54s). Dette gir en merkbart kvikkere og mer energisk flyt over skjermen, samtidig som full pause ved hover og touch er bevart.
+
+---
+
 ## [2.7.0] - 2026-10-31
 
 ### Lagt til (feat)

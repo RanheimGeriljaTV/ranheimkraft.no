@@ -11,7 +11,7 @@ on:
 
   # Tidsplan: Kjører automatisk hver 6. time
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */3 * * *'
 
   # Webhook/Dispatch: Kan trigges fra subrepoer ved push
   repository_dispatch:

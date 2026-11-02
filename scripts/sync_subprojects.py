@@ -286,6 +286,43 @@ def sync_tabell_kraft(root_dir):
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
+
+def sync_ranheim_news(root_dir):
+    print("\n==================================================")
+    print("📰 Henter ferske nyheter fra ranheimfotball.no")
+    print("==================================================")
+    import urllib.request
+    import json
+    import xml.etree.ElementTree as ET
+
+    url = 'https://www.ranheimfotball.no/rss-nyheter'
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            xml_data = r.read()
+
+        root = ET.fromstring(xml_data)
+        items = []
+        for it in root.findall('.//item'):
+            title = it.find('title').text.strip() if it.find('title') is not None else ''
+            link = it.find('link').text.strip() if it.find('link') is not None else ''
+            pubDate = it.find('pubDate').text.strip() if it.find('pubDate') is not None else ''
+            if title and link:
+                items.append({'title': title, 'link': link, 'pubDate': pubDate})
+
+        if items:
+            news_file = os.path.join(root_dir, 'assets', 'news.json')
+            with open(news_file, 'w', encoding='utf-8') as f:
+                json.dump(items, f, indent=2, ensure_ascii=False)
+            print(f"  ✓ {len(items)} nyhetsartikler lagret til assets/news.json")
+            print(f"  ✓ Nyeste sak: {items[0]['title']}")
+            print("✅ Ranheim Fotball nyhetsfeed oppdatert.")
+        else:
+            print("  ⚠ Ingen artikler funnet i RSS-feeden.")
+    except Exception as e:
+        print(f"❌ Feil ved henting av nyheter: {e}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Synkroniser subprosjekter for ranheimkraft.no")
     parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell' eller 'all')")
@@ -304,6 +341,9 @@ def main():
 
     if target in ("all", "tabell", "tabell-kraft", "tipping"):
         sync_tabell_kraft(root_dir)
+
+    if target in ("all", "news", "nyheter"):
+        sync_ranheim_news(root_dir)
 
     print("\n🎉 Synkroniseringskjøring fullført!")
 

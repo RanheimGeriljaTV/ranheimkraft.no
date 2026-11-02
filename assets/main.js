@@ -122,26 +122,23 @@ updateVideoDetails();
 async function loadLiveNews() {
   let items = null;
 
-  // 1. Live real-time RSS fetch via high-speed CORS proxy
+  // 1. Live real-time RSS fetch via high-speed reliable RSS-to-JSON bridge
   try {
     const ctrl = new AbortController();
-    const timeoutId = setTimeout(() => ctrl.abort(), 3500);
-    const res = await fetch('https://r.jina.ai/https://www.ranheimfotball.no/rss-nyheter', {
-      headers: { 'x-respond-with': 'text' },
+    const timeoutId = setTimeout(() => ctrl.abort(), 4000);
+    const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.ranheimfotball.no%2Frss-nyheter', {
       signal: ctrl.signal
     });
     clearTimeout(timeoutId);
 
     if (res.ok) {
-      const xmlText = await res.text();
-      const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
-      const parsed = Array.from(xml.querySelectorAll('item')).map(it => ({
-        title: it.querySelector('title')?.textContent?.trim() || '',
-        link: it.querySelector('link')?.textContent?.trim() || ''
-      })).filter(it => it.title && it.link);
-
-      if (parsed.length > 0) {
-        items = parsed;
+      const data = await res.json();
+      if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
+        items = data.items.map(it => ({
+          title: (it.title || '').trim(),
+          link: (it.link || '').trim(),
+          pubDate: it.pubDate || ''
+        })).filter(it => it.title && it.link);
       }
     }
   } catch (e) {
@@ -149,7 +146,7 @@ async function loadLiveNews() {
   }
 
   // 2. Fallback to cached assets/news.json if live fetch was unavailable
-  if (!items) {
+  if (!items || items.length === 0) {
     try {
       const res = await fetch('assets/news.json?v=' + Date.now());
       if (res.ok) {
@@ -158,7 +155,7 @@ async function loadLiveNews() {
     } catch (e) {}
   }
 
-  // 3. Render ticker items (Begrens til 8 ferskeste og tilpass farten for rolig lesing)
+  // 3. Render ticker items (Bruk de 8 ferskeste og frisk, responsiv hastighet)
   if (items && Array.isArray(items) && items.length > 0) {
     const track = document.getElementById('ticker-track');
     if (!track) return;
@@ -174,10 +171,10 @@ async function loadLiveNews() {
       </a>
     `).join('');
 
-    // Beregn en rolig og behagelig lesehastighet (ca. 45 piksler per sekund)
+    // Beregn en frisk og kvikk glidehastighet (ca. 85 piksler per sekund)
     requestAnimationFrame(() => {
       const halfWidth = track.scrollWidth / 2;
-      const duration = Math.max(35, Math.round(halfWidth / 54));
+      const duration = Math.max(25, Math.round(halfWidth / 85));
       track.style.animationDuration = `${duration}s`;
     });
   }
