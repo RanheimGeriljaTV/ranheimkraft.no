@@ -97,5 +97,6 @@ test_*.png
 test_*.jpg
 verify_*.py
 update_*.py
+!scripts/update_obos_standings.py
 clean_*.py
 scratch/

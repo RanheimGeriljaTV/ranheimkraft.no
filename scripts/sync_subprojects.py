@@ -266,6 +266,18 @@ def sync_tabell_kraft(root_dir):
                 f.write(html)
             print("  ✓ index.html -> tabell/index.html")
 
+        # 4. Live FotMob tabell og Supabase fasit
+        src_script = os.path.join(temp_dir, "scripts", "update_obos_standings.py")
+        if os.path.exists(src_script):
+            dst_script_dir = os.path.join(root_dir, "scripts")
+            os.makedirs(dst_script_dir, exist_ok=True)
+            shutil.copy2(src_script, os.path.join(dst_script_dir, "update_obos_standings.py"))
+            try:
+                subprocess.run([sys.executable, os.path.join(dst_script_dir, "update_obos_standings.py"), "--repo-dir", dst_tabell], check=True)
+                print("  ✓ Live FotMob tabell og Supabase fasit oppdatert")
+            except Exception as se:
+                print(f"  ⚠ Kunne ikke kjøre tabelloppdatering: {se}")
+
         print("✅ Tabell Kraft synkronisert.")
 
     except Exception as e:
