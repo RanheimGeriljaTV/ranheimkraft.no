@@ -52,7 +52,9 @@ function initPlayer() {
       loop: 1,
       playlist: currentVideo.id,
       iv_load_policy: 3,
-      disablekb: 1
+      disablekb: 1,
+      origin: window.location.origin,
+      enablejsapi: 1
     },
     events: {
       onReady: function(e) {

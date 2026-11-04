@@ -6,6 +6,14 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.8.3] - 2026-11-04
+
+### Feilrettinger (bug fixes)
+- **Fjernet pointer-events-none og la til origin i YouTube-spilleren (`index.html`, `assets/main.js`)**:
+  - Fjernet CSS-klassen `pointer-events-none` som hindret brukere fra å trykke på knapper inne i videoruten (f.eks. ved robot-sjekk eller verifisering).
+  - La til `origin` og `enablejsapi` i `playerVars` for å bevise opprinnelsesdomene overfor Googles YouTube API.
+  - Koblet videotittelen direkte til YouTube-videolenken (`#current-video-link`) slik at videoen alltid kan åpnes med ett klikk i nettlesere som blokkerer embeds.
+
 ## [2.8.2] - 2026-11-04
 
 ### Sikkerhet & Skjold (security)
