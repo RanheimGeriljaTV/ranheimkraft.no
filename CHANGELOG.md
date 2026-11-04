@@ -6,6 +6,12 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.8.4] - 2026-11-04
+
+### Feilrettinger
+- **Tilbakestilt YouTube-avspillerkonfigurasjon (`assets/main.js`)**:
+  - Gjenopprettet opprinnelige `playerVars` for å sikre ren og uhindret autoplay slik den alltid har vært konfigurert.
+
 ## [2.8.3] - 2026-11-04
 
 ### Feilrettinger (bug fixes)
