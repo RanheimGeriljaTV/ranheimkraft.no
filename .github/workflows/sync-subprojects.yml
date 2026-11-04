@@ -9,7 +9,7 @@ on:
         required: false
         default: 'all'
 
-  # Tidsplan: Kjører automatisk hver 6. time
+  # Tidsplan: Kjører automatisk hver 3. time
   schedule:
     - cron: '0 */3 * * *'
 
@@ -37,6 +37,8 @@ jobs:
           python-version: '3.12'
 
       - name: 🔄 Kjør synkroniseringsmotor
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
           python scripts/sync_subprojects.py --project "${{ github.event.inputs.project || 'all' }}"
 

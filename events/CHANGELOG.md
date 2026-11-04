@@ -5,6 +5,48 @@ Formatet er basert pa Keep a Changelog og folger Conventional Commits.
 
 Regel: Ingen tankestrek i denne filen.
 
+## [1.5.1] - 2026-11-04
+
+### fix
+- Forsterket ultra-tett listevisning med okt vertikal separasjon (gap-1, py-0.5, block truncate) og fast margin mot billettknappen, som forhindrer enhver form for overlapping pa mobil.
+- Full synkronisering mot ranheimkraft.no/events/: Fjernet gammel tekstboks som hang igjen i det andre repoet.
+- Oppgradert cache-busting til ?v=1.5.1 og localStorage til v4.
+
+## [1.5.0] - 2026-11-04
+
+### feat
+- Optimalisert hele applikasjonen for 9:16 mobilskjermer med presis pikseljustering og null skjevheter.
+- Omstrukturert den festede filterseksjonen til tre ryddige, faste linjer: Sokelinje med visningsvelger, tidsfilterchips og felles omrade-/kategorispor.
+- Gjort Trondheims-ruletten vesentlig mer kompakt pa mobil (side-om-side layout) som sparer over 120px dyrebar vertikal skjermplass.
+- Konvertert arrangementsmodalen til et moderne bunn-ark (bottom sheet) pa mobil med rounded-t-3xl og 88vh maks hoyde, tilpasset tommel-rekkevidde.
+
+### fix
+- Fikset uonsket linjebrudd i ultra-tett listevisning: Fjernet flex-wrap og lagt inn streng overflow-kontroll og shrink-0 pa tid og dato.
+- Fikset kortvisningens tittel-høyde: Erstattet flex-oppsett med dedikert title-clamp-2 container slik at line-clamp-2 fungerer konsistent uten a sprenge boksene.
+- Forhindret tekst-kollisjon mellom dato- og kategori-merke pa arrangementsbildene med max-w-65% og truncate.
+- Lagt inn touch-scroll-x med -webkit-overflow-scrolling for silkemyk rulling av piller pa iOS og Android.
+- Oppgradert cache-busting til ?v=1.5.0 og flyttet localStorage til v3 for umiddelbar oppdatering.
+
+## [1.4.0] - 2026-11-04
+
+### feat
+- Plassert Ranheim Kraft overskriften direkte ved siden av isbjorn-maskoten (assets/logo.png og logosove.png) pa en enkelt kompakt linje.
+- Fjernet overflodig hero-seksjon for a frigjore maksimal vertikal skjermplass pa mobil.
+- Integrert cache-statusindikator og manuell oppdateringsknapp direkte i headeren.
+- Lagt til automatisk sove-effekt for isbjornen bade ved musepeker (hover) og beroring (touch pa mobil).
+
+### fix
+- Lagt til cache-busting parametere (?v=1.4.0) pa style.css, app.js og fallback-data.js for a sikre at endringer vises umiddelbart pa mobil uten a bli blokkert av nettleser-cache.
+- Lagt til Cache-Control og Pragma no-cache meta-tagger i HTML-hodet.
+- Oppgradert localStorage cache-nokler til v2 for a forhindre at eldre data henger igjen i mobilminnet.
+
+## [1.3.1] - 2026-11-04
+
+### fix
+- Fikset tekst-kollisjon og overlapping pa mobil i ultra-tett listevisning.
+- Separert metadata (tid, spillested-badge, dato og pris) og tittel i to krystallklare lag med min-w-0 og ren truncate-stotte.
+- Lagt til flex-shrink-0 pa alle filterknapper for a hindre komprimering ved horisontal beroringsskroll pa mobil.
+
 ## [1.3.0] - 2026-11-04
 
 ### feat
