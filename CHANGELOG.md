@@ -6,6 +6,14 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.8.1] - 2026-11-04
+
+### Endret & Forbedret
+- **Kompakt hero-layout med overskrift ved siden av isbjørnen (`index.html`)**:
+  - Flyttet «RANHEIM KRAFT»-overskriften horisontalt ved siden av isbjørn-maskoten i stedet for å ligge under i flere vertikale linjer.
+  - Strømlinjeformet til én enkelt linje med dynamisk skalering på tvers av mobil og desktop for å minimere vertikal plassbruk.
+  - Sørger for at kjerneappene under *01 / Verktøy & Kode* umiddelbart blir synlige uten å måtte scrolle.
+
 ## [2.8.0] - 2026-11-04
 
 ### Lagt til (feat)
