@@ -6,6 +6,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.8.2] - 2026-11-04
+
+### Sikkerhet & Skjold (security)
+- **Opprettet formell robots.txt (`robots.txt`)**:
+  - Etablert klare indekseringsregler for søkemotorer og eksplisitt blokkering for aggressive AI-skrapere (GPTBot, CCBot, Bytespider, ClaudeBot, Anthropic).
+- **Spambeskyttelse og rate-limiting på feilrapportskjemaet (`assets/feedback.js`)**:
+  - Time-to-submit sjekk: Innsendinger under 2.5 sekunder avvises stille som bot-aktivitet uten å belaste Web3Forms API-kvoten.
+  - Lokal rate-limit: Maks 3 tilbakemeldinger per time per enhet via localStorage.
+- **Brute-force sperre for bildegalleriet (`galleri.html`)**:
+  - Automatisk 60 sekunders nedkjølingslås av passordfelt og innsendingsknapp dersom feil passord tastes 5 ganger på rad.
+  - Viser sanntids nedtelling og gjenværende forsøk i modalen.
+
 ## [2.8.1] - 2026-11-04
 
 ### Endret & Forbedret

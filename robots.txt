@@ -1,0 +1,22 @@
+# robots.txt for https://ranheimkraft.no
+# Offisiell indeks- og skraperetningslinje for Ranheim Kraft
+
+User-agent: *
+Allow: /
+Disallow: /scripts/
+
+# Aggressive AI-skrapere og bulk-crawlere (blokkeres for a spare ressurser)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /

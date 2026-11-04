@@ -417,6 +417,97 @@
       errBox.classList.remove('hidden');
     }
 
+    /* =====================================================================
+       BRUTE-FORCE SIKKERHETSSPERRE FOR PASSORD (5 FORSØK -> 60 SEKUNDERS LÅS)
+       ===================================================================== */
+    const MAX_PASSWORD_ATTEMPTS = 5;
+    const LOCKOUT_DURATION_MS = 60 * 1000; // 60 sekunder
+    let failedAttempts = parseInt(sessionStorage.getItem('rk_gallery_failed_attempts') || '0', 10);
+    let lockoutUntil = parseInt(sessionStorage.getItem('rk_gallery_lockout_until') || '0', 10);
+    let lockoutTimer = null;
+
+    function checkLockout() {
+      const now = Date.now();
+      if (lockoutUntil > now) {
+        const remainingSec = Math.ceil((lockoutUntil - now) / 1000);
+        applyLockoutUI(remainingSec);
+        return true;
+      }
+      return false;
+    }
+
+    function applyLockoutUI(seconds) {
+      const input = document.getElementById('input-password');
+      const btn = document.getElementById('btn-submit-pwd');
+      const errBox = document.getElementById('modal-error');
+
+      if (input) input.disabled = true;
+      if (btn) btn.disabled = true;
+
+      if (errBox) {
+        errBox.textContent = `For mange feilforsøk. Passordfeltet er midlertidig låst i ${seconds} sekunder.`;
+        errBox.classList.remove('hidden');
+      }
+
+      if (lockoutTimer) clearInterval(lockoutTimer);
+      lockoutTimer = setInterval(() => {
+        const remaining = Math.ceil((lockoutUntil - Date.now()) / 1000);
+        if (remaining <= 0) {
+          clearInterval(lockoutTimer);
+          lockoutTimer = null;
+          failedAttempts = 0;
+          lockoutUntil = 0;
+          sessionStorage.removeItem('rk_gallery_failed_attempts');
+          sessionStorage.removeItem('rk_gallery_lockout_until');
+          clearLockoutUI();
+        } else {
+          if (errBox) {
+            errBox.textContent = `For mange feilforsøk. Passordfeltet er midlertidig låst i ${remaining} sekunder.`;
+          }
+        }
+      }, 1000);
+    }
+
+    function clearLockoutUI() {
+      const input = document.getElementById('input-password');
+      const btn = document.getElementById('btn-submit-pwd');
+      const errBox = document.getElementById('modal-error');
+      if (input) input.disabled = false;
+      if (btn) btn.disabled = false;
+      if (errBox && errBox.textContent.includes('låst')) {
+        errBox.classList.add('hidden');
+        errBox.textContent = '';
+      }
+    }
+
+    function recordFailedAttempt() {
+      failedAttempts++;
+      sessionStorage.setItem('rk_gallery_failed_attempts', failedAttempts.toString());
+      if (failedAttempts >= MAX_PASSWORD_ATTEMPTS) {
+        lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+        sessionStorage.setItem('rk_gallery_lockout_until', lockoutUntil.toString());
+        checkLockout();
+      } else {
+        const remainingTries = MAX_PASSWORD_ATTEMPTS - failedAttempts;
+        const errBox = document.getElementById('modal-error');
+        if (errBox && !errBox.classList.contains('hidden')) {
+          errBox.textContent += ` (${remainingTries} forsøk gjenstår før 60s lås)`;
+        }
+      }
+    }
+
+    function resetFailedAttempts() {
+      failedAttempts = 0;
+      lockoutUntil = 0;
+      sessionStorage.removeItem('rk_gallery_failed_attempts');
+      sessionStorage.removeItem('rk_gallery_lockout_until');
+      if (lockoutTimer) {
+        clearInterval(lockoutTimer);
+        lockoutTimer = null;
+      }
+      clearLockoutUI();
+    }
+
     // 3. Request to Open a Gallery
     function requestOpenGallery(galleryId) {
       const g = allGalleries.find(x => x.id === galleryId);
@@ -428,8 +519,14 @@
         pendingGalleryId = galleryId;
         document.getElementById('modal-gallery-name').textContent = g.title;
         document.getElementById('input-password').value = '';
-        document.getElementById('modal-error').classList.add('hidden');
         document.getElementById('modal-password').classList.remove('hidden');
+
+        // Sjekk om det allerede er aktiv 60s lås
+        if (checkLockout()) {
+          return;
+        }
+
+        document.getElementById('modal-error').classList.add('hidden');
         setTimeout(() => document.getElementById('input-password').focus(), 100);
       }
     }
@@ -447,6 +544,8 @@
     // 4. Submit Password
     async function submitPassword(e) {
       e.preventDefault();
+      if (checkLockout()) return;
+
       const pwd = document.getElementById('input-password').value;
       const btn = document.getElementById('btn-submit-pwd');
       const errBox = document.getElementById('modal-error');
@@ -457,33 +556,34 @@
 
       await unlockGallery(pendingGalleryId, pwd);
 
-      btn.disabled = false;
-      btn.innerHTML = `<span>Lås opp &rarr;</span>`;
+      if (!checkLockout()) {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Lås opp &rarr;</span>`;
+      }
     }
 
     // 5. Unlock Gallery & Fetch Photos
     async function unlockGallery(galleryId, password) {
       const errBox = document.getElementById('modal-error');
 
-      // Demo mode fallback
-      if (!APPS_SCRIPT_URL || IS_LOCAL) {
+      // Demo-modus fallback for lokal testing / offline
+      if (IS_LOCAL || !APPS_SCRIPT_URL) {
         if (password && password.trim().toLowerCase() !== 'ranheim' && password.trim().toLowerCase() !== '1234') {
-          // If real URL available, try real URL first, otherwise show demo error
-          if (!APPS_SCRIPT_URL) {
-            errBox.textContent = 'Feil passord! (Tips i demo-modus: skriv "ranheim")';
-            errBox.classList.remove('hidden');
-            return;
-          }
-        } else if (!APPS_SCRIPT_URL) {
+          errBox.textContent = 'Feil passord! (Tips i demo-modus: skriv "ranheim")';
+          errBox.classList.remove('hidden');
+          recordFailedAttempt();
+          return;
+        } else {
+          resetFailedAttempts();
           const g = allGalleries.find(x => x.id === galleryId);
           closePasswordModal();
           displayGallery({
-            id: g.id,
-            title: g.title,
-            date: g.date,
-            description: g.description,
+            id: g ? g.id : galleryId,
+            title: g ? g.title : 'Galleri',
+            date: g ? g.date : '',
+            description: g ? g.description : '',
             folderUrl: 'https://drive.google.com/drive/folders/DEMO_FOLDER_ID',
-            images: getDemoPhotos(g.id)
+            images: getDemoPhotos(galleryId)
           });
           return;
         }
@@ -499,6 +599,7 @@
         const data = await res.json();
 
         if (data.ok && data.gallery) {
+          resetFailedAttempts();
           closePasswordModal();
           const transformed = {
             ...data.gallery,
@@ -514,9 +615,11 @@
         } else {
           errBox.textContent = data.error || 'Feil passord eller tilgang nektet.';
           errBox.classList.remove('hidden');
+          recordFailedAttempt();
         }
       } catch (err) {
         if (IS_LOCAL && (!password || password.trim().toLowerCase() === 'ranheim')) {
+          resetFailedAttempts();
           const g = allGalleries.find(x => x.id === galleryId);
           closePasswordModal();
           displayGallery({

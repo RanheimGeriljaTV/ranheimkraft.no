@@ -13,6 +13,35 @@ const FORM_ACCESS_KEY = 'bdd9638c-4d2d-4a68-a65d-dfdbea23f21c';
 const GITHUB_ISSUES_URL = 'https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/new';
 
 /* =========================================================================
+   SIKKERHET: TIDSLÅS (BOT-VERN) & LOKAL RATE-LIMITING
+   ========================================================================= */
+const MIN_SUBMIT_TIME_SECONDS = 2.5; // Ekte mennesker bruker minst 2.5 sekunder
+const RATE_LIMIT_STORAGE_KEY = 'rk_feedback_history_v1';
+const MAX_SUBMISSIONS_PER_HOUR = 3;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 time
+
+let modalOpenedTimestamp = 0;
+
+function getRecentFeedbackSubmissions() {
+  try {
+    const now = Date.now();
+    const raw = localStorage.getItem(RATE_LIMIT_STORAGE_KEY);
+    const history = raw ? JSON.parse(raw) : [];
+    return history.filter(ts => (now - ts) < RATE_LIMIT_WINDOW_MS);
+  } catch (e) {
+    return [];
+  }
+}
+
+function recordFeedbackSubmission() {
+  try {
+    const history = getRecentFeedbackSubmissions();
+    history.push(Date.now());
+    localStorage.setItem(RATE_LIMIT_STORAGE_KEY, JSON.stringify(history));
+  } catch (e) {}
+}
+
+/* =========================================================================
    2. DOM MODAL STRUKTUR (Injisert automatisk)
    ========================================================================= */
 function initFeedbackModal() {
@@ -154,6 +183,7 @@ function initFeedbackModal() {
    ========================================================================= */
 function openFeedbackModal() {
   initFeedbackModal();
+  modalOpenedTimestamp = Date.now(); // Registrer tidspunkt for tidslås (bot-sjekk)
   const modal = document.getElementById('feedback-modal');
   const form = document.getElementById('feedback-form');
   const successBox = document.getElementById('feedback-success');
@@ -203,6 +233,25 @@ async function submitFeedbackForm(e) {
   const errBox = document.getElementById('feedback-error');
   const successBox = document.getElementById('feedback-success');
 
+  // 1. Tidslås (Time-to-submit sjekk): Ekte mennesker bruker minst 2.5 sekunder.
+  // Automatiserte bots sender umiddelbart (< 2.5 sek). Avvises stille uten eksternt API-kall.
+  const elapsedSeconds = (Date.now() - (modalOpenedTimestamp || 0)) / 1000;
+  if (elapsedSeconds < MIN_SUBMIT_TIME_SECONDS) {
+    console.warn('Feedback avvist (innsending for rask / mistenkelig bot-mønster).');
+    form.classList.add('hidden');
+    successBox.classList.remove('hidden');
+    form.reset();
+    return;
+  }
+
+  // 2. Lokal rate-limit: Maks 3 innsendinger per time per enhet
+  const recentSubmissions = getRecentFeedbackSubmissions();
+  if (recentSubmissions.length >= MAX_SUBMISSIONS_PER_HOUR) {
+    errBox.textContent = 'Grense nådd: Du har sendt inn 3 tilbakemeldinger den siste timen. Vennligst vent litt eller opprett et GitHub Issue.';
+    errBox.classList.remove('hidden');
+    return;
+  }
+
   errBox.classList.add('hidden');
   submitBtn.disabled = true;
   submitBtn.innerHTML = `
@@ -221,6 +270,7 @@ async function submitFeedbackForm(e) {
       form.classList.add('hidden');
       successBox.classList.remove('hidden');
       form.reset();
+      recordFeedbackSubmission();
       console.info('Feedback mottatt lokalt (demo-modus).');
     }, 600);
     return;
@@ -236,6 +286,7 @@ async function submitFeedbackForm(e) {
     const result = await response.json();
 
     if (response.ok && result.success) {
+      recordFeedbackSubmission();
       form.classList.add('hidden');
       successBox.classList.remove('hidden');
       form.reset();
