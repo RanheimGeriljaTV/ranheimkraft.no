@@ -6,6 +6,30 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.8.0] - 2026-11-04
+
+### Lagt til (feat)
+- **Lansering og integrasjon av TRD Events (`/events/`, `/trd/`, `/events.html`, `/trd.html`)**:
+  - Fullverdig sanntids arrangementshub og kulturguide for Trondheim (konserter, sport, teater, festivaler og gratisopplevelser).
+  - 100 % klient-side drift med automatisk daglig caching i `localStorage` (maks 1 nettverkskall per kalenderdag) og robust fallback-datasett.
+  - Visningsvelger mellom kompakte bildekort og ultra-tett listevisning for rask skumming på mobil.
+  - Bydelsfiltre (*Ranheim & Østbyen*, *Midtbyen*, *Sørbyen*), kveldsfilter («Ut i kveld etter 19») og interaktiv Trondheims-rulett med lyd-chime.
+  - Kalendereksport til Google Kalender og `.ics`.
+  - Integrert i automatisert synkroniseringsrutine (`scripts/sync_subprojects.py`) mot oppstrømsrepoet `RanheimGeriljaTV/TRD-Live`.
+
+### Endret & Forbedret
+- **Ny seksjonsprioritering på forsiden (`index.html`)**:
+  - **01 / Verktøy & Kode** er flyttet helt øverst på siden rett under hero-headeren for umiddelbar tilgang til alle interaktive apper (Quiz Kraft, QR Kraft, Tabell Kraft, TRD Events).
+  - **02 / Fotoarkiv** beholdes i midten.
+  - **03 / Levende Bilder** (YouTube Cinema med `@RanheimGeriljaTV`) er plassert som seksjon 03.
+- **Kompakt og hevet nyhetsstripe (`index.html`)**:
+  - Flyttet nyhetsstripen lenger opp ved å koble den direkte til toppnavigasjonen med et tett mellomrom.
+  - Redusert vertikal padding for en betydelig smalere og skarpere profil på tvers av mobil og desktop.
+- **Navigasjonsmenyer (`quiz.html`, `qr.html`, `galleri.html`, `changelog.html`, `events/index.html`)**:
+  - Lagt til TRD Events i toppmenyen på alle sider i økosystemet.
+
+---
+
 ## [2.7.2] - 2026-11-02
 
 ### Endret & Forbedret

@@ -15,7 +15,7 @@ on:
 
   # Webhook/Dispatch: Kan trigges fra subrepoer ved push
   repository_dispatch:
-    types: [sync-subproject, quiz-updated, qr-updated]
+    types: [sync-subproject, quiz-updated, qr-updated, tabell-updated, trd-updated, events-updated]
 
 permissions:
   contents: write

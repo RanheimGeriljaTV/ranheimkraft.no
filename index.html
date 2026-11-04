@@ -47,40 +47,44 @@
   <!-- Main Container -->
   <div class="max-w-5xl mx-auto px-4 sm:px-8 pt-6 pb-20 space-y-8 sm:space-y-10" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Minimalist Bar (Mobil-optimalisert med horisontal berøringsskroll) -->
-    <nav class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10 text-xs font-mono">
-      <div class="flex items-center gap-2.5">
-        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-        <span class="text-white font-bold tracking-wider font-syne uppercase text-sm">Ranheim Kraft</span>
-      </div>
-      <div class="flex items-center gap-4 sm:gap-5 text-zinc-400 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-[11px] sm:text-xs">
-        <a href="quiz.html" data-umami-event="header_quiz_click" class="text-amber-400 hover:text-white transition font-medium">Quiz Kraft</a>
-        <a href="qr.html" data-umami-event="header_qr_click" class="text-cyan-400 hover:text-white transition font-medium">QR Kraft</a>
-        <a href="tabell/" data-umami-event="header_tabell_click" class="text-sky-400 hover:text-white transition font-medium">Tabell Kraft</a>
-        <a href="galleri.html" data-umami-event="header_galleri_click" class="hover:text-white transition">Bildegalleri</a>
-        <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Eliteserien</span>
-        <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Premier League</span>
-        <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
-      </div>
-    </nav>
+    <!-- Top Header: Navigasjon & Ticker Group (Smalere & Lenger opp) -->
+    <div class="space-y-2 sm:space-y-2.5">
+      <!-- Top Minimalist Bar (Mobil-optimalisert med horisontal berøringsskroll) -->
+      <nav class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2.5 border-b border-white/10 text-xs font-mono">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+          <span class="text-white font-bold tracking-wider font-syne uppercase text-sm">Ranheim Kraft</span>
+        </div>
+        <div class="flex items-center gap-3.5 sm:gap-4.5 text-zinc-400 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-[11px] sm:text-xs">
+          <a href="quiz.html" data-umami-event="header_quiz_click" class="text-amber-400 hover:text-white transition font-medium">Quiz Kraft</a>
+          <a href="qr.html" data-umami-event="header_qr_click" class="text-cyan-400 hover:text-white transition font-medium">QR Kraft</a>
+          <a href="tabell/" data-umami-event="header_tabell_click" class="text-sky-400 hover:text-white transition font-medium">Tabell Kraft</a>
+          <a href="events/" data-umami-event="header_events_click" class="text-emerald-400 hover:text-white transition font-medium">TRD Events</a>
+          <a href="galleri.html" data-umami-event="header_galleri_click" class="hover:text-white transition">Bildegalleri</a>
+          <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Eliteserien</span>
+          <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Premier League</span>
+          <a href="https://github.com/RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
+        </div>
+      </nav>
 
-    <!-- Ranheim Fotball Siste Nytt (Integrert Swiss Kinetic nyhetsstripe, uten blinkende prikk) -->
-    <div class="ticker-container relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition p-2 sm:p-2.5 flex items-center gap-3 text-xs font-mono select-none" title="Hold musepeker over for å pause">
-      <div class="flex items-center gap-2 shrink-0 border-r border-white/10 pr-3">
-        <!-- Solid, statisk prikk (ingen blinking) -->
-        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-        <a href="https://www.ranheimfotball.no/nyheter" target="_blank" rel="noopener noreferrer" class="text-white font-bold uppercase tracking-wider hover:text-cyan-400 transition whitespace-nowrap text-[11px] sm:text-xs">
-          Siste Nytt
+      <!-- Ranheim Fotball Siste Nytt (Integrert, smalere og plassert lenger opp) -->
+      <div class="ticker-container relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.02] hover:border-white/20 transition py-1 px-2.5 sm:py-1.5 sm:px-3 flex items-center gap-2.5 text-[11px] sm:text-xs font-mono select-none" title="Hold musepeker over for å pause">
+        <div class="flex items-center gap-1.5 shrink-0 border-r border-white/10 pr-2.5">
+          <!-- Solid, statisk prikk (ingen blinking) -->
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+          <a href="https://www.ranheimfotball.no/nyheter" target="_blank" rel="noopener noreferrer" class="text-white font-bold uppercase tracking-wider hover:text-cyan-400 transition whitespace-nowrap text-[10px] sm:text-[11px]">
+            Siste Nytt
+          </a>
+        </div>
+        <div class="ticker-track-wrap">
+          <div id="ticker-track" class="ticker-content flex items-center gap-6 pl-1.5">
+            <!-- Populerer automatisk via loadLiveNews() med fallback til assets/news.json -->
+          </div>
+        </div>
+        <a href="https://www.ranheimfotball.no" target="_blank" rel="noopener noreferrer" class="text-[10px] sm:text-[11px] text-zinc-500 hover:text-white transition shrink-0 hidden md:inline">
+          ranheimfotball.no &rarr;
         </a>
       </div>
-      <div class="ticker-track-wrap">
-        <div id="ticker-track" class="ticker-content flex items-center gap-8 pl-2">
-          <!-- Populerer automatisk via loadLiveNews() med fallback til assets/news.json -->
-        </div>
-      </div>
-      <a href="https://www.ranheimfotball.no" target="_blank" rel="noopener noreferrer" class="text-[11px] text-zinc-500 hover:text-white transition shrink-0 hidden md:inline">
-        ranheimfotball.no &rarr;
-      </a>
     </div>
 
     <!-- HERO: LOGO DIRECTLY OVER GIANT HEADING (TIGHT & COMPACT) -->
@@ -101,10 +105,81 @@
       </div>
     </header>
 
-    <!-- SECTION 1: COMPACT VIDEO (ASYMMETRICAL 2-COLUMN) -->
+    <!-- SECTION 1: UTILITIES (MODERNIST GRID) - NÅ ØVERST -->
     <section class="space-y-4">
+      <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">01 / Verktøy &amp; Kode</span>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+        <a href="quiz.html" data-umami-event="card_quiz_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-400/40 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-amber-400 transition">01</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Quiz Kraft</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Interaktivt regneark og poengtavle for quizkvelder med tie-breaker og flerarks Excel-eksport.</p>
+        </a>
+
+        <a href="qr.html" data-umami-event="card_qr_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-400/40 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-cyan-400 transition">02</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">QR Kraft</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Gratis, reklamefri QR-kodegenerator med gradienter, WiFi-skilt, vCard og logo.</p>
+        </a>
+
+        <a href="tabell/" data-umami-event="card_tabell_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-400/40 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-sky-400 transition">03</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Tabell Kraft</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">OBOS Tabell-tipper &amp; Gamification Hub med FUT-spillerkort, NFF-kvalik, XP-nivåer og live-stilling.</p>
+        </a>
+
+        <a href="events/" data-umami-event="card_events_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-emerald-400/40 transition group block space-y-3">
+          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-emerald-400 transition">04</span>
+          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">TRD Events</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">Sanntids arrangementsguide for Trondheim med konserter, sport, kultur, bydelsfiltre og Trondheims-rulett.</p>
+        </a>
+
+        <div class="p-6 rounded-2xl bg-white/[0.015] border border-white/5 opacity-60 cursor-not-allowed select-none space-y-3 relative group" title="Siden er midlertidig under revisjon">
+          <div class="flex items-center justify-between">
+            <span class="font-syne text-2xl font-bold text-zinc-600">05</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 border border-white/10 uppercase tracking-wider">Under revisjon</span>
+          </div>
+          <h3 class="text-lg font-syne font-bold text-zinc-300">Eliteserien Fantasy Hub</h3>
+          <p class="text-xs text-zinc-500 leading-relaxed">Troppsoptimalisering, automatisk bytteberegning og livedashbord.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-white/[0.015] border border-white/5 opacity-60 cursor-not-allowed select-none space-y-3 relative group" title="Siden er midlertidig under revisjon">
+          <div class="flex items-center justify-between">
+            <span class="font-syne text-2xl font-bold text-zinc-600">06</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 border border-white/10 uppercase tracking-wider">Under revisjon</span>
+          </div>
+          <h3 class="text-lg font-syne font-bold text-zinc-300">Premier League FPL</h3>
+          <p class="text-xs text-zinc-500 leading-relaxed">Matematisk optimaliseringsverktøy med terminliste og Panini-kort.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PHOTO ARCHIVE (Pure Typography) -->
+    <section class="pt-10 border-t border-white/10 space-y-4">
       <div class="flex items-baseline justify-between border-b border-white/10 pb-3">
-        <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">01 / Levende Bilder</span>
+        <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">02 / Fotoarkiv</span>
+        <span class="text-xs font-mono text-zinc-500">Google Disk</span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-2">
+        <div class="space-y-2">
+          <h2 class="text-2xl sm:text-3xl font-syne font-bold text-white tracking-tight">
+            Arrangements- og oppdragsgalleri
+          </h2>
+          <p class="text-zinc-400 text-xs sm:text-sm max-w-lg leading-relaxed">
+            Passordbeskyttede arrangementsgallerier for fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning rett i nettleseren med mulighet for å laste ned hele mapper samlet i én ZIP-fil.
+          </p>
+        </div>
+        <a href="galleri.html" data-umami-event="card_galleri_click" class="px-6 py-3 rounded-full bg-white hover:bg-zinc-200 text-black font-syne font-bold text-xs uppercase tracking-wider transition shrink-0 self-start sm:self-center">
+          Åpne galleriet &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION 3: COMPACT VIDEO (ASYMMETRICAL 2-COLUMN) -->
+    <section class="pt-10 border-t border-white/10 space-y-4">
+      <div class="flex items-baseline justify-between border-b border-white/10 pb-3">
+        <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">03 / Levende Bilder</span>
         <a href="https://www.youtube.com/@RanheimGeriljaTV" target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-white hover:underline">YouTube-kanal &rarr;</a>
       </div>
 
@@ -138,71 +213,6 @@
               <span id="sound-text">Lyd</span>
             </button>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: PHOTO ARCHIVE (Pure Typography) -->
-    <section class="pt-10 border-t border-white/10 space-y-4">
-      <div class="flex items-baseline justify-between border-b border-white/10 pb-3">
-        <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">02 / Fotoarkiv</span>
-        <span class="text-xs font-mono text-zinc-500">Google Disk</span>
-      </div>
-
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-2">
-        <div class="space-y-2">
-          <h2 class="text-2xl sm:text-3xl font-syne font-bold text-white tracking-tight">
-            Arrangements- og oppdragsgalleri
-          </h2>
-          <p class="text-zinc-400 text-xs sm:text-sm max-w-lg leading-relaxed">
-            Passordbeskyttede arrangementsgallerier for fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning rett i nettleseren med mulighet for å laste ned hele mapper samlet i én ZIP-fil.
-          </p>
-        </div>
-        <a href="galleri.html" data-umami-event="card_galleri_click" class="px-6 py-3 rounded-full bg-white hover:bg-zinc-200 text-black font-syne font-bold text-xs uppercase tracking-wider transition shrink-0 self-start sm:self-center">
-          Åpne galleriet &rarr;
-        </a>
-      </div>
-    </section>
-
-    <!-- SECTION 3: UTILITIES (2-Column Modernist Grid) -->
-    <section class="pt-10 border-t border-white/10 space-y-4">
-      <span class="font-syne text-xs uppercase font-bold text-zinc-400 tracking-wider">03 / Verktøy &amp; Kode</span>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-        <a href="quiz.html" data-umami-event="card_quiz_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-400/40 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-amber-400 transition">01</span>
-          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Quiz Kraft</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">Interaktivt regneark og poengtavle for quizkvelder med tie-breaker og flerarks Excel-eksport.</p>
-        </a>
-
-        <a href="qr.html" data-umami-event="card_qr_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-400/40 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-cyan-400 transition">02</span>
-          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">QR Kraft</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">Gratis, reklamefri QR-kodegenerator med gradienter, WiFi-skilt, vCard og logo.</p>
-        </a>
-
-        <a href="tabell/" data-umami-event="card_tabell_click" class="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-400/40 transition group block space-y-3">
-          <span class="font-syne text-2xl font-bold text-zinc-600 group-hover:text-sky-400 transition">03</span>
-          <h3 class="text-lg font-syne font-bold text-white group-hover:underline">Tabell Kraft</h3>
-          <p class="text-xs text-zinc-400 leading-relaxed">OBOS Tabell-tipper &amp; Gamification Hub med FUT-spillerkort, NFF-kvalik, XP-nivåer og live-stilling.</p>
-        </a>
-
-        <div class="p-6 rounded-2xl bg-white/[0.015] border border-white/5 opacity-60 cursor-not-allowed select-none space-y-3 relative group" title="Siden er midlertidig under revisjon">
-          <div class="flex items-center justify-between">
-            <span class="font-syne text-2xl font-bold text-zinc-600">04</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 border border-white/10 uppercase tracking-wider">Under revisjon</span>
-          </div>
-          <h3 class="text-lg font-syne font-bold text-zinc-300">Eliteserien Fantasy Hub</h3>
-          <p class="text-xs text-zinc-500 leading-relaxed">Troppsoptimalisering, automatisk bytteberegning og livedashbord.</p>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-white/[0.015] border border-white/5 opacity-60 cursor-not-allowed select-none space-y-3 relative group" title="Siden er midlertidig under revisjon">
-          <div class="flex items-center justify-between">
-            <span class="font-syne text-2xl font-bold text-zinc-600">05</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-800 text-zinc-400 border border-white/10 uppercase tracking-wider">Under revisjon</span>
-          </div>
-          <h3 class="text-lg font-syne font-bold text-zinc-300">Premier League FPL</h3>
-          <p class="text-xs text-zinc-500 leading-relaxed">Matematisk optimaliseringsverktøy med terminliste og Panini-kort.</p>
         </div>
       </div>
     </section>

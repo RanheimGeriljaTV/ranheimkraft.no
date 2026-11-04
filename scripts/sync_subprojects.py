@@ -323,6 +323,66 @@ def sync_ranheim_news(root_dir):
         print(f"❌ Feil ved henting av nyheter: {e}")
 
 
+
+def sync_trd_events(root_dir):
+    print("\n==================================================")
+    print("🔄 Synkroniserer: TRD Events (RanheimGeriljaTV/TRD-Live)")
+    print("==================================================")
+    temp_dir = tempfile.mkdtemp(prefix="sync_trd_")
+    try:
+        cmd = ["git", "clone", "--depth", "1", "https://github.com/RanheimGeriljaTV/TRD-Live.git", temp_dir]
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        dst_events = os.path.join(root_dir, "events")
+        os.makedirs(dst_events, exist_ok=True)
+
+        # 1. css
+        src_css = os.path.join(temp_dir, "css")
+        if os.path.exists(src_css):
+            dst_css = os.path.join(dst_events, "css")
+            os.makedirs(dst_css, exist_ok=True)
+            for f in os.listdir(src_css):
+                shutil.copy2(os.path.join(src_css, f), os.path.join(dst_css, f))
+                print(f"  ✓ css/{f} -> events/css/{f}")
+
+        # 2. js
+        src_js = os.path.join(temp_dir, "js")
+        if os.path.exists(src_js):
+            dst_js = os.path.join(dst_events, "js")
+            os.makedirs(dst_js, exist_ok=True)
+            for f in os.listdir(src_js):
+                shutil.copy2(os.path.join(src_js, f), os.path.join(dst_js, f))
+                print(f"  ✓ js/{f} -> events/js/{f}")
+
+        # 3. index.html med Umami og relative lenker
+        src_html = os.path.join(temp_dir, "index.html")
+        if os.path.exists(src_html):
+            with open(src_html, "r", encoding="utf-8") as f:
+                html = f.read()
+
+            # Umami analytics
+            if "7618ae03-9bb8-4228-87cc-14ec10f0fcf0" not in html:
+                html = re.sub(r'data-website-id="[^"]+"', 'data-website-id="7618ae03-9bb8-4228-87cc-14ec10f0fcf0"', html)
+
+            # Relativ navigasjon
+            html = html.replace('href="https://ranheimkraft.no"', 'href="../index.html"')
+            html = html.replace('href="https://ranheimkraft.no/tabell/"', 'href="../tabell/"')
+            html = html.replace('href="https://ranheimkraft.no/quiz.html"', 'href="../quiz.html"')
+            html = html.replace('href="https://ranheimkraft.no/qr.html"', 'href="../qr.html"')
+
+            dst_html = os.path.join(dst_events, "index.html")
+            with open(dst_html, "w", encoding="utf-8") as f:
+                f.write(html)
+            print("  ✓ index.html -> events/index.html")
+
+        print("✅ TRD Events synkronisert.")
+
+    except Exception as e:
+        print(f"❌ Feil ved synkronisering av TRD Events: {e}")
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Synkroniser subprosjekter for ranheimkraft.no")
     parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell' eller 'all')")
@@ -341,6 +401,9 @@ def main():
 
     if target in ("all", "tabell", "tabell-kraft", "tipping"):
         sync_tabell_kraft(root_dir)
+
+    if target in ("all", "events", "trd", "trd-live"):
+        sync_trd_events(root_dir)
 
     if target in ("all", "news", "nyheter"):
         sync_ranheim_news(root_dir)
