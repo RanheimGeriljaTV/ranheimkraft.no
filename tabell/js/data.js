@@ -293,12 +293,12 @@ const LIVE_TABLE_DETAILS_2026 = [
 
 const PLAYOFF_LIVE_DATA_2026 = {
   "eliteserieTeam14": {
-    "id": 8404,
-    "name": "Aalesund",
+    "id": 8605,
+    "name": "Kristiansund",
     "rank": 14,
     "played": 26,
-    "points": 24,
-    "logoUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8404.png"
+    "points": 26,
+    "logoUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8605.png"
   },
   "eliteserieMatches": [
     {
@@ -431,7 +431,7 @@ const PLAYOFF_LIVE_DATA_2026 = {
     }
   ],
   "hasMatches": true,
-  "updated_at": "2026-11-09T11:04:48.676754+00:00"
+  "updated_at": "2026-11-09T22:04:21.977262+00:00"
 };
 if (typeof window !== 'undefined') window.PLAYOFF_LIVE_DATA_2026 = PLAYOFF_LIVE_DATA_2026;
 
