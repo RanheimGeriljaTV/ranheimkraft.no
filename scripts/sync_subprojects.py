@@ -383,9 +383,61 @@ def sync_trd_events(root_dir):
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
+def sync_kraft_fryer(root_dir):
+    """
+    Kraft-Fryer er en React/Vite-app. Den bygges i sitt eget repo, og de ferdige
+    filene legges i grenen «build». Her kopieres de bare inn, uten byggesteg.
+    """
+    print("\n==================================================")
+    print("🔄 Synkroniserer: Kraft-Fryer (RanheimGeriljaTV/Kraft-Fryer, gren build)")
+    print("==================================================")
+    temp_dir = tempfile.mkdtemp(prefix="sync_fryer_")
+    dst_fryer = os.path.join(root_dir, "airfryer")
+    staging = dst_fryer + ".ny"
+    try:
+        cmd = ["git", "clone", "--depth", "1", "--branch", "build",
+               "https://github.com/RanheimGeriljaTV/Kraft-Fryer.git", temp_dir]
+        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        if not os.path.exists(os.path.join(temp_dir, "index.html")):
+            raise FileNotFoundError("index.html mangler i build-grenen")
+
+        # Bygg den nye mappen ved siden av, og bytt først når alt er klart.
+        # Filnavnene har hash (index-AbC123.js), så den gamle mappen erstattes helt
+        # for at utdaterte filer ikke skal bli liggende igjen.
+        shutil.rmtree(staging, ignore_errors=True)
+        shutil.copytree(temp_dir, staging, ignore=shutil.ignore_patterns(".git"))
+
+        # Umami Analytics (samme verktøy-ID som Tabell Kraft og TRD Events)
+        html_path = os.path.join(staging, "index.html")
+        with open(html_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        if "cloud.umami.is" not in html:
+            umami_tag = ('  <!-- Umami Analytics -->\n'
+                         '    <script defer src="https://cloud.umami.is/script.js" '
+                         'data-website-id="7618ae03-9bb8-4228-87cc-14ec10f0fcf0"></script>\n  ')
+            html = html.replace("</head>", f"{umami_tag}</head>", 1)
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(html)
+
+        if os.path.exists(dst_fryer):
+            shutil.rmtree(dst_fryer)
+        os.rename(staging, dst_fryer)
+
+        count = sum(len(files) for _, _, files in os.walk(dst_fryer))
+        print(f"  ✓ {count} filer -> airfryer/ (med Umami)")
+        print("✅ Kraft-Fryer synkronisert.")
+
+    except Exception as e:
+        print(f"❌ Feil ved synkronisering av Kraft-Fryer: {e}")
+    finally:
+        shutil.rmtree(temp_dir, ignore_errors=True)
+        shutil.rmtree(staging, ignore_errors=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Synkroniser subprosjekter for ranheimkraft.no")
-    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell' eller 'all')")
+    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell', 'fryer' eller 'all')")
     args = parser.parse_args()
 
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -404,6 +456,9 @@ def main():
 
     if target in ("all", "events", "trd", "trd-live"):
         sync_trd_events(root_dir)
+
+    if target in ("all", "fryer", "airfryer", "kraft-fryer"):
+        sync_kraft_fryer(root_dir)
 
     if target in ("all", "news", "nyheter"):
         sync_ranheim_news(root_dir)

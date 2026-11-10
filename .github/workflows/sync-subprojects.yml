@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       project:
-        description: 'Velg prosjekt å synkronisere (f.eks. "quiz", "qr" eller "all")'
+        description: 'Velg prosjekt å synkronisere (f.eks. "quiz", "qr", "fryer" eller "all")'
         required: false
         default: 'all'
 
@@ -15,7 +15,7 @@ on:
 
   # Webhook/Dispatch: Kan trigges fra subrepoer ved push
   repository_dispatch:
-    types: [sync-subproject, quiz-updated, qr-updated, tabell-updated, trd-updated, events-updated]
+    types: [sync-subproject, quiz-updated, qr-updated, tabell-updated, trd-updated, events-updated, fryer-updated]
 
 permissions:
   contents: write

@@ -15,13 +15,14 @@ Offisiell portal og samlingssted for **Ranheim Kraft** – uavhengig medieproduk
 * **[QR Kraft](https://ranheimkraft.no/qr.html) (`qr.html`)**: Gratis, reklamefri og avansert QR-kodegenerator for nettsider, WiFi og vCard med egne gradienter, logoer og mønstre. 100 % lokalt og privat.
 * **[Tabell Kraft](https://ranheimkraft.no/tabell/) (`tabell/index.html` & `tipping/`)**: Interaktiv OBOS Tabell-tipper & Gamification Hub 2026 med FUT-spillerkort, NFF-kvalik, XP-stige, 4 poengsystemer, sesonglås, Supabase-synk og flersidig Excel-eksport.
 * **[TRD Events](https://ranheimkraft.no/events/) (`events/index.html` & `trd.html`)**: Sanntids arrangementsguide for Trondheim med konserter, sport, teater, kultur, bydelsfiltre, «Ut i kveld etter 19» og Trondheims-ruletten.
+* **[Kraft-Fryer](https://ranheimkraft.no/airfryer/) (`airfryer/`)**: Stekeovn til airfryer-kalkulator. Gjør om temperatur og tid i sanntid, med hurtigvalg for pommes frites, kylling, laks, pizza og rotgrønnsaker, og nedtellingsklokke med varsel når maten skal ristes og er ferdig. Bygges i [RanheimGeriljaTV/Kraft-Fryer](https://github.com/RanheimGeriljaTV/Kraft-Fryer) og synkes inn fra grenen `build` (ikke rediger filene i `airfryer/` her).
 * **[Bildegalleri](https://ranheimkraft.no/galleri.html) (`galleri.html`)**: Arrangements- og oppdragsgalleri for foto, turer og prosjekter. Bildene vises i full oppløsning med fullskjerm-lightbox, touch-sveip på mobil og samlet ZIP-nedlasting.
 * **[Eliteserien Fantasy Hub](https://ranheimkraft.no/eliteserien.html) (`eliteserien.html`)**: Matematisk troppsoptimalisering for Eliteserien Fantasy med automatisk overgangsberegning og sanntidslivedashbord.
 * **[Premier League FPL Hub](https://ranheimkraft.no/fpl.html) (`fpl.html`)**: Matematisk optimaliseringsverktøy for Fantasy Premier League med terminlisteberegning og spilleranalyser.
 * **[Endringslogg](https://ranheimkraft.no/changelog.html) (`changelog.html`)**: Fullstendig tidslinje over versjoner, forbedringer og funksjoner.
 * **Vipps Boks (`assets/vipps.js`)**: Frivillig støttefunksjon basert på Vipps Boks for privatpersoner (boksnummer `3153MT`).
 * **Feilrapportering (`assets/feedback.js`)**: Spam-sikker og serverløs feilrapporterings-modal via Web3Forms med automatisk feilsøkingsinfo.
-* **Auto-Sync (`.github/workflows/sync-subprojects.yml` & `scripts/sync_subprojects.py`)**: Automatisk skysynkronisering mot oppstrømsrepoer (Quiz-Kraft, QR-Kraft) hver 6. time eller ved ett klikk.
+* **Auto-Sync (`.github/workflows/sync-subprojects.yml` & `scripts/sync_subprojects.py`)**: Automatisk skysynkronisering mot oppstrømsrepoer (Quiz-Kraft, QR-Kraft, Kraft-Tabell-tips, TRD-Live og Kraft-Fryer) hver 3. time, ved ett klikk, eller via `repository_dispatch` (f.eks. `fryer-updated`). Kjør ett prosjekt lokalt med `python scripts/sync_subprojects.py --project fryer`.
 
 ---
 
@@ -42,6 +43,7 @@ Offisiell portal og samlingssted for **Ranheim Kraft** – uavhengig medieproduk
 ranheimkraft.no/
 ├── .github/workflows/
 │   └── sync-subprojects.yml     # GitHub Actions tidsplan og manuell synk
+├── airfryer/                    # Kraft-Fryer (synket fra Kraft-Fryer, gren build)
 ├── assets/                      # Ressurser, media, stiler og skript
 │   ├── quiz/                    # Quiz Kraft komponenter
 │   │   ├── style.css            # Tabell, regneark og temaer

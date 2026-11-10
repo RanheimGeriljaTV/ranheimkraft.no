@@ -6,6 +6,20 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.10.0] - 2026-11-10
+
+### Lagt til
+- **Kraft-Fryer (`airfryer/`)**: Ny stekeovn til airfryer-kalkulator på [ranheimkraft.no/airfryer/](https://ranheimkraft.no/airfryer/), med omregning i sanntid, hurtigvalg og nedtellingsklokke. Appen bygges i [RanheimGeriljaTV/Kraft-Fryer](https://github.com/RanheimGeriljaTV/Kraft-Fryer).
+- **Kort «05 / Kraft-Fryer»** på forsiden og **menylenke** i `assets/layout.js`, med oransje aksentfarge.
+- **Synk av Kraft-Fryer (`scripts/sync_subprojects.py`)**: Ny `sync_kraft_fryer()` henter ferdigbygde filer fra grenen `build`, legger inn Umami og erstatter `airfryer/` helt (så gamle filer med hash i navnet ikke blir liggende). Den nye mappen bygges ved siden av og byttes inn først når alt er klart. Kjør med `--project fryer`.
+- **`fryer-updated`** som `repository_dispatch`-type i Auto-Sync.
+- `https://ranheimkraft.no/airfryer/` i `sitemap.xml`.
+
+### Endret & Forbedret
+- **Beskrivelse og Open Graph** på forsiden nevner Kraft-Fryer.
+- **`assets/site.css`** bygget på nytt med de oransje klassene.
+- **README**: Auto-Sync kjører hver 3. time (ikke hver 6.), og alle fem oppstrømsrepoene er listet.
+
 ## [2.9.0] - 2026-11-10
 
 ### Lagt til
