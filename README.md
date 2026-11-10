@@ -16,13 +16,14 @@ Offisiell portal og samlingssted for **Ranheim Kraft** – uavhengig medieproduk
 * **[Tabell Kraft](https://ranheimkraft.no/tabell/) (`tabell/index.html` & `tipping/`)**: Interaktiv OBOS Tabell-tipper & Gamification Hub 2026 med FUT-spillerkort, NFF-kvalik, XP-stige, 4 poengsystemer, sesonglås, Supabase-synk og flersidig Excel-eksport.
 * **[TRD Events](https://ranheimkraft.no/events/) (`events/index.html` & `trd.html`)**: Sanntids arrangementsguide for Trondheim med konserter, sport, teater, kultur, bydelsfiltre, «Ut i kveld etter 19» og Trondheims-ruletten.
 * **[Kraft-Fryer](https://ranheimkraft.no/airfryer/) (`airfryer/`)**: Stekeovn til airfryer-kalkulator. Gjør om temperatur og tid i sanntid, med hurtigvalg for pommes frites, kylling, laks, pizza og rotgrønnsaker, og nedtellingsklokke med varsel når maten skal ristes og er ferdig. Bygges i [RanheimGeriljaTV/Kraft-Fryer](https://github.com/RanheimGeriljaTV/Kraft-Fryer) og synkes inn fra grenen `build` (ikke rediger filene i `airfryer/` her).
+* **[Kraft Lønn og Skatt](https://ranheimkraft.no/skatt/) (`skatt/`)**: Lønns-, skatte-, gjelds- og feriepengekalkulator. Viser netto utbetaling i en vanlig måned, i juni (feriepenger) og i desember (halv skatt), og hvor mye gjeldsrentene sparer deg i skatt. Alt regnes ut i nettleseren. Bygges i [RanheimGeriljaTV/Kraft-Skatt](https://github.com/RanheimGeriljaTV/Kraft-Skatt) og synkes inn fra grenen `build` (ikke rediger filene i `skatt/` her).
 * **[Bildegalleri](https://ranheimkraft.no/galleri.html) (`galleri.html`)**: Arrangements- og oppdragsgalleri for foto, turer og prosjekter. Bildene vises i full oppløsning med fullskjerm-lightbox, touch-sveip på mobil og samlet ZIP-nedlasting.
 * **[Eliteserien Fantasy Hub](https://ranheimkraft.no/eliteserien.html) (`eliteserien.html`)**: Matematisk troppsoptimalisering for Eliteserien Fantasy med automatisk overgangsberegning og sanntidslivedashbord.
 * **[Premier League FPL Hub](https://ranheimkraft.no/fpl.html) (`fpl.html`)**: Matematisk optimaliseringsverktøy for Fantasy Premier League med terminlisteberegning og spilleranalyser.
 * **[Endringslogg](https://ranheimkraft.no/changelog.html) (`changelog.html`)**: Fullstendig tidslinje over versjoner, forbedringer og funksjoner.
 * **Vipps Boks (`assets/vipps.js`)**: Frivillig støttefunksjon basert på Vipps Boks for privatpersoner (boksnummer `3153MT`).
 * **Feilrapportering (`assets/feedback.js`)**: Spam-sikker og serverløs feilrapporterings-modal via Web3Forms med automatisk feilsøkingsinfo.
-* **Auto-Sync (`.github/workflows/sync-subprojects.yml` & `scripts/sync_subprojects.py`)**: Automatisk skysynkronisering mot oppstrømsrepoer (Quiz-Kraft, QR-Kraft, Kraft-Tabell-tips, TRD-Live og Kraft-Fryer) hver 3. time, ved ett klikk, eller via `repository_dispatch` (f.eks. `fryer-updated`). Kjør ett prosjekt lokalt med `python scripts/sync_subprojects.py --project fryer`.
+* **Auto-Sync (`.github/workflows/sync-subprojects.yml` & `scripts/sync_subprojects.py`)**: Automatisk skysynkronisering mot oppstrømsrepoer (Quiz-Kraft, QR-Kraft, Kraft-Tabell-tips, TRD-Live, Kraft-Fryer og Kraft-Skatt) hver 3. time, ved ett klikk, eller via `repository_dispatch` (f.eks. `fryer-updated` eller `skatt-updated`). Kjør ett prosjekt lokalt med `python scripts/sync_subprojects.py --project fryer`.
 
 ---
 
@@ -64,8 +65,10 @@ ranheimkraft.no/
 │   ├── style.css                # Felles stilark og typografi
 │   ├── main.js                  # YouTube Cinema API og mediespiller
 │   └── vipps.js                 # Sentral Vipps Boks-komponent
+├── maler/nytt-prosjekt/         # Startfiler for nye verktøy (CLAUDE.md, .gitignore m.fl.)
 ├── scripts/
 │   └── sync_subprojects.py      # Synkroniseringsmotor for underprosjekter
+├── skatt/                       # Kraft Lønn og Skatt (synket fra Kraft-Skatt, gren build)
 ├── changelog.html               # Endringslogg (Swiss Kinetic)
 ├── eliteserien.html             # Eliteserien Fantasy Hub
 ├── fpl.html                     # Premier League FPL Hub
@@ -90,6 +93,10 @@ python -m http.server 8000
 ```
 
 Åpne [http://localhost:8000](http://localhost:8000) i nettleseren.
+
+### Nytt verktøy-prosjekt
+
+Startfiler (`CLAUDE.md` med arbeidsregler, `.gitignore`, `.gitattributes` og `CHANGELOG.md`) ligger i [`maler/nytt-prosjekt/`](maler/nytt-prosjekt/). Se README-en der for hvordan de brukes.
 
 ### CSS for hovednettsiden
 

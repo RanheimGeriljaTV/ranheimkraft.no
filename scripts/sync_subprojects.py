@@ -394,20 +394,21 @@ def sync_trd_events(root_dir):
         shutil.rmtree(temp_dir, ignore_errors=True)
 
 
-def sync_kraft_fryer(root_dir):
+def sync_build_branch(root_dir, name, repo, dest_folder, temp_prefix):
     """
-    Kraft-Fryer er en React/Vite-app. Den bygges i sitt eget repo, og de ferdige
-    filene legges i grenen «build». Her kopieres de bare inn, uten byggesteg.
+    Felles synk for Vite-apper (Kraft-Fryer, Kraft-Skatt m.fl.). Appen bygges i sitt
+    eget repo, og de ferdige filene legges i grenen «build». Her kopieres de bare inn,
+    uten byggesteg.
     """
     print("\n==================================================")
-    print("🔄 Synkroniserer: Kraft-Fryer (RanheimGeriljaTV/Kraft-Fryer, gren build)")
+    print(f"🔄 Synkroniserer: {name} (RanheimGeriljaTV/{repo}, gren build)")
     print("==================================================")
-    temp_dir = tempfile.mkdtemp(prefix="sync_fryer_")
-    dst_fryer = os.path.join(root_dir, "airfryer")
-    staging = dst_fryer + ".ny"
+    temp_dir = tempfile.mkdtemp(prefix=temp_prefix)
+    dst = os.path.join(root_dir, dest_folder)
+    staging = dst + ".ny"
     try:
         cmd = ["git", "clone", "--depth", "1", "--branch", "build",
-               "https://github.com/RanheimGeriljaTV/Kraft-Fryer.git", temp_dir]
+               f"https://github.com/RanheimGeriljaTV/{repo}.git", temp_dir]
         subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
         if not os.path.exists(os.path.join(temp_dir, "index.html")):
@@ -427,24 +428,32 @@ def sync_kraft_fryer(root_dir):
         with open(html_path, "w", encoding="utf-8") as f:
             f.write(html)
 
-        if os.path.exists(dst_fryer):
-            shutil.rmtree(dst_fryer)
-        os.rename(staging, dst_fryer)
+        if os.path.exists(dst):
+            shutil.rmtree(dst)
+        os.rename(staging, dst)
 
-        count = sum(len(files) for _, _, files in os.walk(dst_fryer))
-        print(f"  ✓ {count} filer -> airfryer/ (med Umami)")
-        print("✅ Kraft-Fryer synkronisert.")
+        count = sum(len(files) for _, _, files in os.walk(dst))
+        print(f"  ✓ {count} filer -> {dest_folder}/ (med Umami)")
+        print(f"✅ {name} synkronisert.")
 
     except Exception as e:
-        print(f"❌ Feil ved synkronisering av Kraft-Fryer: {e}")
+        print(f"❌ Feil ved synkronisering av {name}: {e}")
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
         shutil.rmtree(staging, ignore_errors=True)
 
 
+def sync_kraft_fryer(root_dir):
+    sync_build_branch(root_dir, "Kraft-Fryer", "Kraft-Fryer", "airfryer", "sync_fryer_")
+
+
+def sync_kraft_skatt(root_dir):
+    sync_build_branch(root_dir, "Kraft Lønn og Skatt", "Kraft-Skatt", "skatt", "sync_skatt_")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Synkroniser subprosjekter for ranheimkraft.no")
-    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell', 'fryer' eller 'all')")
+    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell', 'fryer', 'skatt' eller 'all')")
     args = parser.parse_args()
 
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -466,6 +475,9 @@ def main():
 
     if target in ("all", "fryer", "airfryer", "kraft-fryer"):
         sync_kraft_fryer(root_dir)
+
+    if target in ("all", "skatt", "kraft-skatt", "lonn"):
+        sync_kraft_skatt(root_dir)
 
     if target in ("all", "news", "nyheter"):
         sync_ranheim_news(root_dir)

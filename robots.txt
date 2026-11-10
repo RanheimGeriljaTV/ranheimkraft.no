@@ -5,6 +5,7 @@ User-agent: *
 Allow: /
 Disallow: /scripts/
 Disallow: /src/
+Disallow: /maler/
 
 # Aggressive AI-skrapere og bulk-crawlere (blokkeres for a spare ressurser)
 User-agent: GPTBot

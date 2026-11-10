@@ -23,6 +23,7 @@
     { href: 'tabell/', label: 'Tabell Kraft', color: 'text-sky-400', event: 'header_tabell_click' },
     { href: 'events/', label: 'TRD Events', color: 'text-emerald-400', event: 'header_events_click' },
     { href: 'airfryer/', label: 'Kraft-Fryer', color: 'text-orange-400', event: 'header_fryer_click' },
+    { href: 'skatt/', label: 'Lønn og Skatt', color: 'text-violet-400', event: 'header_skatt_click' },
     { href: 'galleri.html', label: 'Bildegalleri', color: '', event: 'header_galleri_click', page: 'galleri' }
   ];
 

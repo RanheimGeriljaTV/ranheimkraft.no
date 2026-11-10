@@ -6,6 +6,19 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.11.0] - 2026-11-10
+
+### Lagt til
+- **Kraft Lønn og Skatt (`skatt/`)**: Ny lønns-, skatte-, gjelds- og feriepengekalkulator på [ranheimkraft.no/skatt/](https://ranheimkraft.no/skatt/). Appen bygges i [RanheimGeriljaTV/Kraft-Skatt](https://github.com/RanheimGeriljaTV/Kraft-Skatt) og synkes inn fra grenen `build`.
+- **Kort «06 / Kraft Lønn og Skatt»** på forsiden og **menylenke** «Lønn og Skatt» i `assets/layout.js`, med fiolett aksentfarge.
+- **Synk av Kraft-Skatt**: Ny `sync_kraft_skatt()` i `scripts/sync_subprojects.py`. Kjør med `--project skatt`. `skatt-updated` er lagt til som `repository_dispatch`-type i Auto-Sync.
+- **Mal for nye prosjekter (`maler/nytt-prosjekt/`)**: `CLAUDE.md` med arbeidsregler, `.gitignore`, `.gitattributes` og `CHANGELOG.md`, med bruksanvisning i egen README.
+- `https://ranheimkraft.no/skatt/` i `sitemap.xml`, og `Disallow: /maler/` i `robots.txt`.
+
+### Endret & Forbedret
+- **Felles synk for Vite-apper**: `sync_build_branch()` gjør jobben for både Kraft-Fryer og Kraft-Skatt, så neste app med `build`-gren bare trenger én linje.
+- **Forsiden** viser verktøyene i tre kolonner på store skjermer (to rader med tre), og beskrivelsen nevner Kraft Lønn og Skatt.
+
 ## [2.10.2] - 2026-11-10
 
 ### Rettet
