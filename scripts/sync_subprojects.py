@@ -18,6 +18,20 @@ if hasattr(sys.stdout, 'reconfigure'):
 if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8')
 
+# Umami-ID for ranheimkraft.no. Brukes av alle synkede verktøy, så besøkene telles
+# sammen med resten av nettsiden. Den gamle verktøy-ID-en (7618ae03-…) gir 404
+# hos Umami (november 2026) og skal ikke brukes.
+UMAMI_WEBSITE_ID = "72428774-6e80-43be-a634-be18d6c2ff20"
+UMAMI_TAG = ('<script defer src="https://cloud.umami.is/script.js" '
+             f'data-website-id="{UMAMI_WEBSITE_ID}"></script>')
+
+
+def ensure_umami(html):
+    """Legger inn Umami med riktig ID, eller retter ID-en hvis oppstrøms har en annen."""
+    if "cloud.umami.is" in html:
+        return re.sub(r'data-website-id="[^"]+"', f'data-website-id="{UMAMI_WEBSITE_ID}"', html)
+    return html.replace("</head>", f"  <!-- Umami Analytics -->\n  {UMAMI_TAG}\n</head>", 1)
+
 
 def sync_quiz_kraft(root_dir):
     print("\n==================================================")
@@ -257,9 +271,7 @@ def sync_tabell_kraft(root_dir):
                 html = f.read()
 
             # Umami analytics
-            if "cloud.umami.is" not in html:
-                umami_tag = '\n  <!-- Umami Analytics -->\n  <script defer src="https://cloud.umami.is/script.js" data-website-id="7618ae03-9bb8-4228-87cc-14ec10f0fcf0"></script>'
-                html = html.replace('</head>', f'{umami_tag}\n</head>')
+            html = ensure_umami(html)
 
             dst_html = os.path.join(dst_tabell, "index.html")
             with open(dst_html, "w", encoding="utf-8") as f:
@@ -361,8 +373,7 @@ def sync_trd_events(root_dir):
                 html = f.read()
 
             # Umami analytics
-            if "7618ae03-9bb8-4228-87cc-14ec10f0fcf0" not in html:
-                html = re.sub(r'data-website-id="[^"]+"', 'data-website-id="7618ae03-9bb8-4228-87cc-14ec10f0fcf0"', html)
+            html = ensure_umami(html)
 
             # Relativ navigasjon
             html = html.replace('href="https://ranheimkraft.no"', 'href="../index.html"')
@@ -408,16 +419,11 @@ def sync_kraft_fryer(root_dir):
         shutil.rmtree(staging, ignore_errors=True)
         shutil.copytree(temp_dir, staging, ignore=shutil.ignore_patterns(".git"))
 
-        # Umami Analytics med hovedsidens ID. Verktøy-ID-en til Tabell Kraft og
-        # TRD Events (7618ae03-…) gir 404 hos Umami per november 2026.
+        # Umami Analytics (felles ID, se UMAMI_WEBSITE_ID øverst)
         html_path = os.path.join(staging, "index.html")
         with open(html_path, "r", encoding="utf-8") as f:
             html = f.read()
-        if "cloud.umami.is" not in html:
-            umami_tag = ('  <!-- Umami Analytics -->\n'
-                         '    <script defer src="https://cloud.umami.is/script.js" '
-                         'data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>\n  ')
-            html = html.replace("</head>", f"{umami_tag}</head>", 1)
+        html = ensure_umami(html)
         with open(html_path, "w", encoding="utf-8") as f:
             f.write(html)
 

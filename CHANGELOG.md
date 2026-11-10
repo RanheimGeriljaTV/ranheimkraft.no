@@ -6,6 +6,14 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.10.2] - 2026-11-10
+
+### Rettet
+- **Statistikk for Tabell Kraft og TRD Events**: `tabell/index.html` og `events/index.html` bruker nå hovedsidens Umami-ID. Den gamle verktøy-ID-en (`7618ae03-…`) ga 404 hos Umami, så besøkene ble ikke telt.
+
+### Endret & Forbedret
+- **Én Umami-ID i synk-skriptet**: `UMAMI_WEBSITE_ID` og `ensure_umami()` øverst i `scripts/sync_subprojects.py` brukes for Tabell Kraft, TRD Events og Kraft-Fryer. Funksjonen legger inn skriptet hvis det mangler, og retter ID-en hvis oppstrømsrepoet har en annen, så feilen ikke kommer tilbake ved neste synk.
+
 ## [2.10.1] - 2026-11-10
 
 ### Rettet
