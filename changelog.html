@@ -7,6 +7,20 @@
   <meta name="theme-color" content="#08080a">
   <title>Changelog // Ranheim Kraft</title>
   <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+  <meta name="description" content="Endringslogg for ranheimkraft.no – alle versjoner, nye funksjoner og forbedringer.">
+  <link rel="canonical" href="https://ranheimkraft.no/changelog.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ranheim Kraft">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:title" content="Changelog // Ranheim Kraft">
+  <meta property="og:description" content="Endringslogg for ranheimkraft.no – alle versjoner, nye funksjoner og forbedringer.">
+  <meta property="og:url" content="https://ranheimkraft.no/changelog.html">
+  <meta property="og:image" content="https://ranheimkraft.no/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ranheim Kraft – isbjørnen på en tømmerstokk">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   
   <!-- Umami Analytics (Privacy-friendly & Cookieless) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>
@@ -16,30 +30,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            syne: ['Syne', 'sans-serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['monospace']
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Tailwind CSS (bygget lokalt: npm run build:css) -->
+  <link rel="stylesheet" href="assets/site.css">
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="assets/style.css">
-  <style>
-    body {
-      background-color: #08080a;
-    }
-  </style>
 </head>
 
 <body class="text-zinc-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-white selection:text-black">
@@ -47,26 +42,7 @@
   <!-- Main Container -->
   <div class="max-w-5xl mx-auto px-4 sm:px-8 pt-6 pb-20 flex flex-col min-h-screen space-y-10" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Minimalist Bar -->
-    <nav class="flex items-center justify-between pb-5 border-b border-white/10 text-xs font-mono">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="flex items-center gap-2 text-zinc-400 hover:text-white transition group">
-          <span class="group-hover:-translate-x-0.5 transition-transform">&larr;</span>
-          <span class="text-white font-bold tracking-wider font-syne uppercase">Ranheim Kraft</span>
-        </a>
-      </div>
-      <div class="flex items-center gap-3 sm:gap-5 text-zinc-400">
-        <a href="quiz.html" class="text-amber-400 hover:text-white transition font-medium">Quiz Kraft</a>
-        <a href="qr.html" class="text-cyan-400 hover:text-white transition font-medium">QR Kraft</a>
-        <a href="tabell/" class="text-sky-400 hover:text-white transition font-medium">Tabell Kraft</a>
-        <a href="events/" class="text-emerald-400 hover:text-white transition font-medium">TRD Events</a>
-        <a href="index.html" class="hover:text-white transition">Hovedside</a>
-        <button type="button" onclick="openFeedbackModal()" class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400 hover:text-white"><span>🐛</span> <span>Rapporter feil</span></button>
-        <span>&bull;</span>
-        <a href="galleri.html" class="hover:text-white transition">Bildegalleri</a>
-        <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition hidden md:inline">GitHub &rarr;</a>
-      </div>
-    </nav>
+    <script src="assets/layout.js" data-part="nav" data-page="changelog"></script>
 
     <!-- Page Title & Header -->
     <header class="pt-2 sm:pt-4 pb-8 border-b border-white/10 space-y-5">
@@ -84,7 +60,8 @@
 
       <!-- Quick Jump Filter Badges -->
       <div class="flex items-center gap-2 pt-2 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-        <a href="#v2.8.4" class="shrink-0 px-3 py-1 rounded-full bg-white text-black text-xs font-mono font-bold hover:bg-zinc-200 transition">v2.8.4 (Nyest)</a>
+        <a href="#v2.9.0" class="shrink-0 px-3 py-1 rounded-full bg-white text-black text-xs font-mono font-bold hover:bg-zinc-200 transition">v2.9.0 (Nyest)</a>
+        <a href="#v2.8.4" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.8.4</a>
         <a href="#v2.8.3" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.8.3</a>
         <a href="#v2.8.2" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.8.2</a>
         <a href="#v2.8.1" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.8.1</a>
@@ -124,6 +101,68 @@
     <!-- Timeline Entries -->
     <main class="space-y-6 sm:space-y-8 flex-grow">
 
+      <!-- ENTRY: v2.9.0 -->
+      <article id="v2.9.0" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+              <span>v2.9.0</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
+                Ytelse, SEO &amp; Tilgjengelighet &bull; Nyest
+              </span>
+            </span>
+          </div>
+          <div class="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>10. november 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>⚡</span>
+              <span>Raskere sider</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Tailwind bygges nå til én liten CSS-fil (ca. 33 KB) i stedet for å kjøres fra CDN i nettleseren. Ingen blinking før stilene er på plass.</li>
+              <li>Isbjørnen er konvertert til WebP: ca. 20 KB i stedet for 730 KB, og den sovende bjørnen forhåndslastes.</li>
+            </ul>
+          </div>
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>🔗</span>
+              <span>Bedre deling og søk</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Beskrivelse, Open Graph-tagger og eget delingsbilde, så lenker får forhåndsvisning i Messenger, Facebook og Slack.</li>
+              <li>Ny <code>sitemap.xml</code> og <code>apple-touch-icon</code>.</li>
+            </ul>
+          </div>
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>♿</span>
+              <span>Tilgjengelighet & opprydding</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Felles meny og bunntekst på forsiden, galleriet og changelog. Menyen kan nå sveipes på mobil overalt.</li>
+              <li>Tastaturstyring og fokusfelle i galleriet, beskrivende knappetekster, og nyhetsstripen står stille ved «redusert bevegelse».</li>
+              <li>Utgråtte Eliteserien- og Premier League-kort er tatt ut mens de er under revisjon, og ubrukt kode er fjernet.</li>
+            </ul>
+          </div>
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>🛡️</span>
+              <span>Sikkerhet</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Nyhetsstripen og galleriet viser tekst fra eksterne kilder uten å tolke den som HTML, og stripen godtar bare https-lenker.</li>
+              <li>E-postadressen er fjernet fra menyen og bunnteksten.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
       <!-- ENTRY: v2.8.4 -->
       <article id="v2.8.4" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
@@ -131,7 +170,7 @@
             <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
               <span>v2.8.4</span>
               <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
-                Video Autoplay &bull; Nyest
+                Video Autoplay
               </span>
             </span>
           </div>
@@ -2487,23 +2526,10 @@
     <!-- VIPPS STØTTE-KOMPONENT -->
     <div id="vipps-widget"></div>
 
-    <!-- Minimalist Footer -->
-    <footer class="mt-auto pt-8 border-t border-white/10 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-3" style="padding-bottom: env(safe-area-inset-bottom);">
-      <div>&copy; <span id="year"></span> Ranheim Kraft &bull; All rights reserved.</div>
-      <div class="flex items-center gap-4">
-        <a href="index.html" class="hover:text-white transition">Hovedside</a>
-        <span>&bull;</span>
-        <a href="galleri.html" class="hover:text-white transition">Bildegalleri</a>
-        <span>&bull;</span>
-        <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
-      </div>
-    </footer>
+    <script src="assets/layout.js" data-part="footer" data-page="changelog"></script>
 
   </div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
   <script defer src="assets/feedback.js"></script>
   <script defer src="assets/vipps.js"></script>
 </body>

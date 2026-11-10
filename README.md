@@ -88,3 +88,14 @@ python -m http.server 8000
 ```
 
 Åpne [http://localhost:8000](http://localhost:8000) i nettleseren.
+
+### CSS for hovednettsiden
+
+Forsiden, galleriet og changelog bruker en ferdigbygd Tailwind-fil (`assets/site.css`). Etter endringer i Tailwind-klasser i `index.html`, `galleri.html`, `changelog.html` eller `assets/*.js`:
+
+```bash
+npm install
+npm run build:css
+```
+
+Commit den oppdaterte `assets/site.css`. Meny og bunntekst for de tre sidene ligger i `assets/layout.js`.

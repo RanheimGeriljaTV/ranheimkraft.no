@@ -4,6 +4,7 @@
 User-agent: *
 Allow: /
 Disallow: /scripts/
+Disallow: /src/
 
 # Aggressive AI-skrapere og bulk-crawlere (blokkeres for a spare ressurser)
 User-agent: GPTBot
@@ -20,3 +21,5 @@ Disallow: /
 
 User-agent: anthropic-ai
 Disallow: /
+
+Sitemap: https://ranheimkraft.no/sitemap.xml

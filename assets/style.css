@@ -1,13 +1,7 @@
 /**
  * Ranheim Kraft – Global & Component Styles
- * Shared across index.html, galleri.html, and changelog.html
+ * Shared across index.html, galleri.html, changelog.html and qr.html
  */
-
-/* 1. Lightweight Comic Pattern Overlay - Low Opacity, Zero Lag */
-.comic-halftone {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
 
 /* 2. Anamorphic Lens Flare Line */
 .anamorphic-streak {
@@ -58,28 +52,6 @@
     transform: none;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   }
-}
-
-/* 4. Comic Sticker & Graffiti Button Styles */
-.comic-sticker {
-  box-shadow: 3px 3px 0px #000;
-  transition: transform 0.2s ease;
-}
-.comic-sticker:hover {
-  transform: scale(1.06) rotate(-1deg);
-}
-
-.graffiti-btn {
-  box-shadow: 3px 3px 0px #000;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.graffiti-btn:hover {
-  transform: scale(1.03) rotate(-0.5deg);
-  box-shadow: 4px 4px 0px #000;
-}
-.graffiti-btn:active {
-  transform: scale(0.98);
-  box-shadow: 2px 2px 0px #000;
 }
 
 /* 5. Custom Scrollbar */
@@ -141,9 +113,23 @@
   }
 }
 
+/* Redusert bevegelse: stripen står stille og kan sveipes/skrolles manuelt */
 @media (prefers-reduced-motion: reduce) {
   .ticker-content {
-    animation-duration: 34s;
+    animation: none;
+  }
+  .ticker-track-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .ticker-track-wrap::-webkit-scrollbar {
+    display: none;
+  }
+  .ticker-content [aria-hidden="true"] {
+    display: none;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }
 
@@ -156,49 +142,3 @@ a, button {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* -------------------------------------------------------------------------
-   9. SUBTLE DESKTOP CARD TILT & SPOTLIGHT (No Gyroscope, Clean & Calm)
-   ------------------------------------------------------------------------- */
-@media (hover: hover) and (pointer: fine) {
-  #projects {
-    perspective: 1600px;
-  }
-
-  .bento-tile {
-    position: relative;
-    transform-style: preserve-3d;
-    transform: perspective(1600px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0);
-    transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease, border-color 0.25s ease;
-    will-change: transform;
-  }
-
-  .bento-tile:hover {
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
-  }
-
-  /* Subtle spotlight reflection on hover */
-  .holo-foil {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: var(--holo-opacity, 0);
-    transition: opacity 0.3s ease;
-    mix-blend-mode: overlay;
-    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 30%, transparent 65%);
-    z-index: 25;
-  }
-}
-
-/* Touch devices & mobile: Completely static, standard fast layout */
-@media (hover: none), (pointer: coarse) {
-  #projects {
-    perspective: none;
-  }
-  .bento-tile {
-    transform: none !important;
-  }
-  .holo-foil {
-    display: none !important;
-  }
-}

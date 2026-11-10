@@ -1,13 +1,18 @@
 /**
  * Ranheim Kraft – Main Script
- * Handles YouTube Cinema Player & Live Ranheim Fotball RSS News Ticker
+ * Handles YouTube Cinema Player, mascot hover & Live Ranheim Fotball RSS News Ticker
  */
 
-// 1. Dynamic Current Year
-document.addEventListener('DOMContentLoaded', () => {
-  const yr = document.getElementById('year');
-  if (yr) yr.textContent = new Date().getFullYear();
-});
+// 1. Mascot: sleeping bear on hover (preloaded so it doesn't flicker)
+(function initMascot() {
+  const bear = document.getElementById('mascot-bear');
+  if (!bear || !bear.dataset.sleepSrc) return;
+  const awakeSrc = bear.getAttribute('src');
+  const sleepSrc = bear.dataset.sleepSrc;
+  new Image().src = sleepSrc;
+  bear.addEventListener('mouseenter', () => { bear.src = sleepSrc; });
+  bear.addEventListener('mouseleave', () => { bear.src = awakeSrc; });
+})();
 
 // 2. Ranheim Gerilja TV Archive
 const GERILJA_VIDEOS = [
@@ -74,6 +79,7 @@ function toggleSound(e) {
   if (e) e.stopPropagation();
   if (!ytPlayer) return;
 
+  const btn = document.getElementById('sound-toggle');
   const icon = document.getElementById('sound-icon');
   const text = document.getElementById('sound-text');
 
@@ -88,6 +94,11 @@ function toggleSound(e) {
     isSoundOn = false;
     if (icon) icon.textContent = '🔇';
     if (text) text.textContent = 'Slå på lyd';
+  }
+
+  if (btn) {
+    btn.setAttribute('aria-pressed', String(isSoundOn));
+    btn.setAttribute('aria-label', isSoundOn ? 'Slå av lyd' : 'Slå på lyd');
   }
 }
 
@@ -119,10 +130,73 @@ function updateVideoDetails() {
 updateVideoDetails();
 
 // 3. Dynamic Live News Fetcher (Ranheim Fotball) - Real-time RSS with fallback
-async function loadLiveNews() {
-  let items = null;
 
-  // 1. Live real-time RSS fetch via high-speed reliable RSS-to-JSON bridge
+// Only accept plain https links (blocks javascript:, data: etc. from the external feed)
+function safeHttpsUrl(raw) {
+  try {
+    const url = new URL(String(raw || '').trim());
+    return url.protocol === 'https:' ? url.href : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+const TICKER_ARROW_PATH = 'M14 5l7 7m0 0l-7 7m7-7H3';
+
+// Builds one ticker link with DOM APIs (no innerHTML), so feed text is never parsed as HTML
+function buildTickerItem(item, isDuplicate) {
+  const a = document.createElement('a');
+  a.href = item.link;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.className = 'inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem';
+  if (isDuplicate) {
+    // The second copy only exists for the seamless loop: hide it from screen readers and tab order
+    a.setAttribute('aria-hidden', 'true');
+    a.tabIndex = -1;
+  }
+
+  const bullet = document.createElement('span');
+  bullet.className = 'text-cyan-400 font-black text-xs sm:text-sm';
+  bullet.setAttribute('aria-hidden', 'true');
+  bullet.textContent = '•';
+
+  const title = document.createElement('span');
+  title.className = 'hover:underline';
+  title.textContent = item.title;
+
+  const svgNs = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNs, 'svg');
+  svg.setAttribute('class', 'w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS(svgNs, 'path');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('stroke-linejoin', 'round');
+  path.setAttribute('stroke-width', '2');
+  path.setAttribute('d', TICKER_ARROW_PATH);
+  svg.appendChild(path);
+
+  a.append(bullet, title, svg);
+  return a;
+}
+
+function normalizeNewsItems(list) {
+  if (!Array.isArray(list)) return [];
+  return list
+    .map(it => ({
+      title: String((it && it.title) || '').trim(),
+      link: safeHttpsUrl(it && it.link)
+    }))
+    .filter(it => it.title && it.link);
+}
+
+async function loadLiveNews() {
+  let items = [];
+
+  // 1. Live real-time RSS fetch via RSS-to-JSON bridge
   try {
     const ctrl = new AbortController();
     const timeoutId = setTimeout(() => ctrl.abort(), 4000);
@@ -133,12 +207,8 @@ async function loadLiveNews() {
 
     if (res.ok) {
       const data = await res.json();
-      if (data && data.status === 'ok' && Array.isArray(data.items) && data.items.length > 0) {
-        items = data.items.map(it => ({
-          title: (it.title || '').trim(),
-          link: (it.link || '').trim(),
-          pubDate: it.pubDate || ''
-        })).filter(it => it.title && it.link);
+      if (data && data.status === 'ok') {
+        items = normalizeNewsItems(data.items);
       }
     }
   } catch (e) {
@@ -146,88 +216,26 @@ async function loadLiveNews() {
   }
 
   // 2. Fallback to cached assets/news.json if live fetch was unavailable
-  if (!items || items.length === 0) {
+  if (items.length === 0) {
     try {
       const res = await fetch('assets/news.json?v=' + Date.now());
       if (res.ok) {
-        items = await res.json();
+        items = normalizeNewsItems(await res.json());
       }
     } catch (e) {}
   }
 
-  // 3. Render ticker items (Bruk de 8 ferskeste og frisk, responsiv hastighet)
-  if (items && Array.isArray(items) && items.length > 0) {
-    const track = document.getElementById('ticker-track');
-    if (!track) return;
+  // 3. Render ticker items (de 8 ferskeste, duplisert for sømløs loop)
+  if (items.length === 0) return;
+  const track = document.getElementById('ticker-track');
+  if (!track) return;
 
-    // Bruk de 8 ferskeste nyhetene for en ren og relevant nyhetsstripe
-    const freshNews = items.slice(0, 8);
-    const renderList = [...freshNews, ...freshNews];
-    track.innerHTML = renderList.map(item => `
-      <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 sm:gap-2.5 py-0.5 sm:py-1 text-slate-100 hover:text-cyan-300 transition-colors text-[11px] sm:text-xs md:text-sm font-medium tracking-wide group/tickeritem">
-        <span class="text-cyan-400 font-black text-xs sm:text-sm">&bull;</span>
-        <span class="hover:underline">${item.title}</span>
-        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 group-hover/tickeritem:translate-x-0.5 group-hover/tickeritem:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </a>
-    `).join('');
-
-    // Rask og frisk rotasjon på ca. 30 sekunder
-    requestAnimationFrame(() => {
-      const duration = 30;
-      track.style.animationDuration = `${duration}s`;
-    });
-  }
+  const freshNews = items.slice(0, 8);
+  const fragment = document.createDocumentFragment();
+  freshNews.forEach(item => fragment.appendChild(buildTickerItem(item, false)));
+  freshNews.forEach(item => fragment.appendChild(buildTickerItem(item, true)));
+  track.replaceChildren(fragment);
 }
 
 // Start fetching live news immediately
 loadLiveNews();
-
-// 4. Desktop-Only Subtle Card Hover Glow (No Gyroscope, Touch-Safe)
-function initCardHover() {
-  // Completely disable on mobile and touch devices
-  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    return;
-  }
-
-  const cards = document.querySelectorAll('.bento-tile');
-  if (!cards.length) return;
-
-  // Insert subtle light reflection sheen into each card
-  cards.forEach(card => {
-    if (!card.querySelector('.holo-foil')) {
-      const foil = document.createElement('div');
-      foil.className = 'holo-foil';
-      card.appendChild(foil);
-    }
-  });
-
-  // Desktop Mouse Move: Very subtle, smooth spotlight reflection (no aggressive 3D tilt)
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      const maxTilt = 3.5;
-      const rotateX = -(y - 0.5) * 2 * maxTilt;
-      const rotateY = (x - 0.5) * 2 * maxTilt;
-
-      card.style.setProperty('--tilt-x', `${rotateX.toFixed(2)}deg`);
-      card.style.setProperty('--tilt-y', `${rotateY.toFixed(2)}deg`);
-      card.style.setProperty('--glare-x', `${(x * 100).toFixed(1)}%`);
-      card.style.setProperty('--glare-y', `${(y * 100).toFixed(1)}%`);
-      card.style.setProperty('--holo-opacity', '1');
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--tilt-x', '0deg');
-      card.style.setProperty('--tilt-y', '0deg');
-      card.style.setProperty('--holo-opacity', '0');
-    });
-  });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initCardHover);
-} else {
-  initCardHover();
-}

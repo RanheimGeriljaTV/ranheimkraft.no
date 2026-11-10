@@ -7,6 +7,20 @@
   <meta name="theme-color" content="#08080a">
   <title>Bildegalleri // Ranheim Kraft</title>
   <link rel="icon" type="image/x-icon" href="assets/polarICON.ico">
+  <meta name="description" content="Bildegallerier fra fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning og hele mapper kan lastes ned samlet.">
+  <link rel="canonical" href="https://ranheimkraft.no/galleri.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ranheim Kraft">
+  <meta property="og:locale" content="nb_NO">
+  <meta property="og:title" content="Bildegalleri // Ranheim Kraft">
+  <meta property="og:description" content="Bildegallerier fra fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning og hele mapper kan lastes ned samlet.">
+  <meta property="og:url" content="https://ranheimkraft.no/galleri.html">
+  <meta property="og:image" content="https://ranheimkraft.no/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ranheim Kraft – isbjørnen på en tømmerstokk">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   
   <!-- Umami Analytics (Privacy-friendly & Cookieless) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>
@@ -16,30 +30,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            syne: ['Syne', 'sans-serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['monospace']
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Tailwind CSS (bygget lokalt: npm run build:css) -->
+  <link rel="stylesheet" href="assets/site.css">
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="assets/style.css">
-  <style>
-    body {
-      background-color: #08080a;
-    }
-  </style>
 </head>
 
 <body class="text-zinc-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-white selection:text-black">
@@ -47,25 +42,7 @@
   <!-- Main Container -->
   <div class="max-w-6xl mx-auto px-4 sm:px-8 pt-6 pb-20 flex flex-col min-h-screen space-y-10" style="padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right));">
 
-    <!-- Top Minimalist Bar (Mobil-optimalisert) -->
-    <nav class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10 text-xs font-mono">
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="flex items-center gap-2 text-zinc-400 hover:text-white transition group">
-          <span class="group-hover:-translate-x-0.5 transition-transform">&larr;</span>
-          <span class="text-white font-bold tracking-wider font-syne uppercase text-sm">Ranheim Kraft</span>
-        </a>
-      </div>
-      <div class="flex items-center gap-4 sm:gap-5 text-zinc-400 overflow-x-auto no-scrollbar py-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 whitespace-nowrap text-[11px] sm:text-xs">
-        <a href="quiz.html" class="hover:text-white transition">Quiz Kraft</a>
-        <a href="qr.html" class="hover:text-white transition">QR Kraft</a>
-        <a href="tabell/" class="hover:text-white transition">Tabell Kraft</a>
-        <a href="events/" class="hover:text-white transition">TRD Events</a>
-        <a href="index.html" class="hover:text-white transition">Hovedside</a>
-        <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Eliteserien</span>
-        <span class="text-zinc-600 cursor-not-allowed select-none" title="Under revisjon">Premier League</span>
-        <a href="mailto:ksandvin@gmail.com" class="hover:text-white transition hidden sm:inline">Kontakt</a>
-      </div>
-    </nav>
+    <script src="assets/layout.js" data-part="nav" data-page="galleri"></script>
 
     <!-- Page Title & Header -->
     <header class="pt-2 sm:pt-4 pb-8 border-b border-white/10 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
@@ -77,7 +54,7 @@
           BILDE<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-400 to-zinc-600">GALLERI</span>
         </h1>
         <p class="text-zinc-400 text-xs sm:text-sm max-w-xl leading-relaxed pt-1">
-          Passordbeskyttede arrangementsgallerier for fotooppdrag, turer og prosjekter. Bildene vises i full oppløsning rett i nettleseren med mulighet for å laste ned hele mapper samlet i én ZIP-fil.
+          Arrangementsgallerier for fotooppdrag, turer og prosjekter. Låste gallerier åpnes med passord. Bildene vises i full oppløsning rett i nettleseren, og hele mapper kan lastes ned samlet i én ZIP-fil.
         </p>
       </div>
 
@@ -146,31 +123,19 @@
     <!-- VIPPS STØTTE-KOMPONENT -->
     <div id="vipps-widget"></div>
 
-    <!-- Footer -->
-    <footer class="mt-auto pt-8 border-t border-white/10 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-3" style="padding-bottom: env(safe-area-inset-bottom);">
-      <div>&copy; <span id="year"></span> Ranheim Kraft &bull; Passordbeskyttet Google Disk Galleri</div>
-      <div class="flex items-center gap-4">
-        <a href="index.html" class="hover:text-white transition">Hovedside</a>
-        <span>&bull;</span>
-        <button type="button" onclick="openFeedbackModal()" class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400 hover:text-white"><span>🐛</span> <span>Rapporter feil</span></button>
-        <span>&bull;</span>
-        <a href="changelog.html" class="hover:text-white transition">Changelog</a>
-        <span>&bull;</span>
-        <a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>
-      </div>
-    </footer>
+    <script src="assets/layout.js" data-part="footer" data-page="galleri"></script>
 
   </div>
 
   <!-- PASSWORD PROMPT MODAL -->
-  <div id="modal-password" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
+  <div id="modal-password" role="dialog" aria-modal="true" aria-labelledby="modal-password-title" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden">
     <div class="bg-[#0c0c0e] rounded-2xl p-6 sm:p-8 w-full max-w-md border border-white/15 shadow-2xl relative space-y-5">
       <div class="flex items-center justify-between pb-3 border-b border-white/10">
         <div class="space-y-1">
-          <h3 class="text-base font-syne font-bold text-white">Lås opp galleri</h3>
+          <h3 id="modal-password-title" class="text-base font-syne font-bold text-white">Lås opp galleri</h3>
           <p id="modal-gallery-name" class="text-xs text-zinc-400 font-mono truncate max-w-[260px]"></p>
         </div>
-        <button onclick="closePasswordModal()" class="text-zinc-400 hover:text-white p-1 text-2xl leading-none">&times;</button>
+        <button type="button" onclick="closePasswordModal()" aria-label="Lukk" class="text-zinc-400 hover:text-white p-1 text-2xl leading-none">&times;</button>
       </div>
 
       <form onsubmit="submitPassword(event)" class="space-y-4">
@@ -178,7 +143,7 @@
           <label for="input-password" class="block text-xs font-mono text-zinc-300 mb-2">Oppgi passord for dette galleriet:</label>
           <div class="relative">
             <input type="password" id="input-password" autocomplete="current-password" required placeholder="Passord..." class="w-full px-4 py-3 rounded-xl bg-black border border-white/20 focus:border-white focus:outline-none text-white text-sm font-mono placeholder-zinc-600 transition">
-            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs font-mono p-1">👁️</button>
+            <button type="button" onclick="togglePasswordVisibility()" aria-label="Vis eller skjul passord" class="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs font-mono p-1">👁️</button>
           </div>
         </div>
 
@@ -197,7 +162,7 @@
   </div>
 
   <!-- FULLSCREEN LIGHTBOX MODAL -->
-  <div id="lightbox" class="fixed inset-0 z-50 bg-[#000000f0] backdrop-blur-lg flex flex-col justify-between hidden select-none">
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildevisning" class="fixed inset-0 z-50 bg-[#000000f0] backdrop-blur-lg flex flex-col justify-between hidden select-none">
     <!-- Lightbox Top bar -->
     <div class="flex items-center justify-between p-4 z-10 bg-gradient-to-b from-black to-transparent">
       <div class="flex items-center gap-3 text-xs font-mono text-zinc-300">
@@ -209,23 +174,23 @@
           <svg class="w-4 h-4 text-black stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
           <span class="hidden sm:inline">Last ned bilde</span>
         </a>
-        <button onclick="closeLightbox()" class="p-2 text-zinc-400 hover:text-white text-2xl leading-none transition" title="Lukk (Esc)">&times;</button>
+        <button id="lb-close" type="button" onclick="closeLightbox()" aria-label="Lukk bildevisning" class="p-2 text-zinc-400 hover:text-white text-2xl leading-none transition" title="Lukk (Esc)">&times;</button>
       </div>
     </div>
 
     <!-- Image Display Area -->
     <div class="relative flex-1 flex items-center justify-center p-2 sm:p-6 overflow-hidden" onclick="onLightboxBgClick(event)">
       <!-- Prev Button -->
-      <button onclick="prevPhoto(event)" class="absolute left-2 sm:left-6 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition shadow-2xl cursor-pointer" title="Forrige bilde">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      <button type="button" onclick="prevPhoto(event)" aria-label="Forrige bilde" class="absolute left-2 sm:left-6 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition shadow-2xl cursor-pointer" title="Forrige bilde">
+        <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
       </button>
 
       <!-- Center Image -->
       <img id="lb-img" src="" alt="Galleri bilde" referrerpolicy="no-referrer" class="max-h-[82vh] max-w-[94vw] object-contain rounded-xl shadow-2xl transition-opacity duration-200">
 
       <!-- Next Button -->
-      <button onclick="nextPhoto(event)" class="absolute right-2 sm:right-6 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition shadow-2xl cursor-pointer" title="Neste bilde">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      <button type="button" onclick="nextPhoto(event)" aria-label="Neste bilde" class="absolute right-2 sm:right-6 z-20 w-12 h-12 rounded-full bg-black/70 hover:bg-black border border-white/20 text-white flex items-center justify-center transition shadow-2xl cursor-pointer" title="Neste bilde">
+        <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
       </button>
     </div>
 
@@ -236,7 +201,44 @@
   </div>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Escaper tekst før den settes inn i HTML (titler/filnavn kommer fra regneark og Google Disk)
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // Fokushåndtering for dialoger (tastatur og skjermleser)
+    let lastFocusedEl = null;
+
+    function rememberFocus() {
+      lastFocusedEl = document.activeElement;
+    }
+
+    function restoreFocus() {
+      if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus();
+      lastFocusedEl = null;
+    }
+
+    // Holder Tab-fokus inne i en åpen dialog
+    function trapFocus(e, container) {
+      if (e.key !== 'Tab') return;
+      const focusables = Array.from(container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+        .filter(el => el.offsetParent !== null);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
 
     /* =====================================================================
        KONFIGURASJON:
@@ -375,7 +377,16 @@
       list.forEach((g, idx) => {
         const card = document.createElement('article');
         card.className = 'p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/30 transition flex flex-col justify-between cursor-pointer group space-y-5';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `${g.locked ? 'Låst galleri' : 'Åpent galleri'}: ${g.title || ''}`);
         card.onclick = () => requestOpenGallery(g.id);
+        card.onkeydown = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            requestOpenGallery(g.id);
+          }
+        };
 
         card.innerHTML = `
           <div class="space-y-3">
@@ -383,22 +394,22 @@
               <span class="px-2.5 py-1 rounded-full text-[10px] font-mono tracking-wider uppercase font-semibold ${g.locked ? 'bg-amber-400/10 text-amber-300 border border-amber-400/20' : 'bg-emerald-400/10 text-emerald-300 border border-emerald-400/20'}">
                 ${g.locked ? '🔒 Passord' : '🔓 Åpen'}
               </span>
-              <span class="text-xs text-zinc-500 font-mono">${g.date || ''}</span>
+              <span class="text-xs text-zinc-500 font-mono">${escapeHtml(g.date || '')}</span>
             </div>
 
             <h3 class="text-xl font-syne font-bold text-white group-hover:text-cyan-400 transition leading-snug">
-              ${g.title}
+              ${escapeHtml(g.title)}
             </h3>
 
             <p class="text-xs text-zinc-400 leading-relaxed line-clamp-2">
-              ${g.description || 'Klikk for å låse opp og se bildene.'}
+              ${escapeHtml(g.description || 'Klikk for å låse opp og se bildene.')}
             </p>
           </div>
 
           <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono">
             <span class="text-zinc-400 flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-              <span>${g.count ? g.count + ' bilder' : 'Bildegalleri'}</span>
+              <span>${g.count ? escapeHtml(g.count) + ' bilder' : 'Bildegalleri'}</span>
             </span>
 
             <span class="text-white font-bold group-hover:translate-x-1 transition-transform flex items-center gap-1">
@@ -517,6 +528,7 @@
         unlockGallery(galleryId, '');
       } else {
         pendingGalleryId = galleryId;
+        rememberFocus();
         document.getElementById('modal-gallery-name').textContent = g.title;
         document.getElementById('input-password').value = '';
         document.getElementById('modal-password').classList.remove('hidden');
@@ -532,8 +544,11 @@
     }
 
     function closePasswordModal() {
-      document.getElementById('modal-password').classList.add('hidden');
+      const modal = document.getElementById('modal-password');
+      const wasOpen = !modal.classList.contains('hidden');
+      modal.classList.add('hidden');
       pendingGalleryId = null;
+      if (wasOpen) restoreFocus();
     }
 
     function togglePasswordVisibility() {
@@ -673,13 +688,22 @@
 
       currentPhotos.forEach((photo, idx) => {
         const item = document.createElement('div');
-        item.className = 'group relative aspect-square rounded-xl overflow-hidden bg-black border border-white/10 hover:border-white/40 transition cursor-pointer';
+        item.className = 'group relative aspect-square rounded-xl overflow-hidden bg-black border border-white/10 hover:border-white/40 focus-visible:border-white transition cursor-pointer';
+        item.tabIndex = 0;
+        item.setAttribute('role', 'button');
+        item.setAttribute('aria-label', `Vis ${photo.name || 'bilde'} i stor visning`);
         item.onclick = () => openLightbox(idx);
+        item.onkeydown = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLightbox(idx);
+          }
+        };
 
         item.innerHTML = `
-          <img src="${photo.thumbUrl}" alt="${photo.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=0.2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          <img src="${escapeHtml(photo.thumbUrl)}" alt="${escapeHtml(photo.name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.opacity=0.2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2.5">
-            <span class="text-[11px] font-mono text-white truncate">${photo.name}</span>
+            <span class="text-[11px] font-mono text-white truncate">${escapeHtml(photo.name)}</span>
             <span class="text-[10px] text-cyan-400 font-mono flex items-center gap-1">
               <span>Se forstørret</span> &rarr;
             </span>
@@ -703,13 +727,18 @@
     function openLightbox(index) {
       currentPhotoIndex = index;
       updateLightboxImage();
+      rememberFocus();
       document.getElementById('lightbox').classList.remove('hidden');
       document.body.style.overflow = 'hidden';
+      document.getElementById('lb-close').focus();
     }
 
     function closeLightbox() {
-      document.getElementById('lightbox').classList.add('hidden');
+      const lb = document.getElementById('lightbox');
+      if (lb.classList.contains('hidden')) return;
+      lb.classList.add('hidden');
       document.body.style.overflow = '';
+      restoreFocus();
     }
 
     function updateLightboxImage() {
@@ -756,8 +785,16 @@
 
     // Keyboard navigation
     window.addEventListener('keydown', (e) => {
+      const pwdModal = document.getElementById('modal-password');
+      if (!pwdModal.classList.contains('hidden')) {
+        if (e.key === 'Escape') closePasswordModal();
+        trapFocus(e, pwdModal);
+        return;
+      }
+
       const lb = document.getElementById('lightbox');
       if (lb.classList.contains('hidden')) return;
+      trapFocus(e, lb);
 
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') nextPhoto();

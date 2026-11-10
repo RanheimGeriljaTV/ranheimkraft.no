@@ -6,6 +6,27 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.9.0] - 2026-11-10
+
+### Lagt til
+- **Felles meny og bunntekst (`assets/layout.js`)**: Én kilde for meny og bunntekst på forsiden, galleriet og changelog. Menyen kan sveipes sidelengs på mobil på alle sidene.
+- **Deling og søk**: `meta description`, `canonical`, Open Graph- og Twitter-tagger med nytt delingsbilde (`assets/og-image.png`), `apple-touch-icon`, `sitemap.xml` og `Sitemap`-linje i `robots.txt`.
+- **Byggesteg for CSS (`package.json`, `tailwind.config.js`, `src/site.css`)**: Tailwind bygges til `assets/site.css` (ca. 33 KB) i stedet for å kjøres fra CDN i nettleseren. Kjør `npm run build:css` etter endringer i klasser.
+
+### Endret & Forbedret
+- **Lettere isbjørn**: `logo-320.webp` og `logosove-320.webp` (ca. 20 KB til sammen) erstatter PNG-filene på 730 KB på forsiden. Sovende bjørn forhåndslastes, så den ikke blinker ved hover.
+- **Utgråtte kort fjernet**: Eliteserien og Premier League er tatt ut av forsiden og menyen mens de er under revisjon.
+- **Ærligere galleritekst**: Beskriver at låste gallerier åpnes med passord, i stedet for «passordbeskyttet».
+- **Tilgjengelighet**: Beskrivende `aria-label` på knapper, dialogroller og fokusfelle i passorddialog og bildevisning, tastaturstyring av gallerikort og bilder, og nyhetsstripen står stille ved «redusert bevegelse».
+
+### Sikkerhet
+- **Nyhetsstripen (`assets/main.js`)** bygges nå med DOM-API og `textContent`, og godtar bare `https://`-lenker fra den eksterne RSS-tjenesten.
+- **Galleriet** escaper titler, beskrivelser og filnavn før de vises.
+- **E-postadressen** er fjernet fra menyen og bunnteksten (bruk «Rapporter feil»).
+
+### Fjernet
+- Ubrukt kode: kortvippe-effekten (`initCardHover`, `.bento-tile`, `.holo-foil`) og stilene `comic-halftone`, `comic-sticker` og `graffiti-btn`.
+
 ## [2.8.4] - 2026-11-04
 
 ### Feilrettinger
