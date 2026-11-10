@@ -6,6 +6,14 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.10.1] - 2026-11-10
+
+### Rettet
+- **Statistikk for Kraft-Fryer**: Synken legger nå inn hovedsidens Umami-ID (`72428774-…`). Verktøy-ID-en (`7618ae03-…`) som Tabell Kraft og TRD Events også bruker, gir 404 hos Umami, så besøk ble ikke telt.
+
+### Endret & Forbedret
+- **Kraft-Fryer oppdatert til v1.0.0** i `airfryer/`.
+
 ## [2.10.0] - 2026-11-10
 
 ### Lagt til
