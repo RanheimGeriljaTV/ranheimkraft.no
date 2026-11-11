@@ -27,4 +27,6 @@ Startfiler for et nytt verktøy som skal ligge på ranheimkraft.no.
 
    Claude fyller inn feltene, lager README, git og GitHub-repoet.
 
-4. Når verktøyet er klart for nettsiden: gå til ranheimkraft.no-økten og si «legg ut Kraft-Noe på /noe/».
+4. **Eldre prosjekter** (Quiz, QR, Tabell, Events, Fryer, Skatt) har ikke SEO-reglene. Kopier avsnitt «2c. Synlighet på Google» fra malens `CLAUDE.md` inn i prosjektets `CLAUDE.md`, og si i den økten: «Følg 2c i CLAUDE.md og gjør siden søkevennlig.»
+
+5. Når verktøyet er klart for nettsiden: gå til ranheimkraft.no-økten og si «legg ut Kraft-Noe på /noe/».
