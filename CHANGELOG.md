@@ -11,6 +11,14 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 ### Endret & Forbedret
 - **Auto-Sync (`.github/workflows/sync-subprojects.yml`)**: `actions/checkout@v4` → `@v7` og `actions/setup-python@v5` → `@v7`. De gamle versjonene kjørte på Node.js 20, som GitHub fases ut.
 
+## [2.11.1] - 2026-11-11
+
+### Fjernet
+- **«Siste Nytt»-stripen** med scrollende nyheter fra Ranheim Fotball er fjernet fra forsiden, og alt på siden er flyttet opp. Koden er fjernet: markup i `index.html`, ticker-stilene i `assets/style.css`, nyhetshenteren i `assets/main.js` (inkludert kallet til rss2json), `sync_ranheim_news()` i `scripts/sync_subprojects.py` og `assets/news.json`. Synken skriver ikke lenger nyhetsfilen hver 3. time.
+
+### Rettet
+- `prefers-reduced-motion` slår nå av myk rulling som tiltenkt (regelen lå før den globale `scroll-behavior: smooth` og ble overstyrt).
+
 ## [2.11.0] - 2026-11-10
 
 ### Lagt til

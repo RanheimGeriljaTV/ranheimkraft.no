@@ -78,65 +78,15 @@
   display: none;
 }
 
-/* 7. Live Sports News Ticker Marquee (Swiss Kinetic, rolig og myk) */
-@keyframes ticker-slide {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
-}
-
-.ticker-track-wrap {
-  position: relative;
-  overflow: hidden;
-  flex: 1;
-  min-width: 0;
-  mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
-}
-
-.ticker-content {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: ticker-slide 30s linear infinite; /* Rask rotasjon på ca. 30 sekunder */
-  will-change: transform;
-}
-
-.ticker-container:hover .ticker-content {
-  animation-play-state: paused;
-}
-
-@media (max-width: 640px) {
-  .ticker-content {
-    animation-duration: 26s;
-  }
-  .ticker-container:active .ticker-content {
-    animation-play-state: paused;
-  }
-}
-
-/* Redusert bevegelse: stripen står stille og kan sveipes/skrolles manuelt */
-@media (prefers-reduced-motion: reduce) {
-  .ticker-content {
-    animation: none;
-  }
-  .ticker-track-wrap {
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .ticker-track-wrap::-webkit-scrollbar {
-    display: none;
-  }
-  .ticker-content [aria-hidden="true"] {
-    display: none;
-  }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
 /* 8. Global HTML & Touch Polish */
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 a, button {
   -webkit-tap-highlight-color: transparent;
