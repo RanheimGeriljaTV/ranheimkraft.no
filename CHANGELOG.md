@@ -6,6 +6,11 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.12.1] - 2026-11-11
+
+### Endret & Forbedret
+- **Mer kompakte verktøykort på mobil**: Kortene på forsiden har mindre luft, avstand og tekst under 640 px (ca. 134 px høye mot ca. 190 px før). PC og nettbrett er uendret.
+
 ## [2.12.0] - 2026-11-11
 
 ### Lagt til
