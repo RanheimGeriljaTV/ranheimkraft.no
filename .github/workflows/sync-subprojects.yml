@@ -27,12 +27,12 @@ jobs:
 
     steps:
       - name: 📥 Sjekk ut ranheimkraft.no
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🐍 Sett opp Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 

@@ -6,6 +6,11 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.11.1] - 2026-11-11
+
+### Endret & Forbedret
+- **Auto-Sync (`.github/workflows/sync-subprojects.yml`)**: `actions/checkout@v4` → `@v7` og `actions/setup-python@v5` → `@v7`. De gamle versjonene kjørte på Node.js 20, som GitHub fases ut.
+
 ## [2.11.0] - 2026-11-10
 
 ### Lagt til
