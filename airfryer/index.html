@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#08080a" />
     <meta name="color-scheme" content="dark" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <title>Kraft-Fryer – stekeovn til airfryer | Ranheim Kraft</title>
+    <title>Stekeovn til airfryer: tid og temperatur | Ranheim Kraft</title>
     <meta
       name="description"
-      content="Gratis airfryer-kalkulator: gjør om temperatur og tid fra en stekeovnsoppskrift til airfryer, med hurtigvalg for pommes frites, kylling og laks, og nedtellingsklokke."
+      content="Gratis kalkulator som gjør stekeovnsoppskrift om til airfryer: riktig temperatur og tid, hurtigvalg for pommes frites, kylling og egg og nedtellingsklokke."
     />
     <link rel="canonical" href="https://ranheimkraft.no/airfryer/" />
     <link rel="icon" type="image/x-icon" href="./polarICON.ico" />
@@ -19,16 +19,80 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ranheim Kraft" />
     <meta property="og:locale" content="nb_NO" />
-    <meta property="og:title" content="Kraft-Fryer – stekeovn til airfryer" />
+    <meta property="og:title" content="Stekeovn til airfryer: tid og temperatur" />
     <meta
       property="og:description"
-      content="Gjør om en stekeovnsoppskrift til airfryer på sekunder, med hurtigvalg og nedtellingsklokke."
+      content="Gratis kalkulator som gjør om stekeovnsoppskrift til airfryer på sekunder, med hurtigvalg og nedtellingsklokke."
     />
     <meta property="og:url" content="https://ranheimkraft.no/airfryer/" />
     <meta property="og:image" content="https://ranheimkraft.no/assets/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Strukturerte data (CLAUDE.md 2c). FAQPage-teksten må være lik src/data/faq.ts. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "name": "Kraft-Fryer",
+            "url": "https://ranheimkraft.no/airfryer/",
+            "description": "Gratis kalkulator som gjør stekeovnsoppskrift om til airfryer: riktig temperatur og tid, hurtigvalg for pommes frites, kylling og egg og nedtellingsklokke.",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "inLanguage": "nb",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "NOK" }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Hvordan regner jeg om fra stekeovn til airfryer?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Senk temperaturen med 20 °C for over-/undervarme eller 10 °C for varmluft, og korte tiden med 20 % (10 % ved full kurv). Kalkulatoren gjør dette for deg mens du justerer."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Hvilken temperatur skal jeg bruke i airfryeren når oppskriften sier 200 grader?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Med over-/undervarme blir det 180 °C, og med varmluft 190 °C. Tiden blir ca. 20 % kortere. Sjekk maten litt før tiden er ute."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Hva gjør jeg når oppskriften krever mer enn 220 grader?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "De fleste airfryere går bare til 200 °C. Kalkulatoren kutter da temperaturen til 200 °C og øker tiden for å veie opp, for eksempel ca. 23 % mer tid når oppskriften egentlig tilsier 230 °C."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Hvor lenge skal egg være i airfryeren?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Kokte egg tar 11–13 minutter på 125 °C, testet på Philips Airfryer XL. Kortere tid gir mykere plomme."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Når skal jeg riste kurven eller snu maten?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Halvveis i tiden. Nedtellingsklokken varsler med lyd og vibrasjon når det er tid, og igjen når maten er ferdig."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
 
     <!-- Google Fonts: Syne & Plus Jakarta Sans (som ranheimkraft.no) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,8 +101,8 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-CL0ao-Up.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Dx01f_dm.css">
+    <script type="module" crossorigin src="./assets/index-Dw73s3cm.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Dlfb3_wU.css">
     <!-- Umami Analytics -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="72428774-6e80-43be-a634-be18d6c2ff20"></script>
 </head>
@@ -46,7 +110,9 @@
     <div id="root"></div>
     <noscript>
       <p style="padding: 2rem; color: #e4e4e7; font-family: sans-serif">
-        Kraft-Fryer trenger JavaScript. Slå det på i nettleseren for å bruke kalkulatoren.
+        <strong>Stekeovn til airfryer: tid og temperatur.</strong> Kraft-Fryer gjør om en
+        stekeovnsoppskrift til airfryer: senk temperaturen med 10–20 °C og korte tiden med ca. 20 %.
+        Kalkulatoren trenger JavaScript. Slå det på i nettleseren for å bruke den.
       </p>
     </noscript>
   </body>
