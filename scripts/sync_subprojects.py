@@ -414,9 +414,13 @@ def sync_kraft_skatt(root_dir):
     sync_build_branch(root_dir, "Kraft Lønn og Skatt", "Kraft-Skatt", "skatt", "sync_skatt_")
 
 
+def sync_kraft_promille(root_dir):
+    sync_build_branch(root_dir, "Kraft Promille", "Kraft-Promille", "promille", "sync_promille_")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Synkroniser subprosjekter for ranheimkraft.no")
-    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell', 'fryer', 'skatt' eller 'all')")
+    parser.add_argument("--project", default="all", help="Prosjekt-ID (f.eks. 'quiz', 'qr', 'tabell', 'fryer', 'skatt', 'promille' eller 'all')")
     args = parser.parse_args()
 
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -441,6 +445,9 @@ def main():
 
     if target in ("all", "skatt", "kraft-skatt", "lonn"):
         sync_kraft_skatt(root_dir)
+
+    if target in ("all", "promille", "kraft-promille"):
+        sync_kraft_promille(root_dir)
 
     print("\n🎉 Synkroniseringskjøring fullført!")
 

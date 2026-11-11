@@ -6,6 +6,17 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.12.0] - 2026-11-11
+
+### Lagt til
+- **Kraft Promille (`promille/`)**: Ny promille- og forbrenningskalkulator på [ranheimkraft.no/promille/](https://ranheimkraft.no/promille/). Appen bygges i [RanheimGeriljaTV/Kraft-Promille](https://github.com/RanheimGeriljaTV/Kraft-Promille) og synkes inn fra grenen `build`.
+- **Kort «07 / Kraft Promille»** på forsiden og **menylenke** «Promille» i `assets/layout.js`, med rosa aksentfarge.
+- **Synk av Kraft-Promille**: Ny `sync_kraft_promille()` i `scripts/sync_subprojects.py`. Kjør med `--project promille`. `promille-updated` er lagt til som `repository_dispatch`-type i Auto-Sync.
+- `https://ranheimkraft.no/promille/` i `sitemap.xml`.
+
+### Endret & Forbedret
+- **Forsiden** viser verktøyene i fire kolonner på store skjermer, og beskrivelsen nevner Kraft Promille.
+
 ## [2.11.1] - 2026-11-11
 
 ### Endret & Forbedret
