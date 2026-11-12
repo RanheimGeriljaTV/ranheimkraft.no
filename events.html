@@ -2,9 +2,13 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://ranheimkraft.no/events/">
   <title>Omdirigerer til TRD Events...</title>
+  <!-- Beholder ?query og #anker når gamle lenker sendes videre -->
   <script>
-    window.location.replace('events/' + window.location.search);
+    window.location.replace('events/' + window.location.search + window.location.hash);
   </script>
   <noscript>
     <meta http-equiv="refresh" content="0; url=events/">

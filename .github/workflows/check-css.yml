@@ -1,0 +1,53 @@
+name: 🎨 Sjekk at site.css er bygget
+
+# Hovedsidene (index, galleri, changelog) bruker en ferdigbygd Tailwind-fil, assets/site.css.
+# Glemmer man å bygge på nytt etter å ha endret klasser, mangler stilene på den publiserte siden.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'galleri.html'
+      - 'changelog.html'
+      - 'assets/layout.js'
+      - 'assets/main.js'
+      - 'assets/feedback.js'
+      - 'assets/galleri.js'
+      - 'assets/vipps.js'
+      - 'src/site.css'
+      - 'tailwind.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'assets/site.css'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Bygg CSS og sammenlign
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Sjekk ut
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: 🟢 Sett opp Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: 📦 Installer avhengigheter
+        run: npm ci
+
+      - name: 🏗️ Bygg CSS
+        run: npm run build:css
+
+      - name: 🔍 Er assets/site.css oppdatert?
+        run: |
+          if ! git diff --exit-code --stat assets/site.css; then
+            echo "::error file=assets/site.css::assets/site.css er ikke bygget fra de nyeste klassene. Kjør «npm run build:css» og commit filen."
+            exit 1
+          fi

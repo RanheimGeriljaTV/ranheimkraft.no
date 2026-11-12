@@ -6,6 +6,19 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.13.1] - 2026-11-12
+
+Flere rettinger fra [#1](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/1) og [#2](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/2).
+
+### Rettet
+- **Omdirigeringssidene** (`events.html`, `trd.html`, `trd/`, `tabell.html`, `tipping/`, `quiz/`) beholder nå både `?query` og `#anker`, og har `viewport` og `canonical` til målsiden (Q10).
+
+### Lagt til
+- **CI-sjekk av `assets/site.css`** (`.github/workflows/check-css.yml`): bygger CSS på nytt og feiler hvis den innsjekkede filen ikke stemmer. Hindrer at stiler mangler på den publiserte siden etter at klasser er endret (L5).
+
+### Endret & Forbedret
+- **GitHub Actions er låst til commit-SHA** (med versjonen i kommentar) i begge workflows (M4).
+
 ## [2.13.0] - 2026-11-12
 
 Rettinger fra kodegjennomgangen ([#1](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/1)) og QA-runden ([#2](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/2)) som gjelder selve nettsiden.

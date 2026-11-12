@@ -2,9 +2,17 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=../quiz.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
   <link rel="canonical" href="https://ranheimkraft.no/quiz.html">
   <title>Omdirigerer til Quiz Kraft...</title>
+  <!-- Beholder ?query og #anker når gamle lenker sendes videre -->
+  <script>
+    window.location.replace('../quiz.html' + window.location.search + window.location.hash);
+  </script>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=../quiz.html">
+  </noscript>
 </head>
 <body style="background:#08080a; color:#fff; font-family:sans-serif; text-align:center; padding-top:20vh;">
   <p>Omdirigerer til <a href="../quiz.html" style="color:#00f0ff;">Quiz Kraft</a>...</p>
