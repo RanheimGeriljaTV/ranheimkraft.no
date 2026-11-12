@@ -20,6 +20,11 @@ on:
 permissions:
   contents: write
 
+# Bare én synk om gangen. Hindrer at tidsplan, dispatch og manuell kjøring krasjer i «git push».
+concurrency:
+  group: sync-subprojects
+  cancel-in-progress: false
+
 jobs:
   sync:
     name: Synkroniser Subprosjekter
@@ -36,21 +41,35 @@ jobs:
         with:
           python-version: '3.12'
 
+      # continue-on-error: Et prosjekt som feiler skal ikke hindre at de andre blir lagret.
+      # Jobben blir likevel rød i siste steg hvis noe feilet.
       - name: 🔄 Kjør synkroniseringsmotor
+        id: sync
+        continue-on-error: true
         env:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SYNC_PROJECT: ${{ github.event.inputs.project || 'all' }}
         run: |
-          python scripts/sync_subprojects.py --project "${{ github.event.inputs.project || 'all' }}"
+          python scripts/sync_subprojects.py --project "$SYNC_PROJECT"
 
       - name: 🚀 Commit og push endringer hvis oppdatert
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git status --porcelain)" ]; then
-            git add .
+          # Bare mappene og filene synken eier (ikke «git add .», som tar med alt som ligger igjen)
+          for path in assets airfryer events promille quiz.html qr.html skatt tabell tipping trd scripts/update_obos_standings.py; do
+            [ -e "$path" ] && git add -- "$path"
+          done
+          if ! git diff --cached --quiet; then
             git commit -m "chore(sync): automatisk synkronisering av subprosjekter"
             git push
             echo "Nye endringer ble funnet, committet og pushet!"
           else
             echo "Alt er allerede oppdatert. Ingen endringer nødvendig."
           fi
+
+      - name: ❌ Feil hvis synkroniseringen hadde feil
+        if: steps.sync.outcome == 'failure'
+        run: |
+          echo "Minst ett prosjekt feilet under synkroniseringen. Se loggen i steget over."
+          exit 1

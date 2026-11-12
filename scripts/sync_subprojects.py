@@ -22,6 +22,16 @@ if hasattr(sys.stderr, 'reconfigure'):
 # sammen med resten av nettsiden. Den gamle verktøy-ID-en (7618ae03-…) gir 404
 # hos Umami (november 2026) og skal ikke brukes.
 UMAMI_WEBSITE_ID = "72428774-6e80-43be-a634-be18d6c2ff20"
+# Feil samles her, slik at hele kjøringen fullføres (de andre prosjektene blir synket),
+# men jobben likevel blir rød når noe har feilet. Se main().
+FAILURES = []
+
+
+def report_failure(name, error):
+    FAILURES.append(f"{name}: {error}")
+    print(f"❌ Feil ved synkronisering av {name}: {error}")
+
+
 UMAMI_TAG = ('<script defer src="https://cloud.umami.is/script.js" '
              f'data-website-id="{UMAMI_WEBSITE_ID}"></script>')
 
@@ -160,10 +170,16 @@ if (document.readyState === 'loading') {
                 with open(quiz_html_path, "r", encoding="utf-8") as f:
                     current_quiz_html = f.read()
 
-                # Finn header og footer
-                header_part = current_quiz_html[:current_quiz_html.find("  <!-- SELVE QUIZ KRAFT APPLIKASJONEN -->")]
+                # Finn header og footer. find() gir -1 når en markør mangler, og da ville skjøtingen
+                # gitt en avkuttet eller duplisert quiz.html. Avbryt heller, og behold den gamle filen.
+                app_idx = current_quiz_html.find("  <!-- SELVE QUIZ KRAFT APPLIKASJONEN -->")
                 footer_idx = current_quiz_html.find("  <!-- BUNNSEKSJON (VIPPS, FEEDBACK, FOOTER) -->")
+                if app_idx < 0 or footer_idx < 0 or footer_idx < app_idx:
+                    raise RuntimeError("quiz.html mangler markørkommentarene (SELVE QUIZ KRAFT APPLIKASJONEN / BUNNSEKSJON). quiz.html ble ikke endret.")
+                header_part = current_quiz_html[:app_idx]
                 footer_part = current_quiz_html[footer_idx:]
+                if footer_part.find("  <!-- Skript og biblioteker") < 0:
+                    raise RuntimeError("quiz.html mangler «Skript og biblioteker»-markøren i bunnen. quiz.html ble ikke endret.")
 
                 # Oppdater skriptliste i footer_part hvis nye skript mangler
                 script_tags = """  <!-- Skript og biblioteker (100 % lokalt og offline) -->
@@ -196,7 +212,7 @@ if (document.readyState === 'loading') {
         print("✅ Quiz Kraft er 100 % synkronisert!")
 
     except Exception as e:
-        print(f"❌ Feil ved synkronisering av Quiz Kraft: {e}")
+        report_failure("Quiz Kraft", e)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -229,7 +245,7 @@ def sync_qr_kraft(root_dir):
         print(f"✅ QR Kraft: {copied_count} filer synkronisert.")
 
     except Exception as e:
-        print(f"❌ Feil ved synkronisering av QR Kraft: {e}")
+        report_failure("QR Kraft", e)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -288,12 +304,12 @@ def sync_tabell_kraft(root_dir):
                 subprocess.run([sys.executable, os.path.join(dst_script_dir, "update_obos_standings.py"), "--repo-dir", dst_tabell], check=True)
                 print("  ✓ Live FotMob tabell og Supabase fasit oppdatert")
             except Exception as se:
-                print(f"  ⚠ Kunne ikke kjøre tabelloppdatering: {se}")
+                report_failure("Tabell Kraft (tabelloppdatering)", se)
 
         print("✅ Tabell Kraft synkronisert.")
 
     except Exception as e:
-        print(f"❌ Feil ved synkronisering av Tabell Kraft: {e}")
+        report_failure("Tabell Kraft", e)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -352,7 +368,7 @@ def sync_trd_events(root_dir):
         print("✅ TRD Events synkronisert.")
 
     except Exception as e:
-        print(f"❌ Feil ved synkronisering av TRD Events: {e}")
+        report_failure("TRD Events", e)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
 
@@ -400,7 +416,7 @@ def sync_build_branch(root_dir, name, repo, dest_folder, temp_prefix):
         print(f"✅ {name} synkronisert.")
 
     except Exception as e:
-        print(f"❌ Feil ved synkronisering av {name}: {e}")
+        report_failure(name, e)
     finally:
         shutil.rmtree(temp_dir, ignore_errors=True)
         shutil.rmtree(staging, ignore_errors=True)
@@ -448,6 +464,12 @@ def main():
 
     if target in ("all", "promille", "kraft-promille"):
         sync_kraft_promille(root_dir)
+
+    if FAILURES:
+        print(f"\n⚠️ Synkroniseringskjøring ferdig, men {len(FAILURES)} feil:")
+        for item in FAILURES:
+            print(f"  - {item}")
+        sys.exit(1)
 
     print("\n🎉 Synkroniseringskjøring fullført!")
 
