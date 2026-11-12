@@ -6,6 +6,11 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.13.3] - 2026-11-12
+
+### Endret & Forbedret
+- **Levende overskrift**: «KRAFT» i overskriften har en isblå gradient som flyter sakte (9 s løkke), en glans som sveiper over én gang per runde og en myk, pulserende blå glød. Med «redusert bevegelse» står alt stille.
+
 ## [2.13.2] - 2026-11-12
 
 ### Endret & Forbedret

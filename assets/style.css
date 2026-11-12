@@ -78,6 +78,35 @@
   display: none;
 }
 
+/* 7b. Overskriften «KRAFT» på forsiden: isblå gradient som flyter, glans som sveiper over og myk glød */
+.hero-kraft {
+  /* Lag 1: glans (sveiper én gang per runde). Lag 2: flytende gradient (starter og slutter hvit, så løkken er sømløs) */
+  background-image:
+    linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.95) 50%, transparent 62%),
+    linear-gradient(90deg, #ffffff 0%, #7dd3fc 25%, #3b82f6 50%, #7dd3fc 75%, #ffffff 100%);
+  background-size: 250% 100%, 200% 100%;
+  background-repeat: no-repeat, repeat-x;
+  background-position: 100% 0, 0% 0;
+  filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.35));
+  animation: hero-kraft-flow 9s linear infinite, hero-kraft-glow 4s ease-in-out infinite alternate;
+}
+@keyframes hero-kraft-flow {
+  0%   { background-position: 100% 0, 0% 0; }
+  35%  { background-position: 0% 0, 70% 0; }
+  100% { background-position: 0% 0, 200% 0; }
+}
+@keyframes hero-kraft-glow {
+  from { filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.25)); }
+  to   { filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.55)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-kraft {
+    animation: none;
+    background-position: 100% 0, 0% 0;
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.35));
+  }
+}
+
 /* 8. Global HTML & Touch Polish */
 html {
   -webkit-text-size-adjust: 100%;
