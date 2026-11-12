@@ -6,6 +6,28 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.13.0] - 2026-11-12
+
+Rettinger fra kodegjennomgangen ([#1](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/1)) og QA-runden ([#2](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/2)) som gjelder selve nettsiden.
+
+### Rettet
+- **Tilbakemeldingsskjemaet viste «Takk!» uten å sende** når det ble sendt inn raskere enn 2,5 sekunder. Nå vises «Litt for raskt, prøv igjen». Honeypot-feltet avviser fortsatt roboter stille. Svar som ikke er JSON (f.eks. 429) gir en riktig feilmelding i stedet for «Nettverksfeil» (Q5).
+- **Tilbakemeldingsmodalen** flytter fokus inn ved åpning, holder Tab inne i modalen og sender fokus tilbake til knappen ved lukking.
+- **Galleriet hang uten nettleserlagring**: skriptet bruker ikke lenger `sessionStorage` (Q6).
+- **Galleriet hadde to ulike passordsperrer**. Klientens egen sperre er fjernet, og siden viser bare serverens melding. Demomodus er nå eksplisitt (`galleri.html?demo=1`) og gjelder både listen og opplåsingen, så den ekte opplåsingen kan testes lokalt (M2).
+- **Galleri-backend**: Gale passordforsøk settes i kø med `LockService` og får økende ventetid, i stedet for en sperre som alle besøkende delte. Ingen kan lenger låse ute ekte brukere. README i `apps-script/` forklarer at passordet skjuler listen, ikke selve filene (M1). Må limes inn i Apps Script og distribueres på nytt.
+- **Synk-jobben**: Feil samles og gir rød jobb (men de andre prosjektene blir lagret). `quiz.html` skrives ikke lenger hvis markørkommentarene mangler. Jobben har `concurrency`, bruker `env:` for input, og legger bare til mappene synken eier (H2, M4).
+- **Changelog**: To oppføringer het 2.11.1. Fjerningen av nyhetsstripen er nå 2.11.2, og oppgraderingen av Actions er 2.11.1 i begge endringsloggene. Rå backticks i `changelog.html` vises som kode.
+- **Kontrast**: Grå metatekst og kortnummer på forsiden, galleriet og endringsloggen er lysere, og lenker i endringsloggen er understreket.
+
+### Lagt til
+- **Content Security Policy** (meta-tag) på forsiden, galleriet og endringsloggen. Inline-handlere er flyttet til `addEventListener`, og galleriets skript ligger nå i `assets/galleri.js` (M5).
+- **`404.html`** med lenker til forsiden og verktøyene.
+- **`_config.yml`** som holder `scripts/`, `apps-script/`, `maler/`, `src/` og byggfiler utenfor den publiserte siden (L1).
+
+### Endret & Forbedret
+- Teksten om «full oppløsning» i galleriet er rettet: bildene vises i stor oppløsning, og originalene kan lastes ned (L3).
+
 ## [2.12.1] - 2026-11-11
 
 ### Endret & Forbedret
@@ -22,18 +44,18 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 ### Endret & Forbedret
 - **Forsiden** viser verktøyene i fire kolonner på store skjermer, og beskrivelsen nevner Kraft Promille.
 
-## [2.11.1] - 2026-11-11
-
-### Endret & Forbedret
-- **Auto-Sync (`.github/workflows/sync-subprojects.yml`)**: `actions/checkout@v4` → `@v7` og `actions/setup-python@v5` → `@v7`. De gamle versjonene kjørte på Node.js 20, som GitHub fases ut.
-
-## [2.11.1] - 2026-11-11
+## [2.11.2] - 2026-11-11
 
 ### Fjernet
 - **«Siste Nytt»-stripen** med scrollende nyheter fra Ranheim Fotball er fjernet fra forsiden, og alt på siden er flyttet opp. Koden er fjernet: markup i `index.html`, ticker-stilene i `assets/style.css`, nyhetshenteren i `assets/main.js` (inkludert kallet til rss2json), `sync_ranheim_news()` i `scripts/sync_subprojects.py` og `assets/news.json`. Synken skriver ikke lenger nyhetsfilen hver 3. time.
 
 ### Rettet
 - `prefers-reduced-motion` slår nå av myk rulling som tiltenkt (regelen lå før den globale `scroll-behavior: smooth` og ble overstyrt).
+
+## [2.11.1] - 2026-11-11
+
+### Endret & Forbedret
+- **Auto-Sync (`.github/workflows/sync-subprojects.yml`)**: `actions/checkout@v4` → `@v7` og `actions/setup-python@v5` → `@v7`. De gamle versjonene kjørte på Node.js 20, som GitHub fases ut.
 
 ## [2.11.0] - 2026-11-10
 

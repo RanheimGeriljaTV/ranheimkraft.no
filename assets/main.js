@@ -128,3 +128,11 @@ function updateVideoDetails() {
 }
 
 updateVideoDetails();
+
+// Knapper på forsiden (ingen inline-handlere, så en streng CSP er mulig)
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  if (el.dataset.action === 'random-video') pickRandomVideo();
+  if (el.dataset.action === 'toggle-sound') toggleSound(e);
+});

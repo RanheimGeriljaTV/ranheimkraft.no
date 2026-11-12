@@ -2,6 +2,9 @@
 <html lang="no" class="dark">
 <head>
   <meta charset="UTF-8">
+  <!-- Content Security Policy: begrenser hvor skript, bilder og forespørsler kan komme fra.
+       Endres her hvis siden får nye eksterne tjenester. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cloud.umami.is https://www.youtube.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cloud.umami.is https://api-gateway.umami.dev https://gateway.umami.is https://api.web3forms.com https://script.google.com https://script.googleusercontent.com https://www.youtube.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#08080a">
@@ -60,8 +63,10 @@
 
       <!-- Quick Jump Filter Badges -->
       <div class="flex items-center gap-2 pt-2 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
-        <a href="#v2.12.1" class="shrink-0 px-3 py-1 rounded-full bg-white text-black text-xs font-mono font-bold hover:bg-zinc-200 transition">v2.12.1 (Nyest)</a>
+        <a href="#v2.13.0" class="shrink-0 px-3 py-1 rounded-full bg-white text-black text-xs font-mono font-bold hover:bg-zinc-200 transition">v2.13.0 (Nyest)</a>
+        <a href="#v2.12.1" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.12.1</a>
         <a href="#v2.12.0" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.12.0</a>
+        <a href="#v2.11.2" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.11.2</a>
         <a href="#v2.11.1" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.11.1</a>
         <a href="#v2.11.0" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.11.0</a>
         <a href="#v2.10.2" class="shrink-0 px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 text-zinc-300 text-xs font-mono hover:text-white hover:border-white/30 transition">v2.10.2</a>
@@ -108,6 +113,51 @@
     <!-- Timeline Entries -->
     <main class="space-y-6 sm:space-y-8 flex-grow">
 
+      <!-- ENTRY: v2.13.0 -->
+      <article id="v2.13.0" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+              <span>v2.13.0</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
+                Sikkerhet &amp; rettinger &bull; Nyest
+              </span>
+            </span>
+          </div>
+          <div class="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>12. november 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>🔧</span>
+              <span>Rettinger fra kodegjennomgang og QA</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Tilbakemeldingsskjemaet viser ikke lenger «Takk!» når ingenting ble sendt, og modalen fungerer bedre med tastatur.</li>
+              <li>Galleriet fungerer også når nettleseren blokkerer lagring, og har bare én passordsperre (serverens). Ingen kan lenger låse ute andre ved å gjette feil passord.</li>
+              <li>Den automatiske synkingen gir beskjed når noe feiler, og kan ikke lenger ødelegge <code>quiz.html</code> i stillhet.</li>
+              <li>Endringsloggen er ryddet: dobbelt versjonsnummer rettet, og kode vises som kode.</li>
+              <li>Lysere grå tekst og understrekede lenker gir bedre kontrast.</li>
+            </ul>
+          </div>
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>🛡️</span>
+              <span>Sikkerhet og oppsett</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Ny Content Security Policy på forsiden, galleriet og endringsloggen begrenser hva siden kan laste og kontakte.</li>
+              <li>Ny <code>404.html</code> med lenker til verktøyene.</li>
+              <li>Utviklingsfiler (<code>scripts/</code>, <code>apps-script/</code>, <code>maler/</code> m.fl.) publiseres ikke lenger på ranheimkraft.no.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
       <!-- ENTRY: v2.12.1 -->
       <article id="v2.12.1" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
@@ -115,7 +165,7 @@
             <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
               <span>v2.12.1</span>
               <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
-                Forbedring &bull; Nyest
+                Forbedring
               </span>
             </span>
           </div>
@@ -159,7 +209,7 @@
           <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
             <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
               <span>🍺</span>
-              <span>Kraft Promille på <a href="promille/" class="text-rose-400 hover:underline">/promille/</a></span>
+              <span>Kraft Promille på <a href="promille/" class="text-rose-400 underline underline-offset-2">/promille/</a></span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
               <li>Ny kalkulator som regner ut omtrent hvor høy promillen er nå, når den er under 0,2 og når den er nede på 0,00, med norske drikke-enheter.</li>
@@ -170,12 +220,12 @@
         </div>
       </article>
 
-      <!-- ENTRY: v2.11.1 -->
-      <article id="v2.11.1" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
+      <!-- ENTRY: v2.11.2 -->
+      <article id="v2.11.2" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
           <div class="flex flex-wrap items-center gap-2.5">
             <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
-              <span>v2.11.1</span>
+              <span>v2.11.2</span>
               <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
                 Opprydding
               </span>
@@ -202,6 +252,36 @@
         </div>
       </article>
 
+      <!-- ENTRY: v2.11.1 -->
+      <article id="v2.11.1" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-xl sm:text-2xl font-bold text-white font-mono tracking-tight flex items-center gap-2">
+              <span>v2.11.1</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-cyan-400 text-black text-[10px] font-mono font-bold uppercase tracking-wider">
+                Vedlikehold
+              </span>
+            </span>
+          </div>
+          <div class="text-xs text-zinc-400 font-mono flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-400" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>11. november 2026</span>
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+          <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
+              <span>⚙️</span>
+              <span>Oppgraderte GitHub Actions</span>
+            </h3>
+            <ul class="space-y-2 list-disc list-inside text-zinc-400">
+              <li>Auto-Sync bruker nå nyeste versjon av <code>checkout</code> og <code>setup-python</code>. De gamle versjonene kjørte på Node.js 20, som GitHub fases ut.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
       <!-- ENTRY: v2.11.0 -->
       <article id="v2.11.0" class="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition group scroll-mt-6 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/5">
@@ -223,7 +303,7 @@
           <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
             <h3 class="text-sm font-bold text-white flex items-center gap-2 font-syne">
               <span>🧾</span>
-              <span>Kraft Lønn og Skatt på <a href="skatt/" class="text-violet-400 hover:underline">/skatt/</a></span>
+              <span>Kraft Lønn og Skatt på <a href="skatt/" class="text-violet-400 underline underline-offset-2">/skatt/</a></span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
               <li>Ny kalkulator som viser hva du faktisk får utbetalt i en vanlig måned, i juni (feriepenger) og i desember (halv skatt).</li>
@@ -324,7 +404,7 @@
               <li>Gjør om temperatur og tid fra en stekeovnsoppskrift til airfryer, med en gang du endrer noe. Styres med én tommel.</li>
               <li>Hurtigvalg for frosne pommes frites, kyllingbryst, laksefilet, frossenpizza og ovnsbakte rotgrønnsaker.</li>
               <li>Nedtellingsklokke som piper og vibrerer når kurven skal ristes og når maten er ferdig.</li>
-              <li>Ligger på <a href="airfryer/" class="text-orange-400 hover:underline">ranheimkraft.no/airfryer/</a>, med eget kort på forsiden og lenke i menyen.</li>
+              <li>Ligger på <a href="airfryer/" class="text-orange-400 underline underline-offset-2">ranheimkraft.no/airfryer/</a>, med eget kort på forsiden og lenke i menyen.</li>
             </ul>
           </div>
           <div class="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/5 space-y-3">
@@ -548,7 +628,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -580,7 +660,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -643,7 +723,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -675,7 +755,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -801,7 +881,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -833,7 +913,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -896,7 +976,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -928,7 +1008,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1090,7 +1170,7 @@
               <li><strong class="text-white">FUT-spillerkort:</strong> Holografiske samlekort med OVR-rating (45–99), 4 power stats og bilde-eksport.</li>
               <li><strong class="text-white">NFF Playoff-kvalik:</strong> Komplett bracket for opprykkskvalik til Eliteserien og nedrykkskvalik.</li>
               <li><strong class="text-white">Sky-synkronisering &amp; Admin-rapport:</strong> Supabase PostgreSQL-synk, sesonglås, duplikatbeskyttelse og flersidig profesjonell Excel-eksport.</li>
-              <li><strong class="text-white">Snarveier:</strong> Direkte tilgang via <a href="tabell/" class="text-sky-400 hover:underline">/tabell/</a> og <a href="tipping/" class="text-sky-400 hover:underline">/tipping/</a>.</li>
+              <li><strong class="text-white">Snarveier:</strong> Direkte tilgang via <a href="tabell/" class="text-sky-400 underline underline-offset-2">/tabell/</a> og <a href="tipping/" class="text-sky-400 underline underline-offset-2">/tipping/</a>.</li>
             </ul>
           </div>
         </div>
@@ -1120,7 +1200,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1152,7 +1232,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1215,7 +1295,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1247,7 +1327,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1373,7 +1453,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1405,7 +1485,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1468,7 +1548,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1500,7 +1580,7 @@
               <span>Lansering av TRD Events og ny forside-arkitektur</span>
             </h3>
             <ul class="space-y-2 list-disc list-inside text-zinc-400">
-              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 hover:underline">/events/</a>.</li>
+              <li><strong class="text-white">TRD Events integrert:</strong> Sanntids arrangementsguide for Trondheim med konserter, sport og kultur tilgjengelig via <a href="events/" class="text-emerald-400 underline underline-offset-2">/events/</a>.</li>
               <li><strong class="text-white">Verktøy &amp; Kode øverst (Seksjon 01):</strong> Hovedapplikasjonene er flyttet øverst for umiddelbar tilgang, mens Levende Bilder er plassert som seksjon 03.</li>
               <li><strong class="text-white">Smalere og hevet ticker:</strong> Nyhetsstripen er flyttet opp mot topplinjen og gjort betydelig smalere for et rent, presist uttrykk.</li>
             </ul>
@@ -1690,7 +1770,7 @@
 
               <li><strong class="text-white">Sky-synkronisering &amp; Admin-rapport:</strong> Supabase PostgreSQL-synk, sesonglås, duplikatbeskyttelse og flersidig profesjonell Excel-eksport.</li>
 
-              <li><strong class="text-white">Snarveier:</strong> Direkte tilgang via <a href="tabell/" class="text-sky-400 hover:underline">/tabell/</a> og <a href="tipping/" class="text-sky-400 hover:underline">/tipping/</a>.</li>
+              <li><strong class="text-white">Snarveier:</strong> Direkte tilgang via <a href="tabell/" class="text-sky-400 underline underline-offset-2">/tabell/</a> og <a href="tipping/" class="text-sky-400 underline underline-offset-2">/tipping/</a>.</li>
 
             </ul>
 
@@ -2499,21 +2579,21 @@
               <li class="flex items-start gap-2.5">
                 <span class="text-neon-cyan font-bold mt-0.5">&bull;</span>
                 <div>
-                  <strong class="text-white">Dedikert Changelog-side (`changelog.html`):</strong> 
+                  <strong class="text-white">Dedikert Changelog-side (<code>changelog.html</code>):</strong> 
                   Laget en egen interaktiv oversikt over prosjektets versjonshistorikk og utgivelser i full RanheimKraft glassmorphism-stil.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
                 <span class="text-neon-cyan font-bold mt-0.5">&bull;</span>
                 <div>
-                  <strong class="text-white">Omfattende `.gitignore`:</strong> 
-                  Implementert standard gitignore for å hindre sporing av hemmeligheter (`.env`), Python-artefakter (`__pycache__`), OS-søppel (`.DS_Store`, `Thumbs.db`) og midlertidige testfiler.
+                  <strong class="text-white">Omfattende <code>.gitignore</code>:</strong> 
+                  Implementert standard gitignore for å hindre sporing av hemmeligheter (<code>.env</code>), Python-artefakter (<code>__pycache__</code>), OS-søppel (<code>.DS_Store</code>, <code>Thumbs.db</code>) og midlertidige testfiler.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
                 <span class="text-neon-cyan font-bold mt-0.5">&bull;</span>
                 <div>
-                  <strong class="text-white">Standardisert `CHANGELOG.md`:</strong> 
+                  <strong class="text-white">Standardisert <code>CHANGELOG.md</code>:</strong> 
                   Etablert offisiell Markdown-endringslogg strukturert etter *Keep a Changelog* og *Semantic Versioning*.
                 </div>
               </li>
@@ -2554,7 +2634,7 @@
                 <span class="text-cyan-400 font-bold mt-0.5">&bull;</span>
                 <div>
                   <strong class="text-white">Heldekkende Ranheim-gradient på nyhetstickeren:</strong> 
-                  Gjennomgående dyp Ranheimsblå gradient (`#071330` til `#0f2766`) med skarp tekst og matchende kant-fades.
+                  Gjennomgående dyp Ranheimsblå gradient (<code>#071330</code> til <code>#0f2766</code>) med skarp tekst og matchende kant-fades.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
@@ -2568,28 +2648,28 @@
                 <span class="text-cyan-400 font-bold mt-0.5">&bull;</span>
                 <div>
                   <strong class="text-white">Fjernet blinkende lys &amp; RIL-bilde i ticker:</strong> 
-                  Erstatter bildelogo og pulserende prikk med en ren, skarp tekst-badge: `SISTE NYTT`.
+                  Erstatter bildelogo og pulserende prikk med en ren, skarp tekst-badge: <code>SISTE NYTT</code>.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
                 <span class="text-cyan-400 font-bold mt-0.5">&bull;</span>
                 <div>
-                  <strong class="text-white">Fersk og dynamisk nyhetsfeed (`assets/news.json`):</strong> 
+                  <strong class="text-white">Fersk og dynamisk nyhetsfeed (<code>assets/news.json</code>):</strong> 
                   Oppdatert med kampsaker (inkl. 3-1-seieren over Raufoss på Toten) og koblet opp mot automatisk klientside-innlasting.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
                 <span class="text-cyan-400 font-bold mt-0.5">&bull;</span>
                 <div>
-                  <strong class="text-white">Sentralisert ressursmappe (`/assets/`):</strong> 
-                  Alle bildeler, logoer, WebP-formater og `polarICON.ico` samlet på ett sted, og duplikater i rotmappen fjernet.
+                  <strong class="text-white">Sentralisert ressursmappe (<code>/assets/</code>):</strong> 
+                  Alle bildeler, logoer, WebP-formater og <code>polarICON.ico</code> samlet på ett sted, og duplikater i rotmappen fjernet.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
                 <span class="text-cyan-400 font-bold mt-0.5">&bull;</span>
                 <div>
                   <strong class="text-white">Rikere bakgrunnsgraffiti:</strong> 
-                  Lagt til `RANHEIM`, `KRAFT`, `KK` og `RANHEIM GERILJA` i *Sedgwick Ave Display* med subtil rotasjon og opasitet.
+                  Lagt til <code>RANHEIM</code>, <code>KRAFT</code>, <code>KK</code> og <code>RANHEIM GERILJA</code> i *Sedgwick Ave Display* med subtil rotasjon og opasitet.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
@@ -2628,7 +2708,7 @@
               <li class="flex items-start gap-2.5">
                 <span class="text-amber-400 font-bold mt-0.5">&bull;</span>
                 <div>
-                  <strong class="text-white">Underside for Bildegallerier (`galleri.html`):</strong> 
+                  <strong class="text-white">Underside for Bildegallerier (<code>galleri.html</code>):</strong> 
                   Passordbeskyttet portal for visning av høyoppløselige kampbilder og begivenheter direkte fra Google Disk.
                 </div>
               </li>
@@ -2683,7 +2763,7 @@
                 <span class="text-pink-400 font-bold mt-0.5">&bull;</span>
                 <div>
                   <strong class="text-white">YouTube Showcase med terning:</strong> 
-                  Kompakt videomodul for `@RanheimGeriljaTV` med mulighet for å trekke tilfeldige videoer fra arkivet.
+                  Kompakt videomodul for <code>@RanheimGeriljaTV</code> med mulighet for å trekke tilfeldige videoer fra arkivet.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
@@ -2697,7 +2777,7 @@
                 <span class="text-pink-400 font-bold mt-0.5">&bull;</span>
                 <div>
                   <strong class="text-white">Sveipbar filterrad:</strong> 
-                  Horisontal rullemeny for kategoriknappene uten stygg synlig scrollbar (`no-scrollbar`).
+                  Horisontal rullemeny for kategoriknappene uten stygg synlig scrollbar (<code>no-scrollbar</code>).
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
@@ -2737,7 +2817,7 @@
                 <span class="text-emerald-400 font-bold mt-0.5">&bull;</span>
                 <div>
                   <strong class="text-white">Lansering på eget domene:</strong> 
-                  Etablert `ranheimkraft.no` med GitHub Pages og CNAME.
+                  Etablert <code>ranheimkraft.no</code> med GitHub Pages og CNAME.
                 </div>
               </li>
               <li class="flex items-start gap-2.5">

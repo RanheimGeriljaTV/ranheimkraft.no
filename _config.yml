@@ -1,0 +1,15 @@
+# GitHub Pages (Jekyll): ikke publiser utviklingsfiler på ranheimkraft.no.
+# Selve nettsiden (html, assets, verktøymappene) publiseres som før.
+exclude:
+  - scripts
+  - apps-script
+  - maler
+  - src
+  - node_modules
+  - package.json
+  - package-lock.json
+  - tailwind.config.js
+  - README.md
+  - CHANGELOG.md
+  - CLAUDE.md
+  - .claude

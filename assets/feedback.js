@@ -21,6 +21,7 @@ const MAX_SUBMISSIONS_PER_HOUR = 3;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 time
 
 let modalOpenedTimestamp = 0;
+let feedbackReturnFocus = null;
 
 function getRecentFeedbackSubmissions() {
   try {
@@ -49,7 +50,7 @@ function initFeedbackModal() {
 
   const modalHtml = `
     <div id="feedback-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden select-none" role="dialog" aria-modal="true" aria-labelledby="feedback-title">
-      <div class="bg-[#0c0c0e] rounded-2xl p-6 sm:p-8 w-full max-w-lg border border-white/15 shadow-2xl relative space-y-5 text-left select-text" onclick="event.stopPropagation()">
+      <div class="bg-[#0c0c0e] rounded-2xl p-6 sm:p-8 w-full max-w-lg border border-white/15 shadow-2xl relative space-y-5 text-left select-text">
         
         <!-- Modal Topplinje -->
         <div class="flex items-center justify-between pb-3 border-b border-white/10">
@@ -60,7 +61,7 @@ function initFeedbackModal() {
             </h3>
             <p class="text-xs text-zinc-400 font-mono">Hjelp oss å gjøre siden enda bedre</p>
           </div>
-          <button type="button" onclick="closeFeedbackModal()" class="text-zinc-400 hover:text-white p-1 text-2xl leading-none transition cursor-pointer" aria-label="Lukk">&times;</button>
+          <button type="button" data-fb-close class="text-zinc-400 hover:text-white p-1 text-2xl leading-none transition cursor-pointer" aria-label="Lukk">&times;</button>
         </div>
 
         <!-- Bekreftelsesmelding (skjult som standard) -->
@@ -71,14 +72,14 @@ function initFeedbackModal() {
             Vi setter stor pris på at du sa ifra. Vi ser på saken så raskt som mulig!
           </p>
           <div class="pt-2">
-            <button type="button" onclick="closeFeedbackModal()" class="px-5 py-2 rounded-xl bg-white text-black font-syne font-bold text-xs uppercase tracking-wider hover:bg-zinc-200 transition cursor-pointer">
+            <button type="button" data-fb-close class="px-5 py-2 rounded-xl bg-white text-black font-syne font-bold text-xs uppercase tracking-wider hover:bg-zinc-200 transition cursor-pointer">
               Lukk vindu
             </button>
           </div>
         </div>
 
         <!-- Selve Skjemaet -->
-        <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitFeedbackForm(event)" class="space-y-4">
+        <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
           
           <!-- SKJULTE SPAM- OG SYSTEMFELTER (Web3Forms + Diagnostikk) -->
           <input type="hidden" name="access_key" value="${FORM_ACCESS_KEY}">
@@ -141,7 +142,7 @@ function initFeedbackModal() {
 
           <!-- Handlingsknapper -->
           <div class="flex items-center justify-end gap-3 pt-2">
-            <button type="button" onclick="closeFeedbackModal()" class="px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 text-xs font-mono text-zinc-300 transition cursor-pointer">
+            <button type="button" data-fb-close class="px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/10 text-xs font-mono text-zinc-300 transition cursor-pointer">
               Avbryt
             </button>
             <button type="submit" id="fb-submit-btn" class="px-5 py-2 rounded-xl bg-white hover:bg-zinc-200 text-black font-syne font-bold text-xs uppercase tracking-wider transition flex items-center gap-2 cursor-pointer shadow-md">
@@ -170,19 +171,57 @@ function initFeedbackModal() {
     if (e.target === modal) closeFeedbackModal();
   });
 
-  // Lukk ved Esc-tast
+  // Lukkeknapper og innsending (ingen inline-handlere, så en streng CSP er mulig)
+  modal.querySelectorAll('[data-fb-close]').forEach((btn) => {
+    btn.addEventListener('click', closeFeedbackModal);
+  });
+  document.getElementById('feedback-form').addEventListener('submit', submitFeedbackForm);
+
+  // Esc lukker, og Tab holdes inne i modalen
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    if (modal.classList.contains('hidden')) return;
+    if (e.key === 'Escape') {
       closeFeedbackModal();
+    } else if (e.key === 'Tab') {
+      trapFeedbackFocus(e, modal);
     }
   });
 }
+
+// Tab/Shift+Tab sirkulerer mellom synlige, fokuserbare elementer i modalen
+function trapFeedbackFocus(e, container) {
+  const focusable = Array.from(container.querySelectorAll('a[href], button:not([disabled]), input:not([type="hidden"]):not([type="checkbox"]), select, textarea'))
+    .filter((el) => el.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (!container.contains(document.activeElement)) {
+    e.preventDefault();
+    first.focus();
+  } else if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
+// Knapper med data-feedback-open åpner modalen (brukes av layout.js)
+document.addEventListener('click', (e) => {
+  const trigger = e.target.closest && e.target.closest('[data-feedback-open]');
+  if (trigger) {
+    e.preventDefault();
+    openFeedbackModal();
+  }
+});
 
 /* =========================================================================
    3. APNE & LUKKE MODAL + AUTOMATISK DIAGNOSTIKK
    ========================================================================= */
 function openFeedbackModal() {
   initFeedbackModal();
+  feedbackReturnFocus = document.activeElement;
   modalOpenedTimestamp = Date.now(); // Registrer tidspunkt for tidslås (bot-sjekk)
   const modal = document.getElementById('feedback-modal');
   const form = document.getElementById('feedback-form');
@@ -221,6 +260,11 @@ function openFeedbackModal() {
 function closeFeedbackModal() {
   const modal = document.getElementById('feedback-modal');
   if (modal) modal.classList.add('hidden');
+  // Fokus tilbake til knappen som åpnet modalen
+  if (feedbackReturnFocus && typeof feedbackReturnFocus.focus === 'function' && document.contains(feedbackReturnFocus)) {
+    feedbackReturnFocus.focus();
+  }
+  feedbackReturnFocus = null;
 }
 
 /* =========================================================================
@@ -234,13 +278,17 @@ async function submitFeedbackForm(e) {
   const successBox = document.getElementById('feedback-success');
 
   // 1. Tidslås (Time-to-submit sjekk): Ekte mennesker bruker minst 2.5 sekunder.
-  // Automatiserte bots sender umiddelbart (< 2.5 sek). Avvises stille uten eksternt API-kall.
+  // Er honeypot-feltet huket av, er det en bot: avvises stille uten eksternt API-kall.
+  // Ellers er det trolig et menneske som var litt rask: si fra, ikke vis falsk suksess.
+  const honeypot = form.querySelector('input[name="botcheck"]');
+  if (honeypot && honeypot.checked) {
+    console.warn('Feedback avvist (honeypot).');
+    return;
+  }
   const elapsedSeconds = (Date.now() - (modalOpenedTimestamp || 0)) / 1000;
   if (elapsedSeconds < MIN_SUBMIT_TIME_SECONDS) {
-    console.warn('Feedback avvist (innsending for rask / mistenkelig bot-mønster).');
-    form.classList.add('hidden');
-    successBox.classList.remove('hidden');
-    form.reset();
+    errBox.textContent = 'Litt for raskt. Vent et par sekunder og trykk «Send inn» igjen.';
+    errBox.classList.remove('hidden');
     return;
   }
 
@@ -283,7 +331,13 @@ async function submitFeedbackForm(e) {
       body: formData
     });
 
-    const result = await response.json();
+    // Svaret kan være HTML (f.eks. ved 429), så les det forsiktig før vi sjekker innholdet
+    let result = {};
+    try {
+      result = await response.json();
+    } catch (parseErr) {
+      result = {};
+    }
 
     if (response.ok && result.success) {
       recordFeedbackSubmission();
@@ -291,7 +345,9 @@ async function submitFeedbackForm(e) {
       successBox.classList.remove('hidden');
       form.reset();
     } else {
-      errBox.textContent = result.message || 'Kunne ikke sende feilrapporten. Prøv igjen eller bruk GitHub Issues.';
+      errBox.textContent = response.status === 429
+        ? 'For mange forsøk akkurat nå. Vent litt og prøv igjen, eller bruk GitHub-lenken.'
+        : (result.message || 'Kunne ikke sende feilrapporten. Prøv igjen eller bruk GitHub Issues.');
       errBox.classList.remove('hidden');
       submitBtn.disabled = false;
       submitBtn.innerHTML = '<span>Prøv igjen &rarr;</span>';

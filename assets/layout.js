@@ -59,12 +59,12 @@
   function footerHtml() {
     const items = [];
     if (!isHome) items.push('<a href="index.html" class="hover:text-white transition">Hovedside</a>');
-    items.push('<button type="button" onclick="openFeedbackModal()" class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400"><span aria-hidden="true">🐛</span> <span>Rapporter feil</span></button>');
+    items.push('<button type="button" data-feedback-open class="hover:text-white transition flex items-center gap-1 cursor-pointer text-zinc-400"><span aria-hidden="true">🐛</span> <span>Rapporter feil</span></button>');
     if (page !== 'changelog') items.push('<a href="changelog.html" class="hover:text-white transition">Changelog</a>');
     items.push('<a href="https://github.com/RanheimGeriljaTV/ranheimkraft.no" target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub</a>');
 
     return `
-      <footer class="mt-auto pt-8 border-t border-white/10 text-xs font-mono text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-3" style="padding-bottom: env(safe-area-inset-bottom);">
+      <footer class="mt-auto pt-8 border-t border-white/10 text-xs font-mono text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-3" style="padding-bottom: env(safe-area-inset-bottom);">
         <div>&copy; ${new Date().getFullYear()} Ranheim Kraft</div>
         <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           ${items.join('\n<span aria-hidden="true">&bull;</span>\n')}

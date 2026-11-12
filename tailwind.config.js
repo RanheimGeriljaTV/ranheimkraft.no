@@ -12,6 +12,7 @@ module.exports = {
     './assets/layout.js',
     './assets/main.js',
     './assets/feedback.js',
+    './assets/galleri.js',
     './assets/vipps.js'
   ],
   theme: {
