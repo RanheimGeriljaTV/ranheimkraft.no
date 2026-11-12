@@ -5,7 +5,10 @@
  *
  * Backend API for gallerioversikt og sikker autentisering:
  * - Sikkerhet (Forslag A): Saltet SHA-256 kryptografisk hashing av passord.
- * - Sikkerhet (Forslag B): Brute-Force beskyttelse & midlertidig 15-minutters sperre ved 5 feil forsøk.
+ * - Sikkerhet (Forslag B): Brute-Force-bremse. Gale passord gir økende ventetid, og forsøkene
+ *   settes i kø med LockService. Ingen full utesperring, så ekte brukere ikke kan låses ute av andre.
+ * - OBS: Passordet skjuler bare gallerilisten. Selve bildene ligger i mapper som er delt med
+ *   «alle med lenken», så de som allerede har en bilde- eller mappelenke har fortsatt tilgang.
  * - Tomt passord i arket = Åpent galleri (ingen passord kreves).
  * - Aktiv = "nei" skjuler galleriet uten å slette raden.
  * - Nye bilder i Disk-mappen dukker opp automatisk (hurtigbuffer: 5 min).
@@ -14,8 +17,10 @@
 const SHEET_NAME = 'Gallerier';
 const HEADERS = ['ID', 'Tittel', 'Dato', 'Beskrivelse', 'Mappe-lenke', 'Passord', 'Aktiv'];
 const CACHE_SECONDS = 300;     // Hvor lenge bildelister mellomlagres (5 min)
-const MAX_FAILS = 5;           // Maks feil passordforsøk før midlertidig lås
-const LOCK_SECONDS = 900;      // Sperretid: 15 minutter (900 sekunder)
+const FREE_TRIES = 5;          // Antall gale forsøk før det legges på ekstra ventetid
+const MAX_DELAY_SECONDS = 8;   // Lengste ventetid per galt forsøk
+const FAIL_WINDOW_SECONDS = 900; // Telleren for gale forsøk nullstilles etter 15 minutter uten nye feil
+const LOCK_WAIT_MS = 20000;    // Hvor lenge et forsøk venter i køen før det gir opp
 
 /* ---------- Administrasjon & Konfigurasjon ---------- */
 
@@ -99,14 +104,14 @@ function hashAllPlaintextPasswords() {
     : 'Alle eksisterende passord i arket er allerede sikret med SHA-256 hash.');
 }
 
-/** Tømmer hurtigbuffer for bilder og nullstiller midlertidige passordsperrer */
+/** Tømmer hurtigbuffer for bilder og nullstiller telleren for gale passordforsøk */
 function clearCache() {
   const keys = [];
   readGalleries_(true).forEach(function (g) {
     keys.push('img_' + g.folderId, 'fail_gal_' + g.id);
   });
   if (keys.length) CacheService.getScriptCache().removeAll(keys);
-  notify_('Hurtigbuffer og eventuelle passordsperrer er tømt.');
+  notify_('Hurtigbuffer og tellere for gale passordforsøk er tømt.');
 }
 
 /* ---------- Web-API (brukes av galleri.html) ---------- */
@@ -144,36 +149,39 @@ function open_(id, password) {
   const g = readGalleries_(false).filter(function (x) { return x.id === String(id || ''); })[0];
   if (!g) return { ok: false, error: 'Fant ikke galleriet.' };
 
-  const cache = CacheService.getScriptCache();
-  const failKey = 'fail_gal_' + g.id;
-  const fails = Number(cache.get(failKey) || 0);
+  // Åpne gallerier trenger ikke passordsjekk eller kø
+  if (g.password) {
+    // Alle passordforsøk settes i kø, slik at telleren er pålitelig og gjetting går tregt.
+    // Det er ingen full utesperring: et riktig passord slipper alltid inn (etter at køen er gått).
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(LOCK_WAIT_MS)) {
+      return { ok: false, status: 503, error: 'Mange forsøk akkurat nå. Vent litt og prøv igjen.' };
+    }
+    try {
+      const cache = CacheService.getScriptCache();
+      const failKey = 'fail_gal_' + g.id;
+      const fails = Number(cache.get(failKey) || 0);
 
-  // Forslag B: Brute-Force lockout etter 5 feil forsøk (15 minutters sperre)
-  if (fails >= MAX_FAILS) {
-    return { 
-      ok: false, 
-      status: 429,
-      error: 'For mange feil passordforsøk. Galleriet er midlertidig låst i 15 minutter av sikkerhetshensyn.' 
-    };
-  }
+      // Forslag A: Validering via saltet SHA-256 hash
+      if (!verifyPassword_(password, g.password)) {
+        const newFails = fails + 1;
+        cache.put(failKey, String(newFails), FAIL_WINDOW_SECONDS);
+        // Økende ventetid (mens køen holdes) bremser automatiske gjettere uten å stenge ute ekte brukere
+        const extra = newFails <= FREE_TRIES ? 0 : Math.min((newFails - FREE_TRIES) * 2, MAX_DELAY_SECONDS - 1);
+        Utilities.sleep((1 + extra) * 1000);
+        return {
+          ok: false,
+          error: newFails >= FREE_TRIES
+            ? 'Feil passord. Det har vært mange forsøk, så svaret kommer litt saktere en stund.'
+            : 'Feil passord.'
+        };
+      }
 
-  // Forslag A: Validering via saltet SHA-256 hash
-  const isValid = verifyPassword_(password, g.password);
-
-  if (!isValid) {
-    const newFails = fails + 1;
-    cache.put(failKey, String(newFails), LOCK_SECONDS);
-    Utilities.sleep(1000); // 1 sekund forsinkelse for å sinke automatiske roboter
-    const remaining = MAX_FAILS - newFails;
-    const msg = remaining > 0
-      ? 'Feil passord. (' + remaining + ' forsøk gjenstår før 15 min sperre)'
-      : 'Feil passord. Galleriet er nå låst i 15 minutter.';
-    return { ok: false, error: msg };
-  }
-
-  // Riktig passord: Fjern eventuell feil-teller
-  if (fails > 0) {
-    cache.remove(failKey);
+      // Riktig passord: fjern telleren
+      if (fails > 0) cache.remove(failKey);
+    } finally {
+      lock.releaseLock();
+    }
   }
 
   let images;
