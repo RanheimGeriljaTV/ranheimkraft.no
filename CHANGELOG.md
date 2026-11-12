@@ -6,6 +6,11 @@ Formatet er basert på [Keep a Changelog](https://keepachangelog.com/no/1.0.0/),
 
 ---
 
+## [2.13.2] - 2026-11-12
+
+### Endret & Forbedret
+- **Isblå «KRAFT» i overskriften**: Gradienten i «RANHEIM KRAFT» går nå fra hvit via lys isblå til dyp blå (var grå), så den passer til isbjørnen og verktøyfargene.
+
 ## [2.13.1] - 2026-11-12
 
 Flere rettinger fra [#1](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/1) og [#2](https://github.com/RanheimGeriljaTV/ranheimkraft.no/issues/2).
