@@ -349,17 +349,53 @@ const PLAYOFF_LIVE_DATA_2026 = {
       "awayTeam": {
         "id": "161378",
         "name": "Bjarg",
-        "score": 2
+        "score": 3
       },
-      "score": "2 - 2",
-      "finished": false,
+      "score": "2 - 3",
+      "finished": true,
       "started": true,
-      "reason": "",
+      "reason": "FT",
       "utcTime": "2026-11-14T12:00:00.000Z"
+    },
+    {
+      "id": "6651328",
+      "homeTeam": {
+        "id": "8616",
+        "name": "Sogndal",
+        "score": 0
+      },
+      "awayTeam": {
+        "id": "161378",
+        "name": "Bjarg",
+        "score": 0
+      },
+      "score": null,
+      "finished": false,
+      "started": false,
+      "reason": "",
+      "utcTime": "2026-11-21T17:00:00Z"
+    },
+    {
+      "id": "6651329",
+      "homeTeam": {
+        "id": "161378",
+        "name": "Bjarg",
+        "score": 0
+      },
+      "awayTeam": {
+        "id": "8616",
+        "name": "Sogndal",
+        "score": 0
+      },
+      "score": null,
+      "finished": false,
+      "started": false,
+      "reason": "",
+      "utcTime": "2026-11-28T17:00:00Z"
     }
   ],
   "hasMatches": true,
-  "updated_at": "2026-11-14T13:11:52.192264+00:00"
+  "updated_at": "2026-11-14T19:47:47.047386+00:00"
 };
 if (typeof window !== 'undefined') window.PLAYOFF_LIVE_DATA_2026 = PLAYOFF_LIVE_DATA_2026;
 
