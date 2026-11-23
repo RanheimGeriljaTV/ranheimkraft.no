@@ -317,7 +317,7 @@ const PLAYOFF_LIVE_DATA_2026 = {
       "finished": true,
       "started": true,
       "reason": "FT",
-      "utcTime": "2026-11-22T12:30:00.000Z"
+      "utcTime": "2026-11-22T12:30:00Z"
     },
     {
       "id": "6736172",
@@ -391,7 +391,7 @@ const PLAYOFF_LIVE_DATA_2026 = {
       "finished": true,
       "started": true,
       "reason": "FT",
-      "utcTime": "2026-11-22T12:00:00.000Z"
+      "utcTime": "2026-11-22T12:00:00Z"
     },
     {
       "id": "6651329",
@@ -413,7 +413,7 @@ const PLAYOFF_LIVE_DATA_2026 = {
     }
   ],
   "hasMatches": true,
-  "updated_at": "2026-11-22T19:13:10.677720+00:00"
+  "updated_at": "2026-11-23T01:27:33.041029+00:00"
 };
 if (typeof window !== 'undefined') window.PLAYOFF_LIVE_DATA_2026 = PLAYOFF_LIVE_DATA_2026;
 
